@@ -574,6 +574,26 @@ ul {
     100% { transform: translateY(0px); }
 }
 
+.floating-left {
+    animation: floating-left 7s ease-in-out infinite;
+}
+
+@keyframes floating-left {
+    0% { transform: translateY(0px) rotate(-6deg); }
+    50% { transform: translateY(-10px) rotate(-4deg); }
+    100% { transform: translateY(0px) rotate(-6deg); }
+}
+
+.floating-right {
+    animation: floating-right 8s ease-in-out infinite;
+}
+
+@keyframes floating-right {
+    0% { transform: translateY(0px) rotate(6deg); }
+    50% { transform: translateY(-10px) rotate(4deg); }
+    100% { transform: translateY(0px) rotate(6deg); }
+}
+
 /* ===============
    Section Globals
    =============== */
