@@ -959,9 +959,9 @@ section {
 }
 
 .cert-container {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
 }
 
 a.cert-row {
@@ -1070,7 +1070,7 @@ a.cert-row:hover::before {
 }
 
 @media (max-width: 992px) {
-    .summary-grid, .grid-2-col, .widget-grid, .footer-widget-grid {
+    .summary-grid, .grid-2-col, .widget-grid, .footer-widget-grid, .cert-container {
         grid-template-columns: 1fr;
     }
 }
