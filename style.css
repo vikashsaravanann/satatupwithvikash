@@ -3,15 +3,15 @@
    =============== */
 :root {
     /* Colors */
-    --bg-dark: #0a0a0f;
-    --bg-card: rgba(25, 25, 35, 0.6);
-    --bg-card-hover: rgba(35, 35, 50, 0.8);
-    --text-primary: #f0f0f5;
-    --text-secondary: #a0a0b0;
-    --accent: #6c5ce7;
-    --accent-hover: #5b4bc4;
-    --accent-glow: rgba(108, 92, 231, 0.4);
-    --neon-blue: #00cec9;
+    --bg-dark: #000000;
+    --bg-card: rgba(20, 20, 20, 0.6);
+    --bg-card-hover: rgba(30, 30, 30, 0.8);
+    --text-primary: #ffffff;
+    --text-secondary: #b3b3b3;
+    --accent: #87ceeb;
+    --accent-hover: #5cb3e6;
+    --accent-glow: rgba(135, 206, 235, 0.4);
+    --neon-blue: #ffffff;
     
     /* Typography */
     --font-body: 'Inter', sans-serif;
@@ -47,9 +47,9 @@ body {
     line-height: 1.6;
     overflow-x: hidden;
     background-image: 
-        radial-gradient(at 0% 0%, rgba(108, 92, 231, 0.15) 0px, transparent 50%),
-        radial-gradient(at 100% 0%, rgba(0, 206, 201, 0.1) 0px, transparent 50%),
-        radial-gradient(at 100% 100%, rgba(108, 92, 231, 0.1) 0px, transparent 50%);
+        radial-gradient(at 0% 0%, rgba(135, 206, 235, 0.15) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(255, 255, 255, 0.05) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(135, 206, 235, 0.1) 0px, transparent 50%);
     background-attachment: fixed;
 }
 
