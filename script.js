@@ -18,11 +18,14 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const observer = new IntersectionObserver((entries, observer) => {
+        let delay = 0;
         entries.forEach(entry => {
             if (entry.isIntersecting) {
+                // Apply a staggered delay
+                entry.target.style.transitionDelay = `${delay}s`;
                 entry.target.classList.add('visible');
-                // Optional: unobserve after animating in
-                // observer.unobserve(entry.target);
+                delay += 0.15;
+                observer.unobserve(entry.target);
             }
         });
     }, observerOptions);

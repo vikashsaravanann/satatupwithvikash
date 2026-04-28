@@ -22,9 +22,9 @@
     --section-pad: 100px 0;
     
     /* Effects */
-    --glass-border: 1px solid rgba(255, 255, 255, 0.05);
-    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
-    --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    --glass-border: 1px solid rgba(255, 255, 255, 0.1);
+    --glass-shadow: 0 16px 40px 0 rgba(0, 0, 0, 0.4);
+    --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* ===============
@@ -46,12 +46,19 @@ body {
     font-family: var(--font-body);
     line-height: 1.6;
     overflow-x: hidden;
-    /* Subtle background mesh gradient */
+    /* Animated mesh gradient */
     background-image: 
-        radial-gradient(at 0% 0%, rgba(135, 206, 235, 0.15) 0px, transparent 50%),
-        radial-gradient(at 100% 0%, rgba(224, 247, 250, 0.1) 0px, transparent 50%),
-        radial-gradient(at 100% 100%, rgba(135, 206, 235, 0.1) 0px, transparent 50%);
+        radial-gradient(circle at 15% 50%, rgba(135, 206, 235, 0.12), transparent 50%),
+        radial-gradient(circle at 85% 30%, rgba(224, 247, 250, 0.1), transparent 50%),
+        radial-gradient(circle at 50% 80%, rgba(135, 206, 235, 0.08), transparent 50%);
+    background-size: 200% 200%;
+    animation: moveBackground 15s ease infinite alternate;
     background-attachment: fixed;
+}
+
+@keyframes moveBackground {
+    0% { background-position: 0% 0%; }
+    100% { background-position: 100% 100%; }
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -78,9 +85,17 @@ ul {
 
 .highlight {
     color: var(--accent);
-    background: linear-gradient(90deg, var(--accent), var(--neon-blue));
+    background: linear-gradient(90deg, var(--accent), var(--neon-blue), var(--accent));
+    background-size: 200% auto;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    animation: shineText 4s linear infinite;
+}
+
+@keyframes shineText {
+    to {
+        background-position: 200% center;
+    }
 }
 
 .text-accent {
@@ -657,23 +672,31 @@ section {
    =============== */
 .fade-up {
     opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
+    filter: blur(8px);
+    transform: translateY(40px);
+    transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), 
+                transform 1s cubic-bezier(0.16, 1, 0.3, 1),
+                filter 1s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .fade-up.visible {
     opacity: 1;
+    filter: blur(0);
     transform: translateY(0);
 }
 
 .fade-left {
     opacity: 0;
-    transform: translateX(30px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
+    filter: blur(8px);
+    transform: translateX(40px);
+    transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), 
+                transform 1s cubic-bezier(0.16, 1, 0.3, 1),
+                filter 1s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .fade-left.visible {
     opacity: 1;
+    filter: blur(0);
     transform: translateX(0);
 }
 
