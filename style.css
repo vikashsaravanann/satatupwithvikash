@@ -240,6 +240,58 @@ ul {
     align-items: center;
 }
 
+.hero-content-stacked {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 40px;
+}
+
+.hero-content-stacked .hero-text {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.hero-content-stacked .hero-stats-grid {
+    justify-content: center;
+}
+
+.hero-content-stacked .social-links-hero {
+    justify-content: center;
+}
+
+.hero-graphics-stacked {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.skills-boxes-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 40px;
+    width: 100%;
+}
+
+.floating-box-static {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(10, 10, 15, 0.7);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(135, 206, 235, 0.2);
+    padding: 12px 20px;
+    border-radius: 12px;
+    z-index: 10;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    text-align: left;
+}
+
 .availability-badge {
     display: inline-flex;
     align-items: center;
