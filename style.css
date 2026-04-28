@@ -41,12 +41,7 @@ html {
 }
 
 body {
-    background-color: var(--bg-light);
-    background-image: 
-        radial-gradient(rgba(0, 0, 0, 0.15) 1px, transparent 1px);
-    background-size: 24px 24px;
-    background-position: 0 0;
-    background-attachment: fixed;
+    background-color: #f9fafb; /* Extremely clean, soft white/gray */
     color: var(--text-primary);
     font-family: var(--font-body);
     line-height: 1.6;
@@ -55,13 +50,8 @@ body {
 }
 
 #app-frame {
-    background-color: rgba(248, 249, 250, 0.7);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    border-radius: 20px;
+    background-color: transparent;
     min-height: calc(100vh - 2vw);
-    box-shadow: 0 0 40px rgba(0, 0, 0, 0.05);
     overflow: hidden;
     position: relative;
 }
