@@ -927,12 +927,63 @@ section {
     align-items: flex-start;
 }
 
-.cert-list li {
+.cert-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.cert-row {
     display: flex;
     align-items: center;
-    gap: 10px;
-    margin-bottom: 10px;
-    color: var(--text-secondary);
+    padding: 16px;
+    background: rgba(255, 255, 255, 0.03);
+    border: var(--glass-border);
+    border-radius: 12px;
+    transition: var(--transition);
+    cursor: default;
+    position: relative;
+    overflow: hidden;
+}
+
+.cert-row::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 4px; height: 100%;
+    background: var(--accent);
+    opacity: 0;
+    transition: var(--transition);
+}
+
+.cert-row:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateX(5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    border-color: rgba(135, 206, 235, 0.3);
+}
+
+.cert-row:hover::before {
+    opacity: 1;
+}
+
+.cert-icon {
+    font-size: 1.8rem;
+    color: var(--accent);
+    margin-right: 16px;
+    width: 40px;
+    text-align: center;
+}
+
+.cert-details h4 {
+    font-size: 1rem;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+}
+
+.cert-issuer {
+    font-size: 0.8rem;
+    color: var(--neon-blue);
+    font-weight: 600;
 }
 
 .contact-details p {
