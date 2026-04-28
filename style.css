@@ -94,6 +94,7 @@ ul {
     background: linear-gradient(90deg, var(--accent), var(--neon-blue), var(--accent));
     background-size: 200% auto;
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
     animation: shineText 4s linear infinite;
 }
@@ -311,6 +312,7 @@ ul {
 .gradient-text-premium {
     background: linear-gradient(135deg, var(--accent) 0%, #1e90ff 100%);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
     font-size: 4.5rem;
     margin-bottom: 10px;
