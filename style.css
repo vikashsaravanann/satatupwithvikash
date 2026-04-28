@@ -41,7 +41,11 @@ html {
 }
 
 body {
-    background-color: #030303;
+    background-color: #0b0c10;
+    background-image: 
+        radial-gradient(at 0% 0%, rgba(135, 206, 235, 0.15) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(135, 206, 235, 0.1) 0px, transparent 50%);
+    background-attachment: fixed;
     color: var(--text-primary);
     font-family: var(--font-body);
     line-height: 1.6;
@@ -50,11 +54,14 @@ body {
 }
 
 #app-frame {
-    background-color: var(--bg-dark);
+    background-color: rgba(5, 5, 5, 0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     border: 1px solid rgba(135, 206, 235, 0.2);
     border-radius: 16px;
-    box-shadow: 0 0 40px rgba(0,0,0,0.8);
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
     overflow: hidden;
+    position: relative;
     min-height: calc(100vh - 2vw);
     
     /* Animated mesh gradient */
