@@ -3,15 +3,15 @@
    =============== */
 :root {
     /* Colors */
-    --bg-light: #F8F9FA; /* Soft Silver background */
-    --bg-card: rgba(0, 0, 0, 0.03); /* Faint black card background */
-    --bg-card-hover: rgba(0, 0, 0, 0.08);
-    --text-primary: #111111; /* Dark charcoal text */
-    --text-secondary: #495057; /* Dark gray for secondary text */
-    --accent: #4B0082; /* Deep Indigo */
-    --accent-hover: #3b0066; /* Darker Indigo */
-    --accent-glow: rgba(75, 0, 130, 0.2);
-    --neon-blue: #4B0082; /* Mapped neon-blue to indigo for light mode */
+    --bg-light: #000000; /* Dark black background */
+    --bg-card: rgba(255, 255, 255, 0.05); /* Faint white card background */
+    --bg-card-hover: rgba(255, 255, 255, 0.08);
+    --text-primary: #ffffff; /* White text */
+    --text-secondary: #a1a1aa; /* Light gray for secondary text */
+    --accent: #0ea5e9; /* Sky Blue */
+    --accent-hover: #38bdf8; /* Lighter Sky Blue */
+    --accent-glow: rgba(14, 165, 233, 0.2);
+    --neon-blue: #0ea5e9; /* Sky Blue */
     
     /* Typography */
     --font-body: 'Inter', sans-serif;
@@ -22,7 +22,7 @@
     --section-pad: 100px 0;
     
     /* Effects */
-    --glass-border: 1px solid rgba(0, 0, 0, 0.1);
+    --glass-border: 1px solid rgba(255, 255, 255, 0.1);
     --glass-shadow: 0 16px 40px 0 rgba(0, 0, 0, 0.08);
     --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -41,7 +41,7 @@ html {
 }
 
 body {
-    background-color: #f9fafb; /* Extremely clean, soft white/gray */
+    background-color: var(--bg-light);
     color: var(--text-primary);
     font-family: var(--font-body);
     line-height: 1.6;
@@ -139,12 +139,12 @@ ul {
     padding: 14px 28px;
     border-radius: 8px;
     font-weight: 600;
-    border: 1px solid rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .btn-secondary:hover {
-    background: rgba(0, 0, 0, 0.05);
-    border-color: rgba(0, 0, 0, 0.4);
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.4);
 }
 
 /* ===============
@@ -357,7 +357,7 @@ ul {
     display: flex;
     align-items: center;
     gap: 16px;
-    background: rgba(0, 0, 0, 0.03);
+    background: rgba(255, 255, 255, 0.03);
     padding: 12px 16px;
     border-radius: 12px;
     border: var(--glass-border);
@@ -365,7 +365,7 @@ ul {
 }
 
 .hero-stat-box:hover {
-    background: rgba(0, 0, 0, 0.08);
+    background: rgba(255, 255, 255, 0.08);
     transform: translateX(5px);
 }
 
@@ -679,7 +679,7 @@ section {
 
 .project-card:hover {
     transform: translateY(-10px);
-    border-color: rgba(0, 0, 0, 0.1);
+    border-color: rgba(255, 255, 255, 0.1);
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
 }
 
@@ -717,7 +717,7 @@ section {
     font-size: 0.75rem;
     font-weight: 600;
     padding: 4px 10px;
-    background: rgba(0, 0, 0, 0.05);
+    background: rgba(255, 255, 255, 0.05);
     border-radius: 4px;
     color: var(--neon-blue);
     text-transform: uppercase;
@@ -854,7 +854,7 @@ section {
 }
 
 .footer-widget {
-    background: rgba(0, 0, 0, 0.02);
+    background: rgba(255, 255, 255, 0.02);
     border: var(--glass-border);
     border-radius: 16px;
     padding: 30px;
@@ -862,7 +862,7 @@ section {
 }
 
 .footer-widget:hover {
-    background: rgba(0, 0, 0, 0.05);
+    background: rgba(255, 255, 255, 0.05);
     transform: translateY(-5px);
     border-color: rgba(135, 206, 235, 0.3);
     box-shadow: 0 10px 30px rgba(0,0,0,0.5);
@@ -889,7 +889,7 @@ section {
     align-items: center;
     gap: 10px;
     padding: 12px 16px;
-    background: rgba(0, 0, 0, 0.03);
+    background: rgba(255, 255, 255, 0.03);
     border-radius: 8px;
     color: var(--text-primary);
     transition: var(--transition);
@@ -905,7 +905,7 @@ section {
     text-align: center;
     color: var(--text-secondary);
     font-size: 0.9rem;
-    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
     padding-top: 30px;
 }
 
@@ -1079,7 +1079,7 @@ section {
 }
 
 .deep-dive-header {
-    background: rgba(0,0,0,0.2);
+    background: rgba(255, 255, 255,0.2);
     padding: 30px;
     border-bottom: var(--glass-border);
 }
@@ -1146,7 +1146,7 @@ a.cert-row {
     display: flex;
     align-items: center;
     padding: 16px;
-    background: rgba(0, 0, 0, 0.03);
+    background: rgba(255, 255, 255, 0.03);
     border: var(--glass-border);
     border-radius: 12px;
     transition: var(--transition);
@@ -1166,7 +1166,7 @@ a.cert-row::before {
 }
 
 a.cert-row:hover {
-    background: rgba(0, 0, 0, 0.08);
+    background: rgba(255, 255, 255, 0.08);
     transform: translateX(5px);
     box-shadow: 0 5px 15px rgba(0,0,0,0.3);
     border-color: rgba(135, 206, 235, 0.3);
@@ -1183,7 +1183,7 @@ a.cert-row:hover::before {
     border-radius: 4px;
     overflow: hidden;
     flex-shrink: 0;
-    border: 1px solid rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .cert-thumb img {
@@ -1213,7 +1213,7 @@ a.cert-row:hover::before {
 }
 
 .widget-card {
-    background: rgba(0, 0, 0, 0.03);
+    background: rgba(255, 255, 255, 0.03);
     border: var(--glass-border);
     border-radius: 12px;
     padding: 20px;
@@ -1225,7 +1225,7 @@ a.cert-row:hover::before {
 }
 
 .widget-card:hover {
-    background: rgba(0, 0, 0, 0.06);
+    background: rgba(255, 255, 255, 0.06);
     border-color: rgba(135, 206, 235, 0.4);
     transform: translateY(-3px);
     box-shadow: 0 10px 20px rgba(0,0,0,0.4);
@@ -1254,7 +1254,7 @@ a.cert-row:hover::before {
 }
 
 .progress-item {
-    background: rgba(0, 0, 0, 0.02);
+    background: rgba(255, 255, 255, 0.02);
     padding: 16px;
     border-radius: 8px;
     border: var(--glass-border);
@@ -1271,7 +1271,7 @@ a.cert-row:hover::before {
 .skill-bar {
     width: 100%;
     height: 8px;
-    background: rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.1);
     border-radius: 10px;
     overflow: hidden;
 }
@@ -1350,7 +1350,7 @@ a.cert-row:hover::before {
 }
 
 .timeline-content {
-    background: rgba(0, 0, 0, 0.03);
+    background: rgba(255, 255, 255, 0.03);
     padding: 24px;
     border-radius: 12px;
     border: var(--glass-border);
@@ -1376,8 +1376,8 @@ a.cert-row:hover::before {
 .form-control {
     width: 100%;
     padding: 12px 16px;
-    background: rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 8px;
     color: var(--text-primary);
     font-family: 'Space Grotesk', sans-serif;
