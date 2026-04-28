@@ -3,15 +3,15 @@
    =============== */
 :root {
     /* Colors */
-    --bg-dark: #0a0a0f;
-    --bg-card: rgba(25, 25, 35, 0.6);
-    --bg-card-hover: rgba(35, 35, 50, 0.8);
-    --text-primary: #f0f0f5;
-    --text-secondary: #a0a0b0;
-    --accent: #6c5ce7;
-    --accent-hover: #5b4bc4;
-    --accent-glow: rgba(108, 92, 231, 0.4);
-    --neon-blue: #00cec9;
+    --bg-dark: #050505; /* Black background */
+    --bg-card: rgba(255, 255, 255, 0.03); /* Faint white card background */
+    --bg-card-hover: rgba(255, 255, 255, 0.08);
+    --text-primary: #ffffff; /* White text */
+    --text-secondary: #a3a3a3; /* Light gray for secondary text */
+    --accent: #87CEEB; /* Sky Blue */
+    --accent-hover: #00BFFF; /* Deep Sky Blue */
+    --accent-glow: rgba(135, 206, 235, 0.4);
+    --neon-blue: #E0F7FA; /* Very light cyan/white-blue */
     
     /* Typography */
     --font-body: 'Inter', sans-serif;
@@ -48,9 +48,9 @@ body {
     overflow-x: hidden;
     /* Subtle background mesh gradient */
     background-image: 
-        radial-gradient(at 0% 0%, rgba(108, 92, 231, 0.15) 0px, transparent 50%),
-        radial-gradient(at 100% 0%, rgba(0, 206, 201, 0.1) 0px, transparent 50%),
-        radial-gradient(at 100% 100%, rgba(108, 92, 231, 0.1) 0px, transparent 50%);
+        radial-gradient(at 0% 0%, rgba(135, 206, 235, 0.15) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(224, 247, 250, 0.1) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(135, 206, 235, 0.1) 0px, transparent 50%);
     background-attachment: fixed;
 }
 
