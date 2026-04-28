@@ -268,24 +268,93 @@ ul {
     line-height: 1.6;
 }
 
-.hero-stats {
+.hero-stats-grid {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     gap: 12px;
-    margin-bottom: 32px;
+    margin-bottom: 24px;
 }
 
-.hero-stats span {
+.hero-stat-box {
     display: flex;
     align-items: center;
-    gap: 8px;
-    font-size: 0.9rem;
-    font-weight: 500;
-    color: var(--text-primary);
-    background: rgba(255, 255, 255, 0.05);
-    padding: 8px 16px;
-    border-radius: 8px;
+    gap: 16px;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 12px 16px;
+    border-radius: 12px;
     border: var(--glass-border);
+    transition: var(--transition);
+}
+
+.hero-stat-box:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateX(5px);
+}
+
+.hero-stat-box i {
+    font-size: 1.5rem;
+}
+
+.stat-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.stat-desc {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+/* Floating Design Boxes for Hero Graphics */
+.floating-box {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(10, 10, 15, 0.7);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(135, 206, 235, 0.2);
+    padding: 12px 20px;
+    border-radius: 12px;
+    z-index: 10;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    animation: float 6s ease-in-out infinite;
+}
+
+.box-1 {
+    top: 20%;
+    left: -10%;
+    animation-delay: 0s;
+}
+
+.box-2 {
+    bottom: 20%;
+    right: -10%;
+    animation-delay: 2s;
+}
+
+.box-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.box-title {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.box-value {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--text-primary);
 }
 
 .hero-cta {
