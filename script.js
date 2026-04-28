@@ -33,6 +33,50 @@ document.addEventListener('DOMContentLoaded', () => {
     const animatedElements = document.querySelectorAll('.fade-up, .fade-left');
     animatedElements.forEach(el => observer.observe(el));
 
+    // Intersection Observer for Skill Progress Bars
+    const progressObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const progressBar = entry.target;
+                const targetWidth = progressBar.getAttribute('data-progress');
+                progressBar.style.width = `${targetWidth}%`;
+                observer.unobserve(progressBar);
+            }
+        });
+    }, observerOptions);
+
+    const progressBars = document.querySelectorAll('.skill-progress');
+    progressBars.forEach(bar => progressObserver.observe(bar));
+
+    // Handle Contact Form Submission
+    const contactForm = document.getElementById('contactForm');
+    if (contactForm) {
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const submitBtn = contactForm.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Sending...';
+            submitBtn.style.opacity = '0.7';
+            
+            // Simulate sending delay
+            setTimeout(() => {
+                contactForm.reset();
+                submitBtn.textContent = 'Sent Successfully!';
+                submitBtn.style.color = '#000';
+                submitBtn.style.background = '#00ffcc'; // neon green success
+                submitBtn.style.boxShadow = '0 0 15px #00ffcc';
+                
+                setTimeout(() => {
+                    submitBtn.textContent = originalText;
+                    submitBtn.style.background = '';
+                    submitBtn.style.color = '';
+                    submitBtn.style.boxShadow = '';
+                    submitBtn.style.opacity = '1';
+                }, 3000);
+            }, 1500);
+        });
+    }
+
     // Typewriter effect for Hero section
     const typewriterElement = document.querySelector('.typewriter');
     const words = ["Data Analyst", "Data Scientist", "AI Engineer"];

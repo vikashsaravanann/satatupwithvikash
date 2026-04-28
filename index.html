@@ -105,6 +105,50 @@
         </div>
     </section>
 
+    <!-- My Journey Timeline -->
+    <section id="timeline" class="timeline-section">
+        <div class="container">
+            <div class="section-title fade-up">
+                <h2>My <span class="highlight">Journey</span></h2>
+                <p>The path from foundational learning to enterprise AI automation.</p>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item fade-up">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-date">2023 - Present</div>
+                    <div class="timeline-content">
+                        <h3>B.Tech AI & Data Science</h3>
+                        <p>Started degree at Rathinam Technical Campus. Built strong foundations in Python, SQL, and core AI architectures.</p>
+                    </div>
+                </div>
+                <div class="timeline-item fade-up" style="transition-delay: 0.1s;">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-date">2024</div>
+                    <div class="timeline-content">
+                        <h3>Full-Stack & Freelancing</h3>
+                        <p>Developed responsive websites and deployed production-ready applications. Started a freelance career creating portfolios and landing pages.</p>
+                    </div>
+                </div>
+                <div class="timeline-item fade-up" style="transition-delay: 0.2s;">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-date">2024 - 2025</div>
+                    <div class="timeline-content">
+                        <h3>Certifications & Growth</h3>
+                        <p>Completed intensive certifications across Networking (Cisco), Data Analysis (freeCodeCamp, Scaler), and Design Thinking (IIT Bombay).</p>
+                    </div>
+                </div>
+                <div class="timeline-item fade-up" style="transition-delay: 0.3s;">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-date">2025</div>
+                    <div class="timeline-content">
+                        <h3>Enterprise AI Automation</h3>
+                        <p>Specialized in building complex n8n workflows, autonomous agents, and end-to-end automation systems for real-world scaling.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Core Technical Competencies -->
     <section id="competencies" class="competencies-section" style="background: rgba(10, 10, 15, 0.4);">
         <div class="container">
@@ -147,6 +191,37 @@
                     </ul>
                 </div>
             </div>
+            
+            <div class="skills-progress-container mt-5 fade-up">
+                <h3 class="mb-4 text-center">Core Technology Proficiency</h3>
+                <div class="progress-grid">
+                    <div class="progress-item">
+                        <div class="progress-header"><span>Python</span><span>85%</span></div>
+                        <div class="skill-bar"><div class="skill-progress" data-progress="85"></div></div>
+                    </div>
+                    <div class="progress-item">
+                        <div class="progress-header"><span>SQL</span><span>80%</span></div>
+                        <div class="skill-bar"><div class="skill-progress" data-progress="80"></div></div>
+                    </div>
+                    <div class="progress-item">
+                        <div class="progress-header"><span>HTML/CSS</span><span>90%</span></div>
+                        <div class="skill-bar"><div class="skill-progress" data-progress="90"></div></div>
+                    </div>
+                    <div class="progress-item">
+                        <div class="progress-header"><span>JavaScript/React</span><span>85%</span></div>
+                        <div class="skill-bar"><div class="skill-progress" data-progress="85"></div></div>
+                    </div>
+                    <div class="progress-item">
+                        <div class="progress-header"><span>Supabase</span><span>75%</span></div>
+                        <div class="skill-bar"><div class="skill-progress" data-progress="75"></div></div>
+                    </div>
+                    <div class="progress-item">
+                        <div class="progress-header"><span>n8n Automation</span><span>88%</span></div>
+                        <div class="skill-bar"><div class="skill-progress" data-progress="88"></div></div>
+                    </div>
+                </div>
+            </div>
+            
         </div>
     </section>
 
@@ -373,12 +448,22 @@
                 </div>
             </div>
 
-            <!-- Widget 3: Thank You -->
+            <!-- Widget 3: Contact Form -->
             <div class="footer-widget highlight-widget">
-                <div class="widget-icon"><i class="fas fa-heart text-accent"></i></div>
-                <h3 class="text-neon mb-2">Thank You</h3>
-                <p class="text-sm text-secondary">Thank you for visiting my professional portfolio! I am constantly iterating on my codebase and expanding my technical stack. Feel free to reach out to collaborate on innovative AI projects.</p>
-                <a href="mailto:vikash07052008@gmail.com" class="btn-primary-sm mt-3 w-100" style="text-align: center; display: block;">Get In Touch</a>
+                <div class="widget-icon"><i class="fas fa-envelope-open-text text-accent"></i></div>
+                <h3 class="text-neon mb-2">Send a Message</h3>
+                <form class="contact-form mt-3" id="contactForm">
+                    <div class="form-group mb-2">
+                        <input type="text" class="form-control" id="name" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group mb-2">
+                        <input type="email" class="form-control" id="email" placeholder="Your Email" required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <textarea class="form-control" id="message" rows="3" placeholder="Your Message" required></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary-sm w-100" style="border:none; cursor:pointer;">Send Message</button>
+                </form>
             </div>
         </div>
         <div class="footer-bottom">
