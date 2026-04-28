@@ -1078,25 +1078,16 @@ section {
 }
 
 .deep-dive-card {
-    background: #ffffff;
-    color: #000000;
+    background: #111111; /* Light black */
     border: var(--glass-border);
     border-radius: 20px;
     overflow: hidden;
 }
 
-.deep-dive-card h3,
-.deep-dive-card h4,
-.deep-dive-card p,
-.deep-dive-card li,
-.deep-dive-card strong {
-    color: #111111 !important;
-}
-
 .deep-dive-header {
-    background: rgba(0, 0, 0, 0.05);
+    background: #1a1a1a; /* Slightly lighter black for the header */
     padding: 30px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: var(--glass-border);
 }
 
 .deep-dive-header h3 {
