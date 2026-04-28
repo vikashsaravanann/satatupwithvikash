@@ -1078,16 +1078,25 @@ section {
 }
 
 .deep-dive-card {
-    background: var(--bg-card);
+    background: #ffffff;
+    color: #000000;
     border: var(--glass-border);
     border-radius: 20px;
     overflow: hidden;
 }
 
+.deep-dive-card h3,
+.deep-dive-card h4,
+.deep-dive-card p,
+.deep-dive-card li,
+.deep-dive-card strong {
+    color: #111111 !important;
+}
+
 .deep-dive-header {
-    background: rgba(255, 255, 255,0.2);
+    background: rgba(0, 0, 0, 0.05);
     padding: 30px;
-    border-bottom: var(--glass-border);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .deep-dive-header h3 {
