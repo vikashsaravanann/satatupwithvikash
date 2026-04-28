@@ -41,11 +41,22 @@ html {
 }
 
 body {
-    background-color: var(--bg-dark);
+    background-color: #030303;
     color: var(--text-primary);
     font-family: var(--font-body);
     line-height: 1.6;
     overflow-x: hidden;
+    padding: 1vw;
+}
+
+#app-frame {
+    background-color: var(--bg-dark);
+    border: 1px solid rgba(135, 206, 235, 0.2);
+    border-radius: 16px;
+    box-shadow: 0 0 40px rgba(0,0,0,0.8);
+    overflow: hidden;
+    min-height: calc(100vh - 2vw);
+    
     /* Animated mesh gradient */
     background-image: 
         radial-gradient(circle at 15% 50%, rgba(135, 206, 235, 0.12), transparent 50%),
@@ -986,6 +997,38 @@ section {
     font-weight: 600;
 }
 
+/* Strategic Widgets */
+.widget-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 32px;
+}
+
+.widget-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: var(--glass-border);
+    border-radius: 12px;
+    padding: 20px;
+    transition: var(--transition);
+}
+
+.widget-card.full-width {
+    grid-column: 1 / -1;
+}
+
+.widget-card:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(135, 206, 235, 0.4);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+}
+
+.widget-icon {
+    font-size: 1.5rem;
+    margin-bottom: 12px;
+}
+
 .contact-details p {
     margin-bottom: 8px;
     color: var(--text-secondary);
@@ -998,7 +1041,7 @@ section {
 }
 
 @media (max-width: 992px) {
-    .summary-grid, .grid-2-col {
+    .summary-grid, .grid-2-col, .widget-grid {
         grid-template-columns: 1fr;
     }
 }
