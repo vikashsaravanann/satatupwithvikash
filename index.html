@@ -224,25 +224,16 @@
                 <div class="intro-image-wrapper fade-up"
                     style="display: flex; gap: 30px; justify-content: center; flex-wrap: wrap;">
                     <!-- Image 1 Widget -->
-                    <div style="flex: 1 1 250px; max-width: 350px; background: linear-gradient(135deg, rgba(255,255,255,0.03), rgba(0,0,0,0.5)); padding: 15px; border-radius: 24px; border: 1px solid rgba(135, 206, 235, 0.2); box-shadow: 0 15px 35px rgba(0,0,0,0.5); transform: translateY(15px) rotate(-4deg); transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);"
-                        onmouseover="this.style.transform='translateY(0) rotate(0deg) scale(1.05)'; this.style.borderColor='rgba(135, 206, 235, 0.6)'"
-                        onmouseout="this.style.transform='translateY(15px) rotate(-4deg) scale(1)'; this.style.borderColor='rgba(135, 206, 235, 0.2)'">
-                        <img src="assets/profile/profile10.jpeg" alt="Vikash Profile Image 1"
-                            style="width: 100%; height: 350px; object-fit: cover; object-position: center 20%; border-radius: 12px;">
+                    <div class="responsive-intro-card" style="transform: translateY(15px) rotate(-4deg);" onmouseover="this.style.transform='translateY(0) rotate(0deg) scale(1.05)';" onmouseout="this.style.transform='translateY(15px) rotate(-4deg) scale(1)';">
+                        <img src="assets/profile/profile10.jpeg" alt="Vikash Profile Image 1">
                     </div>
                     <!-- Image 2 Widget -->
-                    <div style="flex: 1 1 250px; max-width: 350px; background: linear-gradient(135deg, rgba(0,0,0,0.4), rgba(135,206,235,0.05)); padding: 15px; border-radius: 24px; border: 1px solid rgba(135, 206, 235, 0.2); box-shadow: 0 20px 45px rgba(0,0,0,0.7); transform: translateY(-10px) rotate(0deg); transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); z-index: 2;"
-                        onmouseover="this.style.transform='translateY(-15px) rotate(0deg) scale(1.05)'; this.style.borderColor='rgba(135, 206, 235, 0.6)'"
-                        onmouseout="this.style.transform='translateY(-10px) rotate(0deg) scale(1)'; this.style.borderColor='rgba(135, 206, 235, 0.2)'">
-                        <img src="assets/profile/profile11.jpeg" alt="Vikash Profile Image 2"
-                            style="width: 100%; height: 350px; object-fit: cover; object-position: center 20%; border-radius: 12px;">
+                    <div class="responsive-intro-card" style="background: linear-gradient(135deg, rgba(0,0,0,0.4), rgba(135,206,235,0.05)); transform: translateY(-10px) rotate(0deg); z-index: 2;" onmouseover="this.style.transform='translateY(-15px) rotate(0deg) scale(1.05)';" onmouseout="this.style.transform='translateY(-10px) rotate(0deg) scale(1)';">
+                        <img src="assets/profile/profile11.jpeg" alt="Vikash Profile Image 2">
                     </div>
                     <!-- Image 3 Widget -->
-                    <div style="flex: 1 1 250px; max-width: 350px; background: linear-gradient(135deg, rgba(0,0,0,0.5), rgba(255,255,255,0.03)); padding: 15px; border-radius: 24px; border: 1px solid rgba(135, 206, 235, 0.2); box-shadow: 0 15px 35px rgba(0,0,0,0.5); transform: translateY(15px) rotate(4deg); transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);"
-                        onmouseover="this.style.transform='translateY(0) rotate(0deg) scale(1.05)'; this.style.borderColor='rgba(135, 206, 235, 0.6)'"
-                        onmouseout="this.style.transform='translateY(15px) rotate(4deg) scale(1)'; this.style.borderColor='rgba(135, 206, 235, 0.2)'">
-                        <img src="assets/profile/profile12.jpeg" alt="Vikash Profile Image 3"
-                            style="width: 100%; height: 350px; object-fit: cover; object-position: center 20%; border-radius: 12px;">
+                    <div class="responsive-intro-card" style="transform: translateY(15px) rotate(4deg);" onmouseover="this.style.transform='translateY(0) rotate(0deg) scale(1.05)';" onmouseout="this.style.transform='translateY(15px) rotate(4deg) scale(1)';">
+                        <img src="assets/profile/profile12.jpeg" alt="Vikash Profile Image 3">
                     </div>
                 </div>
             </div>
@@ -741,19 +732,14 @@
                 <!-- Project Gallery Collage -->
                 <div class="project-gallery-collage fade-up"
                     style="display: flex; justify-content: center; align-items: center; margin: 80px 0; padding: 40px 0;">
-                    <img src="assets/profile/profile11.jpeg" alt="Project Context 1"
-                        style="width: 300px; height: 400px; object-fit: cover; border-radius: 24px; box-shadow: 0 15px 40px rgba(0,0,0,0.6); transform: rotate(-8deg) translateX(40px); z-index: 1; transition: transform 0.4s;"
-                        onmouseover="this.style.transform='rotate(-8deg) translateX(40px) scale(1.05)'; this.style.zIndex='10'"
-                        onmouseout="this.style.transform='rotate(-8deg) translateX(40px) scale(1)'; this.style.zIndex='1'">
+                    <img src="assets/profile/profile11.jpeg" alt="Project Context 1" class="collage-img"
+                        style="transform: rotate(-8deg) translateX(40px); z-index: 1;">
 
-                    <img src="assets/profile/profile.jpg" alt="Project Context 2"
-                        style="width: 360px; height: 500px; object-fit: cover; border-radius: 24px; box-shadow: 0 25px 50px rgba(0,0,0,0.8); z-index: 2; border: 4px solid rgba(135,206,235,0.4); transition: transform 0.4s;"
-                        onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                    <img src="assets/profile/profile.jpg" alt="Project Context 2" class="collage-img"
+                        style="width: 360px; height: 500px; z-index: 2; border: 4px solid rgba(135,206,235,0.4);">
 
-                    <img src="assets/profile/profile6.jpeg" alt="Project Context 3"
-                        style="width: 300px; height: 400px; object-fit: cover; border-radius: 24px; box-shadow: 0 15px 40px rgba(0,0,0,0.6); transform: rotate(8deg) translateX(-40px); z-index: 1; transition: transform 0.4s;"
-                        onmouseover="this.style.transform='rotate(8deg) translateX(-40px) scale(1.05)'; this.style.zIndex='10'"
-                        onmouseout="this.style.transform='rotate(8deg) translateX(-40px) scale(1)'; this.style.zIndex='1'">
+                    <img src="assets/profile/profile6.jpeg" alt="Project Context 3" class="collage-img"
+                        style="transform: rotate(8deg) translateX(-40px); z-index: 1;">
                 </div>
 
                 <!-- Yudhisthra -->
@@ -862,30 +848,19 @@
                     style="display: flex; gap: 24px; justify-content: center; align-items: center; flex-wrap: wrap; margin-bottom: 20px;">
 
                     <!-- Left Image (Shorter, lower) -->
-                    <div style="flex: 1 1 280px; max-width: 350px; border-radius: 24px; overflow: hidden; box-shadow: 0 15px 35px rgba(0,0,0,0.4); transform: translateY(30px); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s;"
-                        onmouseover="this.style.transform='translateY(15px) scale(1.04)'; this.style.boxShadow='0 25px 45px rgba(135,206,235,0.2)';"
-                        onmouseout="this.style.transform='translateY(30px) scale(1)'; this.style.boxShadow='0 15px 35px rgba(0,0,0,0.4)';">
-                        <img src="assets/profile/friends2.jpeg" alt="Friends Memory 1"
-                            style="width: 100%; height: 380px; object-fit: cover; border: 1px solid rgba(255,255,255,0.05); display: block;">
+                    <div class="responsive-staggered-card" style="transform: translateY(30px);" onmouseover="this.style.transform='translateY(15px) scale(1.04)'; this.style.boxShadow='0 25px 45px rgba(135,206,235,0.2)';" onmouseout="this.style.transform='translateY(30px) scale(1)'; this.style.boxShadow='0 15px 35px rgba(0,0,0,0.4)';">
+                        <img src="assets/profile/friends2.jpeg" alt="Friends Memory 1" style="border: 1px solid rgba(255,255,255,0.05);">
                     </div>
-
+                    
                     <!-- Center Image (Taller, higher, highlighted) -->
-                    <div style="flex: 1 1 300px; max-width: 380px; border-radius: 24px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.6); transform: translateY(-10px); z-index: 2; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s;"
-                        onmouseover="this.style.transform='translateY(-25px) scale(1.06)'; this.style.boxShadow='0 30px 50px rgba(135,206,235,0.3)';"
-                        onmouseout="this.style.transform='translateY(-10px) scale(1)'; this.style.boxShadow='0 20px 40px rgba(0,0,0,0.6)';">
-                        <div
-                            style="position: absolute; inset: 0; border-radius: 24px; border: 2px solid rgba(135,206,235,0.5); pointer-events: none; z-index: 3;">
-                        </div>
-                        <img src="assets/profile/friends1.jpeg" alt="Friends Memory 2"
-                            style="width: 100%; height: 440px; object-fit: cover; display: block;">
+                    <div class="responsive-staggered-card" style="transform: translateY(-10px); z-index: 2;" onmouseover="this.style.transform='translateY(-25px) scale(1.06)'; this.style.boxShadow='0 30px 50px rgba(135,206,235,0.3)';" onmouseout="this.style.transform='translateY(-10px) scale(1)'; this.style.boxShadow='0 20px 40px rgba(0,0,0,0.6)';">
+                        <div style="position: absolute; inset: 0; border-radius: 24px; border: 2px solid rgba(135,206,235,0.5); pointer-events: none; z-index: 3;"></div>
+                        <img src="assets/profile/friends1.jpeg" alt="Friends Memory 2" style="height: 440px;">
                     </div>
-
+                    
                     <!-- Right Image (Shorter, lower) -->
-                    <div style="flex: 1 1 280px; max-width: 350px; border-radius: 24px; overflow: hidden; box-shadow: 0 15px 35px rgba(0,0,0,0.4); transform: translateY(30px); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s;"
-                        onmouseover="this.style.transform='translateY(15px) scale(1.04)'; this.style.boxShadow='0 25px 45px rgba(135,206,235,0.2)';"
-                        onmouseout="this.style.transform='translateY(30px) scale(1)'; this.style.boxShadow='0 15px 35px rgba(0,0,0,0.4)';">
-                        <img src="assets/profile/friends3.jpeg" alt="Friends Memory 3"
-                            style="width: 100%; height: 380px; object-fit: cover; border: 1px solid rgba(255,255,255,0.05); display: block;">
+                    <div class="responsive-staggered-card" style="transform: translateY(30px);" onmouseover="this.style.transform='translateY(15px) scale(1.04)'; this.style.boxShadow='0 25px 45px rgba(135,206,235,0.2)';" onmouseout="this.style.transform='translateY(30px) scale(1)'; this.style.boxShadow='0 15px 35px rgba(0,0,0,0.4)';">
+                        <img src="assets/profile/friends3.jpeg" alt="Friends Memory 3" style="border: 1px solid rgba(255,255,255,0.05);">
                     </div>
 
                 </div>

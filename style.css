@@ -1772,10 +1772,17 @@ section {
         width: 100%;
         max-width: 320px;
     }
+
+    /* Mobile Typography */
+    h1 { font-size: 2.8rem !important; }
+    h2 { font-size: 2.2rem !important; }
+    h3 { font-size: 1.8rem !important; }
+    .hero-text h1 { font-size: 3rem !important; }
+    .hero-text h2 { font-size: 1.8rem !important; }
+    .gradient-text-premium { font-size: 3rem !important; }
 }
 
 @media (max-width: 992px) {
-
     .summary-grid,
     .grid-2-col,
     .widget-grid,
@@ -1783,4 +1790,83 @@ section {
     .cert-container {
         grid-template-columns: 1fr;
     }
+
+    /* Responsive adjustments for new sections */
+    .intro-image-wrapper, .staggered-wrapper, .project-gallery-collage {
+        flex-direction: column !important;
+        gap: 40px !important;
+    }
+
+    .intro-image-wrapper div, .staggered-wrapper div, .project-gallery-collage div, .project-gallery-collage img {
+        max-width: 90% !important;
+        width: 100% !important;
+        transform: none !important;
+        margin: 0 auto !important;
+        height: auto !important;
+        aspect-ratio: 4/5;
+    }
+    
+    .project-gallery-collage img {
+        height: 350px !important;
+        margin-bottom: -20px !important;
+    }
+
+    .staggered-wrapper div {
+        transform: none !important;
+        margin-bottom: 20px !important;
+    }
+
+    .profile-separator img {
+        height: 250px !important;
+    }
+}
+
+/* Specific Component Classes (to replace inline styles) */
+.responsive-intro-card {
+    flex: 1 1 250px;
+    max-width: 350px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.03), rgba(0,0,0,0.5));
+    padding: 15px;
+    border-radius: 24px;
+    border: 1px solid rgba(135, 206, 235, 0.2);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.responsive-intro-card img {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+    object-position: center 20%;
+    border-radius: 12px;
+}
+
+.responsive-staggered-card {
+    flex: 1 1 280px;
+    max-width: 350px;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s;
+}
+
+.responsive-staggered-card img {
+    width: 100%;
+    height: 380px;
+    object-fit: cover;
+    display: block;
+}
+
+.collage-img {
+    width: 300px;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 24px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+    transition: transform 0.4s;
+}
+
+.collage-img:hover {
+    z-index: 10 !important;
+    transform: scale(1.05) !important;
 }
