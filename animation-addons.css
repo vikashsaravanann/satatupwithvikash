@@ -344,23 +344,23 @@
 /* ─── 35. AURORA FLOATING BLOBS ─────────────────────── */
 .aurora-blob {
   position:absolute;border-radius:50%;pointer-events:none;
-  filter:blur(80px);opacity:.18;mix-blend-mode:screen;
+  opacity:.18; will-change: transform;
 }
 .aurora-blob-1 {
   width:500px;height:500px;
-  background:radial-gradient(circle,#0ea5e9,transparent 70%);
+  background:radial-gradient(circle, #0ea5e9 0%, transparent 60%);
   top:-150px;left:-100px;
   animation:auroraFloat1 14s ease-in-out infinite alternate;
 }
 .aurora-blob-2 {
   width:400px;height:400px;
-  background:radial-gradient(circle,#6366f1,transparent 70%);
+  background:radial-gradient(circle, #6366f1 0%, transparent 60%);
   bottom:-120px;right:-80px;
   animation:auroraFloat2 18s ease-in-out infinite alternate;
 }
 .aurora-blob-3 {
   width:300px;height:300px;
-  background:radial-gradient(circle,#ec4899,transparent 70%);
+  background:radial-gradient(circle, #ec4899 0%, transparent 60%);
   top:40%;left:60%;
   animation:auroraFloat3 11s ease-in-out infinite alternate;
 }

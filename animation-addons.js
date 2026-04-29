@@ -121,7 +121,12 @@ document.addEventListener('DOMContentLoaded', () => {
     requestAnimationFrame(draw);
   }
 
-  window.addEventListener('resize', () => { resize(); makeParticles(); });
+  let resizeTimer;
+  window.addEventListener('resize', () => { 
+    resize(); 
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => makeParticles(), 200);
+  });
   resize(); makeParticles(); draw();
 
 
