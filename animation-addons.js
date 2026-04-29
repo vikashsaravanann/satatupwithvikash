@@ -69,72 +69,60 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   /* ══════════════════════════════════════════
-   6. PARTICLE CANVAS (hero)
+   6. GLOBAL STAR CANVAS & HERO AURORA
   ══════════════════════════════════════════ */
   const heroSection = document.getElementById('hero');
   if (heroSection) {
-    const canvas = document.createElement('canvas');
-    canvas.id = 'hero-canvas';
-    heroSection.insertBefore(canvas, heroSection.firstChild);
-    const ctx = canvas.getContext('2d');
-    let particles = [], visible = true;
-
     // Add aurora blobs to hero
     ['aurora-blob aurora-blob-1','aurora-blob aurora-blob-2','aurora-blob aurora-blob-3'].forEach(cls => {
       const b = document.createElement('div');
       b.className = cls;
       heroSection.insertBefore(b, heroSection.firstChild);
     });
-
-    function resize() {
-      canvas.width  = heroSection.offsetWidth;
-      canvas.height = heroSection.offsetHeight;
-    }
-
-    function makeParticles() {
-      particles = [];
-      const n = Math.floor(canvas.width * canvas.height / 9000);
-      for (let i = 0; i < n; i++) particles.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        r: Math.random() * 1.6 + 0.3,
-        vx: (Math.random() - .5) * 0.28,
-        vy: (Math.random() - .5) * 0.28,
-        a: Math.random() * .55 + .1,
-        p: Math.random() * Math.PI * 2
-      });
-    }
-
-    function draw() {
-      if (!visible) return;
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      particles.forEach((pt, i) => {
-        pt.x += pt.vx; pt.y += pt.vy; pt.p += .015;
-        if (pt.x < 0) pt.x = canvas.width;
-        if (pt.x > canvas.width)  pt.x = 0;
-        if (pt.y < 0) pt.y = canvas.height;
-        if (pt.y > canvas.height) pt.y = 0;
-        const a = pt.a * (.6 + .4 * Math.sin(pt.p));
-        ctx.beginPath(); ctx.arc(pt.x, pt.y, pt.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(14,165,233,${a})`; ctx.fill();
-        for (let j = i + 1; j < Math.min(i + 5, particles.length); j++) {
-          const p2 = particles[j];
-          const dx = pt.x - p2.x, dy = pt.y - p2.y;
-          const d = Math.sqrt(dx*dx + dy*dy);
-          if (d < 110) {
-            ctx.beginPath(); ctx.moveTo(pt.x,pt.y); ctx.lineTo(p2.x,p2.y);
-            ctx.strokeStyle = `rgba(14,165,233,${(1 - d/110) * .1})`;
-            ctx.lineWidth = .5; ctx.stroke();
-          }
-        }
-      });
-      requestAnimationFrame(draw);
-    }
-
-    new IntersectionObserver(e => { visible = e[0].isIntersecting; if (visible) draw(); }).observe(heroSection);
-    new ResizeObserver(() => { resize(); makeParticles(); }).observe(heroSection);
-    resize(); makeParticles(); draw();
   }
+
+  const canvas = document.createElement('canvas');
+  canvas.id = 'site-canvas';
+  document.body.prepend(canvas);
+  const ctx = canvas.getContext('2d');
+  let particles = [];
+
+  function resize() {
+    canvas.width  = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+
+  function makeParticles() {
+    particles = [];
+    const n = Math.floor(canvas.width * canvas.height / 15000);
+    for (let i = 0; i < n; i++) particles.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      r: Math.random() * 1.5 + 0.2,
+      vx: (Math.random() - .5) * 0.15,
+      vy: (Math.random() - .5) * 0.15,
+      a: Math.random() * .6 + .2,
+      p: Math.random() * Math.PI * 2
+    });
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach((pt) => {
+      pt.x += pt.vx; pt.y += pt.vy; pt.p += .015;
+      if (pt.x < 0) pt.x = canvas.width;
+      if (pt.x > canvas.width)  pt.x = 0;
+      if (pt.y < 0) pt.y = canvas.height;
+      if (pt.y > canvas.height) pt.y = 0;
+      const a = pt.a * (.5 + .5 * Math.sin(pt.p));
+      ctx.beginPath(); ctx.arc(pt.x, pt.y, pt.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(14,165,233,${a})`; ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize', () => { resize(); makeParticles(); });
+  resize(); makeParticles(); draw();
 
 
   /* ══════════════════════════════════════════

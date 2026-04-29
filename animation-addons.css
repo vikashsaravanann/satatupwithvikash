@@ -15,7 +15,7 @@
 @keyframes progressShine { to { background-position:200% 0; } }
 
 /* ─── 3. PARTICLE CANVAS ───────────────────────────── */
-#hero-canvas { position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0; }
+#site-canvas { position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:-1; }
 #hero { position:relative;overflow:hidden; }
 #hero .container { position:relative;z-index:2; }
 
