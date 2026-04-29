@@ -43,7 +43,7 @@
                 <div class="hero-top-intro fade-up" style="display: flex; flex-direction: column; align-items: center;">
 
                     <h1 class="mt-2" style="font-size: 4.5rem; margin-bottom: 10px; font-weight: 800; color: white;">
-                        VIKASH SARAVANAN !!</h1>
+                        VIKASH SARAVANAN </h1>
                 </div>
 
                 <!-- Hero Images Wrapper -->
@@ -632,18 +632,40 @@
                     </div>
                     <div class="deep-dive-body">
                         <div class="problem-solution">
-                            <h4><span class="text-accent">Context:</span> Meta PyTorch OpenEnv Hackathon x Scaler School of Technology (Team: Fresh Tensors)</h4>
-                            <h4 class="mt-3"><span class="text-accent">The Problem:</span> Training Large Language Models (LLMs) and Reinforcement Learning agents directly on live customer support systems is highly risky and prone to failure. AI agents require safe, standardized, and stateful simulation environments to practice decision-making, routing, and triage before ever touching a production database.</h4>
-                            <h4><span class="text-neon">The Solution:</span> Architected a production-ready simulation environment adhering to the OpenEnv framework. This system acts as a backend training ground for AI agents, simulating a high-volume customer support ticketing system where agents must fetch state, determine ticket severity, and execute triage actions.</h4>
+                            <h4><span class="text-accent">Context:</span> Meta PyTorch OpenEnv Hackathon x Scaler School
+                                of Technology (Team: Fresh Tensors)</h4>
+                            <h4 class="mt-3"><span class="text-accent">The Problem:</span> Training Large Language
+                                Models (LLMs) and Reinforcement Learning agents directly on live customer support
+                                systems is highly risky and prone to failure. AI agents require safe, standardized, and
+                                stateful simulation environments to practice decision-making, routing, and triage before
+                                ever touching a production database.</h4>
+                            <h4><span class="text-neon">The Solution:</span> Architected a production-ready simulation
+                                environment adhering to the OpenEnv framework. This system acts as a backend training
+                                ground for AI agents, simulating a high-volume customer support ticketing system where
+                                agents must fetch state, determine ticket severity, and execute triage actions.</h4>
                         </div>
                         <div class="tech-highlights mt-4">
                             <h4>Key Engineering Highlights & Strategic Value</h4>
                             <ul class="highlight-list">
-                                <li><strong>Stateful API Architecture:</strong> Engineered a robust, asynchronous REST API using FastAPI. Exposes standard RL-interaction endpoints (/reset, /step, /state, /tasks, /grader) allowing AI agents to interact with the environment in isolated, repeatable episodes.</li>
-                                <li><strong>Algorithmic Grading & Task Logic:</strong> Developed a multi-tiered evaluation engine featuring progressive difficulty levels (Easy, Medium, Hard). The grader mathematically evaluates the AI agent's actions and returns immediate performance feedback.</li>
-                                <li><strong>DevOps & Containerization:</strong> Ensured the simulation was fully reproducible and deployable. Containerized the entire environment using Docker and orchestrated automated deployment pipelines using GitHub Actions, ensuring seamless integration with the global OpenEnv registry.</li>
-                                <li><strong>Data Modeling:</strong> Utilized Pydantic for rigorous data validation, ensuring that the simulated state and the agent's action payloads remained strictly typed, preventing environment crashes during automated training runs.</li>
-                                <li><strong>Strategic Value (AI Infrastructure):</strong> Demonstrates capability to build "AI Infrastructure." Engineered the rigorous backend systems and standardized environments required by data scientists to safely train, benchmark, and grade autonomous AI agents.</li>
+                                <li><strong>Stateful API Architecture:</strong> Engineered a robust, asynchronous REST
+                                    API using FastAPI. Exposes standard RL-interaction endpoints (/reset, /step, /state,
+                                    /tasks, /grader) allowing AI agents to interact with the environment in isolated,
+                                    repeatable episodes.</li>
+                                <li><strong>Algorithmic Grading & Task Logic:</strong> Developed a multi-tiered
+                                    evaluation engine featuring progressive difficulty levels (Easy, Medium, Hard). The
+                                    grader mathematically evaluates the AI agent's actions and returns immediate
+                                    performance feedback.</li>
+                                <li><strong>DevOps & Containerization:</strong> Ensured the simulation was fully
+                                    reproducible and deployable. Containerized the entire environment using Docker and
+                                    orchestrated automated deployment pipelines using GitHub Actions, ensuring seamless
+                                    integration with the global OpenEnv registry.</li>
+                                <li><strong>Data Modeling:</strong> Utilized Pydantic for rigorous data validation,
+                                    ensuring that the simulated state and the agent's action payloads remained strictly
+                                    typed, preventing environment crashes during automated training runs.</li>
+                                <li><strong>Strategic Value (AI Infrastructure):</strong> Demonstrates capability to
+                                    build "AI Infrastructure." Engineered the rigorous backend systems and standardized
+                                    environments required by data scientists to safely train, benchmark, and grade
+                                    autonomous AI agents.</li>
                             </ul>
                         </div>
                     </div>
