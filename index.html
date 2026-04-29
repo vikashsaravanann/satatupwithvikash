@@ -42,7 +42,8 @@
                 <!-- Top Identity -->
                 <div class="hero-top-intro fade-up" style="display: flex; flex-direction: column; align-items: center;">
 
-                    <h1 class="gradient-text-premium mt-2 hero-title-animated">VIKASH SARAVANAN !!</h1>
+                    <h1 class="mt-2" style="font-size: 4.5rem; margin-bottom: 10px; font-weight: 800; color: white;">
+                        VIKASH SARAVANAN !!</h1>
                 </div>
 
                 <!-- Hero Images Wrapper -->
@@ -52,13 +53,13 @@
                     <!-- Left Image (profile1.jpeg) -->
                     <div class="profile-image-container side-profile floating-left"
                         style="width: 240px; height: 320px; opacity: 0.7; z-index: 1;">
-                        <img src="profile1.jpeg" alt="Vikash" class="profile-img" style="filter: grayscale(30%);">
+                        <img src="assets/profile/profile1.jpeg" alt="Vikash" class="profile-img" style="filter: grayscale(30%);">
                     </div>
 
                     <!-- Main Hero Image (profile.jpg) -->
                     <div class="profile-image-container floating"
                         style="margin: 0; z-index: 10; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);">
-                        <img src="profile.jpg" alt="Vikash Saravanan Profile" class="profile-img"
+                        <img src="assets/profile/profile.jpg" alt="Vikash Saravanan Profile" class="profile-img"
                             onerror="this.src='https://via.placeholder.com/400x450/1a1a24/87CEEB?text=Profile+Image'">
                         <div class="profile-glow"></div>
                     </div>
@@ -66,7 +67,7 @@
                     <!-- Right Image (profile2.jpeg) -->
                     <div class="profile-image-container side-profile floating-right"
                         style="width: 240px; height: 320px; opacity: 0.7; z-index: 1; animation-delay: 1s;">
-                        <img src="profile2.jpeg" alt="Vikash" class="profile-img" style="filter: grayscale(30%);">
+                        <img src="assets/profile/profile2.jpeg" alt="Vikash" class="profile-img" style="filter: grayscale(30%);">
                     </div>
 
                 </div>
@@ -209,9 +210,8 @@
                                 aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
                             <a href="https://github.com/vikashsaravanann" target="_blank" aria-label="GitHub"><i
                                     class="fab fa-github"></i></a>
-                            <a href="https://vikash-saravanan-lw5yo84.gamma.site" target="_blank"
-                                aria-label="Portfolio"><i class="fas fa-globe"></i></a>
-                            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                            <a href="https://www.instagram.com/startupwithvikash/?__pwa=1" target="_blank"
+                                aria-label="Instagram"><i class="fab fa-instagram"></i></a>
                         </div>
                     </div>
                 </div>
@@ -219,95 +219,127 @@
         </header>
 
         <!-- Professional Certifications Section -->
-        <section class="certifications-section" style="padding: 40px 0; background: var(--bg-primary);">
+        <section class="certifications-section">
             <div class="container">
-                <div class="hero-certificates fade-up"
-                    style="width: 100%; max-width: 1100px; margin: 0 auto; text-align: center;">
+                <div class="hero-certificates fade-up certs-bordered-card">
                     <h2 class="mb-4 text-center">Professional <span class="highlight">Certifications</span></h2>
-                    <div class="cert-container"
-                        style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px;">
-                        <a href="assets/certs/cert1.png" target="_blank" class="cert-row"
-                            style="padding: 12px; font-size: 0.9rem;">
-                            <div class="cert-thumb" style="width: 40px; height: 30px; margin-right: 12px;">
-                                <img src="assets/certs/cert1.png" alt="LinkedIn Career Certificate">
+
+                    <div class="cert-container">
+
+                        <!-- Cert 1 -->
+                        <a href="assets/certs/cert1.png" target="_blank" class="cert-badge-card">
+                            <i class="fas fa-certificate cert-badge-icon"></i>
+                            <div class="cert-badge-body">
+                                <span class="cert-badge-name">Data Analysis</span>
+                                <span class="cert-badge-issuer">Microsoft &amp; LinkedIn</span>
                             </div>
-                            <div class="cert-details" style="text-align: left;">
-                                <h4 style="font-size: 0.95rem; margin-bottom: 2px;">Data Analysis</h4>
-                                <span class="cert-issuer" style="font-size: 0.75rem;">Microsoft & LinkedIn</span>
-                            </div>
-                        </a>
-                        <a href="assets/certs/cert2.png" target="_blank" class="cert-row"
-                            style="padding: 12px; font-size: 0.9rem;">
-                            <div class="cert-thumb" style="width: 40px; height: 30px; margin-right: 12px;">
-                                <img src="assets/certs/cert2.png" alt="Scaler Certificate">
-                            </div>
-                            <div class="cert-details" style="text-align: left;">
-                                <h4 style="font-size: 0.95rem; margin-bottom: 2px;">Logic Building</h4>
-                                <span class="cert-issuer" style="font-size: 0.75rem;">Scaler Certificate</span>
+                            <div class="cert-badge-footer">
+                                <span class="cert-badge-view">View <i class="fas fa-arrow-right"></i></span>
+                                <span class="cert-badge-num">#01</span>
                             </div>
                         </a>
-                        <a href="assets/certs/cert3.png" target="_blank" class="cert-row"
-                            style="padding: 12px; font-size: 0.9rem;">
-                            <div class="cert-thumb" style="width: 40px; height: 30px; margin-right: 12px;">
-                                <img src="assets/certs/cert3.png" alt="Rathinam Workshop Certificate">
+
+                        <!-- Cert 2 -->
+                        <a href="assets/certs/cert2.png" target="_blank" class="cert-badge-card">
+                            <i class="fas fa-certificate cert-badge-icon"></i>
+                            <div class="cert-badge-body">
+                                <span class="cert-badge-name">Coding Essentials</span>
+                                <span class="cert-badge-issuer">Scaler</span>
                             </div>
-                            <div class="cert-details" style="text-align: left;">
-                                <h4 style="font-size: 0.95rem; margin-bottom: 2px;">Full-Stack</h4>
-                                <span class="cert-issuer" style="font-size: 0.75rem;">Rathinam Workshop Certificate
-                                </span>
-                            </div>
-                        </a>
-                        <a href="assets/certs/cert4.png" target="_blank" class="cert-row"
-                            style="padding: 12px; font-size: 0.9rem;">
-                            <div class="cert-thumb" style="width: 40px; height: 30px; margin-right: 12px;">
-                                <img src="assets/certs/cert4.png" alt="LinkedIn Data Analytics Certificate">
-                            </div>
-                            <div class="cert-details" style="text-align: left;">
-                                <h4 style="font-size: 0.95rem; margin-bottom: 2px;">Data Analytics 1 </h4>
-                                <span class="cert-issuer" style="font-size: 0.75rem;">LinkedIn Data Analytics
-                                    Certificate</span>
+                            <div class="cert-badge-footer">
+                                <span class="cert-badge-view">View <i class="fas fa-arrow-right"></i></span>
+                                <span class="cert-badge-num">#02</span>
                             </div>
                         </a>
-                        <a href="assets/certs/cert5.png" target="_blank" class="cert-row"
-                            style="padding: 12px; font-size: 0.9rem;">
-                            <div class="cert-thumb" style="width: 40px; height: 30px; margin-right: 12px;">
-                                <img src="assets/certs/cert5.png" alt="LinkedIn Data Analytics Part 2">
+
+                        <!-- Cert 3 -->
+                        <a href="assets/certs/cert3.png" target="_blank" class="cert-badge-card">
+                            <i class="fas fa-certificate cert-badge-icon"></i>
+                            <div class="cert-badge-body">
+                                <span class="cert-badge-name">Full-Stack Development</span>
+                                <span class="cert-badge-issuer">Rathinam Workshop</span>
                             </div>
-                            <div class="cert-details" style="text-align: left;">
-                                <h4 style="font-size: 0.95rem; margin-bottom: 2px;">Data Analytics 2</h4>
-                                <span class="cert-issuer" style="font-size: 0.75rem;">LinkedIn Data Analytics
-                                    Certificate </span>
-                            </div>
-                        </a>
-                        <a href="assets/certs/cert6.png" target="_blank" class="cert-row"
-                            style="padding: 12px; font-size: 0.9rem;">
-                            <div class="cert-thumb" style="width: 40px; height: 30px; margin-right: 12px;">
-                                <img src="assets/certs/cert6.png" alt="freeCodeCamp Data Analysis">
-                            </div>
-                            <div class="cert-details" style="text-align: left;">
-                                <h4 style="font-size: 0.95rem; margin-bottom: 2px;">Data Analysis with Python</h4>
-                                <span class="cert-issuer" style="font-size: 0.75rem;">freeCodeCamp</span>
+                            <div class="cert-badge-footer">
+                                <span class="cert-badge-view">View <i class="fas fa-arrow-right"></i></span>
+                                <span class="cert-badge-num">#03</span>
                             </div>
                         </a>
-                        <a href="assets/certs/cert7.png" target="_blank" class="cert-row"
-                            style="padding: 12px; font-size: 0.9rem;">
-                            <div class="cert-thumb" style="width: 40px; height: 30px; margin-right: 12px;">
-                                <img src="assets/certs/cert7.png" alt="Cisco Networking Academy">
+
+                        <!-- Cert 4 -->
+                        <a href="assets/certs/cert4.png" target="_blank" class="cert-badge-card">
+                            <i class="fas fa-certificate cert-badge-icon"></i>
+                            <div class="cert-badge-body">
+                                <span class="cert-badge-name">Data Analytics 1</span>
+                                <span class="cert-badge-issuer">LinkedIn</span>
                             </div>
-                            <div class="cert-details" style="text-align: left;">
-                                <h4 style="font-size: 0.95rem; margin-bottom: 2px;">Networking Basics & Troubleshooting
-                                </h4>
-                                <span class="cert-issuer" style="font-size: 0.75rem;">Cisco Academy</span>
+                            <div class="cert-badge-footer">
+                                <span class="cert-badge-view">View <i class="fas fa-arrow-right"></i></span>
+                                <span class="cert-badge-num">#04</span>
                             </div>
                         </a>
-                        <a href="assets/certs/cert8.png" target="_blank" class="cert-row"
-                            style="padding: 12px; font-size: 0.9rem;">
-                            <div class="cert-thumb" style="width: 40px; height: 30px; margin-right: 12px;">
-                                <img src="assets/certs/cert8.png" alt="Coursera Design Thinking">
+
+                        <!-- Cert 5 -->
+                        <a href="assets/certs/cert5.png" target="_blank" class="cert-badge-card">
+                            <i class="fas fa-certificate cert-badge-icon"></i>
+                            <div class="cert-badge-body">
+                                <span class="cert-badge-name">Data Analytics 2</span>
+                                <span class="cert-badge-issuer">LinkedIn</span>
                             </div>
-                            <div class="cert-details" style="text-align: left;">
-                                <h4 style="font-size: 0.95rem; margin-bottom: 2px;">Design Thinking</h4>
-                                <span class="cert-issuer" style="font-size: 0.75rem;">IIT Bombay</span>
+                            <div class="cert-badge-footer">
+                                <span class="cert-badge-view">View <i class="fas fa-arrow-right"></i></span>
+                                <span class="cert-badge-num">#05</span>
+                            </div>
+                        </a>
+
+                        <!-- Cert 6 -->
+                        <a href="assets/certs/cert6.png" target="_blank" class="cert-badge-card">
+                            <i class="fas fa-certificate cert-badge-icon"></i>
+                            <div class="cert-badge-body">
+                                <span class="cert-badge-name">Data Analysis with Python</span>
+                                <span class="cert-badge-issuer">freeCodeCamp</span>
+                            </div>
+                            <div class="cert-badge-footer">
+                                <span class="cert-badge-view">View <i class="fas fa-arrow-right"></i></span>
+                                <span class="cert-badge-num">#06</span>
+                            </div>
+                        </a>
+
+                        <!-- Cert 7 -->
+                        <a href="assets/certs/cert7.png" target="_blank" class="cert-badge-card">
+                            <i class="fas fa-certificate cert-badge-icon"></i>
+                            <div class="cert-badge-body">
+                                <span class="cert-badge-name">Networking Basics &amp; Troubleshooting</span>
+                                <span class="cert-badge-issuer">Cisco Academy</span>
+                            </div>
+                            <div class="cert-badge-footer">
+                                <span class="cert-badge-view">View <i class="fas fa-arrow-right"></i></span>
+                                <span class="cert-badge-num">#07</span>
+                            </div>
+                        </a>
+
+                        <!-- Cert 8 -->
+                        <a href="assets/certs/cert8.png" target="_blank" class="cert-badge-card">
+                            <i class="fas fa-certificate cert-badge-icon"></i>
+                            <div class="cert-badge-body">
+                                <span class="cert-badge-name">Design Thinking</span>
+                                <span class="cert-badge-issuer">IIT Bombay</span>
+                            </div>
+                            <div class="cert-badge-footer">
+                                <span class="cert-badge-view">View <i class="fas fa-arrow-right"></i></span>
+                                <span class="cert-badge-num">#08</span>
+                            </div>
+                        </a>
+
+                        <!-- Cert 9 -->
+                        <a href="assets/certs/cert9.png" target="_blank" class="cert-badge-card">
+                            <i class="fas fa-certificate cert-badge-icon"></i>
+                            <div class="cert-badge-body">
+                                <span class="cert-badge-name">Professional Certificate</span>
+                                <span class="cert-badge-issuer">Certificate Issuer</span>
+                            </div>
+                            <div class="cert-badge-footer">
+                                <span class="cert-badge-view">View <i class="fas fa-arrow-right"></i></span>
+                                <span class="cert-badge-num">#09</span>
                             </div>
                         </a>
                     </div>
@@ -496,14 +528,7 @@
                     </div>
                 </div>
 
-                <!-- Gamma Portfolio Link -->
-                <div class="gamma-link-wrapper fade-up"
-                    style="display: flex; justify-content: center; margin-top: 40px; margin-bottom: 20px;">
-                    <a href="gamma_source.html" class="btn-primary"
-                        style="text-align: center; font-size: 1.1rem; padding: 14px 28px; border-radius: 12px; display: inline-flex; align-items: center; gap: 10px; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); backdrop-filter: blur(10px);">
-                        <i class="fas fa-layer-group text-accent"></i> Gamma Portfolio
-                    </a>
-                </div>
+
 
             </div>
         </section>
@@ -672,6 +697,7 @@
                     <div class="contact-details mt-3">
                         <p><i class="fas fa-map-marker-alt"></i> Karur-639102, Tamilnadu</p>
                         <p><i class="fas fa-envelope"></i> vikash07052008@gmail.com</p>
+                        <p><i class="fas fa-phone"></i> +91 9342877474</p>
                     </div>
                 </div>
 
@@ -684,8 +710,8 @@
                             class="footer-btn"><i class="fab fa-linkedin"></i> LinkedIn</a>
                         <a href="https://github.com/vikashsaravanann" target="_blank" class="footer-btn"><i
                                 class="fab fa-github"></i> GitHub</a>
-                        <a href="https://vikash-saravanan-lw5yo84.gamma.site/" target="_blank" class="footer-btn"><i
-                                class="fas fa-globe"></i> Gamma Portfolio</a>
+                        <a href="https://www.instagram.com/startupwithvikash/?__pwa=1" target="_blank"
+                            class="footer-btn"><i class="fab fa-instagram"></i> Instagram</a>
                     </div>
                 </div>
 
