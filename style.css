@@ -1890,16 +1890,18 @@ section {
 .responsive-intro-card, .responsive-staggered-card {
     flex: 1 1 250px;
     max-width: 350px;
+    height: 380px; /* Force container height */
     position: relative;
     border-radius: 24px;
     overflow: hidden;
     box-shadow: 0 15px 35px rgba(0,0,0,0.5);
     transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s;
+    background: transparent;
 }
 
 .responsive-intro-card img, .responsive-staggered-card img {
     width: 100%;
-    height: 380px;
+    height: 100%; /* Perfectly fill the fixed-height container */
     object-fit: cover;
     object-position: center 20%;
     display: block;
