@@ -1657,6 +1657,72 @@ section {
     color: var(--text-secondary);
 }
 
+/* ==============================
+   Certifications Page Layout (One by One Column)
+   ============================== */
+.cert-column-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.cert-row {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 24px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.cert-row:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(14, 165, 233, 0.5);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px -10px rgba(14, 165, 233, 0.2);
+}
+
+.cert-thumb {
+    flex-shrink: 0;
+}
+
+.cert-thumb img {
+    width: 250px;
+    height: auto;
+    border-radius: 8px;
+    border: 1px solid rgba(14, 165, 233, 0.3);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.cert-details {
+    flex-grow: 1;
+}
+
+.cert-details h4 {
+    color: #fff;
+    margin-bottom: 8px;
+    font-size: 1.3rem;
+}
+
+.cert-issuer {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+@media (max-width: 768px) {
+    .cert-row {
+        flex-direction: column;
+        text-align: center;
+    }
+    .cert-thumb img {
+        width: 100%;
+        max-width: 320px;
+    }
+}
+
 @media (max-width: 992px) {
 
     .summary-grid,
