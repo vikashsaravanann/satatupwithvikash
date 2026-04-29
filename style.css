@@ -1475,11 +1475,25 @@ section {
 }
 
 .widget-card {
-    background: rgba(255, 255, 255, 0.03);
-    border: var(--glass-border);
-    border-radius: 12px;
-    padding: 20px;
-    transition: var(--transition);
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.01));
+    border: 1px solid rgba(135, 206, 235, 0.15);
+    border-radius: 16px;
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.widget-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    opacity: 0;
+    transition: opacity 0.4s ease;
 }
 
 .widget-card.full-width {
@@ -1487,10 +1501,14 @@ section {
 }
 
 .widget-card:hover {
-    background: rgba(255, 255, 255, 0.06);
+    background: rgba(255, 255, 255, 0.08);
     border-color: rgba(135, 206, 235, 0.4);
-    transform: translateY(-3px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+}
+
+.widget-card:hover::before {
+    opacity: 1;
 }
 
 .widget-icon {
@@ -1718,17 +1736,17 @@ section {
 .gallery-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 24px;
+    gap: 0;
     margin-top: 40px;
 }
 
 .gallery-item {
     overflow: hidden;
-    border-radius: 16px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(255, 255, 255, 0.05);
     position: relative;
+    border-radius: 0;
+    box-shadow: none;
+    background: transparent;
+    border: none;
 }
 
 .gallery-item img {
