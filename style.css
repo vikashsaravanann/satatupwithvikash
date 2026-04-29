@@ -1336,34 +1336,21 @@ section {
 
 .cert-badge-card {
     position: relative;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 16px;
-    padding: 22px 20px 18px 26px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+    padding: 24px 20px 16px 20px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     overflow: hidden;
     transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
     text-decoration: none;
-    min-height: 140px;
+    min-height: 160px;
     cursor: pointer;
 }
 
-/* Left accent bar */
-.cert-badge-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 4px;
-    height: 100%;
-    background: linear-gradient(180deg, var(--accent), #1e90ff);
-    border-radius: 16px 0 0 16px;
-    transition: width 0.35s ease;
-}
-
-/* Subtle glow behind accent on hover */
+/* Subtle glow on hover */
 .cert-badge-card::after {
     content: '';
     position: absolute;
@@ -1371,49 +1358,52 @@ section {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, rgba(14, 165, 233, 0.06) 0%, transparent 60%);
+    background: radial-gradient(circle at center, rgba(14, 165, 233, 0.1) 0%, transparent 70%);
     opacity: 0;
     transition: opacity 0.35s ease;
     pointer-events: none;
+    z-index: 0;
 }
 
 .cert-badge-card:hover {
-    border-color: rgba(14, 165, 233, 0.35);
+    border-color: rgba(14, 165, 233, 0.3);
     transform: translateY(-4px);
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(14, 165, 233, 0.15);
-    background: rgba(255, 255, 255, 0.07);
-}
-
-.cert-badge-card:hover::before {
-    width: 5px;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(14, 165, 233, 0.1);
+    background: rgba(255, 255, 255, 0.04);
 }
 
 .cert-badge-card:hover::after {
     opacity: 1;
 }
 
-/* Icon top-right */
+/* Icon top-center */
 .cert-badge-icon {
-    position: absolute;
-    top: 16px;
-    right: 16px;
+    position: relative;
     font-size: 1.8rem;
     color: var(--accent);
-    opacity: 0.35;
-    transition: opacity 0.3s ease, transform 0.3s ease;
+    opacity: 0.9;
+    margin: 0 auto 12px auto;
+    display: block;
+    text-align: center;
+    transition: transform 0.3s ease, color 0.3s ease;
+    z-index: 1;
 }
 
 .cert-badge-card:hover .cert-badge-icon {
-    opacity: 0.7;
-    transform: scale(1.1) rotate(-5deg);
+    transform: scale(1.15) rotate(-5deg);
+    color: #38bdf8;
 }
 
 /* Content */
 .cert-badge-body {
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    align-items: center;
+    text-align: center;
+    gap: 6px;
     flex: 1;
+    z-index: 1;
+    position: relative;
 }
 
 .cert-badge-name {
@@ -1422,12 +1412,11 @@ section {
     font-weight: 700;
     color: var(--text-primary);
     line-height: 1.3;
-    max-width: calc(100% - 40px);
-    /* leave room for icon */
+    max-width: 100%;
 }
 
 .cert-badge-issuer {
-    font-size: 0.78rem;
+    font-size: 0.8rem;
     font-weight: 600;
     color: var(--accent);
     letter-spacing: 0.3px;
@@ -1441,6 +1430,9 @@ section {
     margin-top: 14px;
     padding-top: 10px;
     border-top: 1px solid rgba(255, 255, 255, 0.06);
+    z-index: 1;
+    position: relative;
+    width: 100%;
 }
 
 .cert-badge-view {
@@ -1895,39 +1887,25 @@ section {
 }
 
 /* Specific Component Classes (to replace inline styles) */
-.responsive-intro-card {
+.responsive-intro-card, .responsive-staggered-card {
     flex: 1 1 250px;
     max-width: 350px;
-    background: linear-gradient(135deg, rgba(255,255,255,0.03), rgba(0,0,0,0.5));
-    padding: 15px;
+    position: relative;
     border-radius: 24px;
-    border: 1px solid rgba(135, 206, 235, 0.2);
     box-shadow: 0 15px 35px rgba(0,0,0,0.5);
-    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.responsive-intro-card img {
-    width: 100%;
-    height: 350px;
-    object-fit: cover;
-    object-position: center 20%;
-    border-radius: 12px;
-}
-
-.responsive-staggered-card {
-    flex: 1 1 280px;
-    max-width: 350px;
-    border-radius: 24px;
-    overflow: hidden;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.4);
     transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s;
 }
 
-.responsive-staggered-card img {
+.responsive-intro-card img, .responsive-staggered-card img {
     width: 100%;
     height: 380px;
     object-fit: cover;
+    object-position: center 20%;
     display: block;
+    margin: 0;
+    padding: 0;
+    border: none;
+    border-radius: 24px;
 }
 
 .collage-img {
