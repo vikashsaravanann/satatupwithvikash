@@ -35,6 +35,8 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'Messages array is required' });
   }
 
+  const model = req.body.model;
+
   // Force a Groq-compatible model
   const groqModel = (model && model.includes('llama')) ? model : 'llama-3.3-70b-versatile';
 
