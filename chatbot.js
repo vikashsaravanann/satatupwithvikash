@@ -13,9 +13,8 @@
   // Point to our new bridge server (works for local node or Vercel /api/chat)
   const API_URL = '/api/chat'; 
   
-  // 🔗 IMPORTANT: Update this to your actual Vercel URL (e.g., https://your-project.vercel.app)
-  // This allows the AI to work on your GitHub Pages site!
-  const VERCEL_URL = 'https://portfolio-information-vikash.vercel.app'; 
+  // 🔗 This allows the AI to work on your GitHub Pages site!
+  const VERCEL_URL = 'https://portfolio-information.vercel.app'; 
 
   // For local testing without Vercel, use: http://localhost:3000/api/chat
   const LOCAL_API_URL = 'http://localhost:3000/api/chat';
