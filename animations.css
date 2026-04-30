@@ -1,0 +1,719 @@
+/* =====================================================
+   VIKASH PORTFOLIO — ANIMATION ADDONS v2
+   Drop-in after style.css
+   ===================================================== */
+
+/* ─── 2. SCROLL PROGRESS BAR ───────────────────────── */
+#scroll-progress {
+  position: fixed; top:0; left:0; height:3px; width:0%;
+  z-index:100000;
+  background: linear-gradient(90deg,#0ea5e9,#7dd3fc,#0ea5e9);
+  background-size: 200% 100%;
+  animation: progressShine 2s linear infinite;
+  box-shadow: 0 0 12px rgba(14,165,233,.9), 0 0 30px rgba(14,165,233,.4);
+}
+@keyframes progressShine { to { background-position:200% 0; } }
+
+/* ─── 3. PARTICLE CANVAS ───────────────────────────── */
+#site-canvas { position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:-1; }
+#hero { position:relative;overflow:hidden; }
+#hero .container { position:relative;z-index:2; }
+
+/* ─── 6. HOLOGRAPHIC SHIMMER ───────────────────────── */
+.holo-card { position:relative;overflow:hidden; }
+.holo-card::before {
+  content:''; position:absolute; inset:0; pointer-events:none; z-index:1; border-radius:inherit;
+  background: conic-gradient(
+    from 0deg at var(--hx,50%) var(--hy,50%),
+    rgba(255,0,128,.06), rgba(255,165,0,.06), rgba(0,255,255,.06),
+    rgba(128,0,255,.06), rgba(255,0,128,.06)
+  );
+  opacity:0; transition:opacity .4s;
+}
+.holo-card:hover::before { opacity:1; }
+.holo-card > * { position:relative;z-index:2; }
+
+/* ─── 7. SPOTLIGHT CARD ────────────────────────────── */
+.spotlight-card { position:relative;overflow:hidden; }
+.spotlight-card::after {
+  content:''; position:absolute;
+  width:500px; height:500px;
+  background:radial-gradient(circle,rgba(14,165,233,.1) 0%,transparent 65%);
+  border-radius:50%; pointer-events:none; z-index:0;
+  transform:translate(-50%,-50%); opacity:0; transition:opacity .4s;
+  left:var(--sx,50%); top:var(--sy,50%);
+}
+.spotlight-card:hover::after { opacity:1; }
+.spotlight-card > * { position:relative;z-index:1; }
+
+/* ─── 8. 3D TILT ───────────────────────────────────── */
+.tilt-card { transform-style:preserve-3d;transform:perspective(1000px); }
+.tilt-card:hover { box-shadow:0 40px 80px rgba(0,0,0,.7),0 0 50px rgba(14,165,233,.12); }
+
+/* ─── 9. RIPPLE ────────────────────────────────────── */
+.ripple-btn { position:relative;overflow:hidden; }
+.ripple-wave {
+  position:absolute; border-radius:50%;
+  background:rgba(255,255,255,.28);
+  transform:scale(0);
+  animation:rippleAnim .7s linear forwards;
+  pointer-events:none;
+}
+@keyframes rippleAnim { to { transform:scale(4.5);opacity:0; } }
+
+/* ─── 10. BUTTON SHINE SWIPE ───────────────────────── */
+.btn-primary, .btn-primary-sm { overflow:hidden;position:relative; }
+.btn-primary::after, .btn-primary-sm::after {
+  content:''; position:absolute; top:0; left:-100%;
+  width:55%; height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.28),transparent);
+  transform:skewX(-20deg); transition:left .55s;
+}
+.btn-primary:hover::after,.btn-primary-sm:hover::after { left:150%; }
+
+/* ─── 11. CLICK PARTICLE BURST ─────────────────────── */
+.click-particle {
+  position:fixed; width:6px; height:6px; border-radius:50%;
+  pointer-events:none; z-index:99997;
+  transform:translate(-50%,-50%);
+  animation:particleBurst var(--d,.8s) ease-out forwards;
+}
+@keyframes particleBurst {
+  0%   { transform:translate(-50%,-50%) translate(0,0) scale(1);opacity:1; }
+  100% { transform:translate(-50%,-50%) translate(var(--tx),var(--ty)) scale(0);opacity:0; }
+}
+
+/* ─── 12. STATS COUNTER SECTION ────────────────────── */
+.stats-counter-section {
+  padding:90px 0;
+  background:rgba(5,5,10,.65);
+  border-top:1px solid rgba(255,255,255,.05);
+  border-bottom:1px solid rgba(255,255,255,.05);
+  position:relative; overflow:hidden;
+}
+.stats-counter-section::before {
+  content:''; position:absolute; inset:0;
+  background-image:radial-gradient(rgba(14,165,233,.08) 1px,transparent 1px);
+  background-size:32px 32px; pointer-events:none;
+}
+.stats-counter-grid {
+  display:grid; grid-template-columns:repeat(4,1fr);
+  gap:28px; max-width:960px; margin:0 auto;
+}
+@media(max-width:768px){ .stats-counter-grid { grid-template-columns:repeat(2,1fr); } }
+@media(max-width:480px){ .stats-counter-grid { grid-template-columns:1fr; } }
+.counter-card {
+  text-align:center; padding:44px 20px 36px;
+  background:rgba(255,255,255,.025);
+  border:1px solid rgba(14,165,233,.12); border-radius:22px;
+  position:relative; overflow:hidden;
+  transition:all .45s cubic-bezier(.16,1,.3,1);
+}
+.counter-card::before {
+  content:''; position:absolute; top:0;left:0;right:0;
+  height:2px;
+  background:linear-gradient(90deg,transparent,#0ea5e9,transparent);
+  transform:scaleX(0); transition:transform .5s;
+}
+.counter-card:hover { transform:translateY(-10px);border-color:rgba(14,165,233,.45);box-shadow:0 24px 48px rgba(0,0,0,.6),0 0 30px rgba(14,165,233,.08); }
+.counter-card:hover::before { transform:scaleX(1); }
+.counter-icon { font-size:2.2rem;color:#0ea5e9;margin-bottom:18px;display:block; }
+.counter-number {
+  font-family:'Outfit',sans-serif; font-size:3.2rem; font-weight:800;
+  color:#fff; line-height:1; margin-bottom:10px;
+  background:linear-gradient(135deg,#fff,#0ea5e9);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+}
+.counter-suffix { font-size:2rem;font-weight:800;color:#0ea5e9;-webkit-text-fill-color:#0ea5e9; }
+.counter-label { font-size:.82rem;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:2px;font-weight:700; }
+
+/* ─── 14. PROFILE BREATHING GLOW ───────────────────── */
+@keyframes breatheGlow {
+  0%,100% { box-shadow:0 0 20px rgba(14,165,233,.2),0 0 60px rgba(14,165,233,.08); }
+  50%      { box-shadow:0 0 40px rgba(14,165,233,.55),0 0 100px rgba(14,165,233,.22); }
+}
+.profile-image-container.floating { animation:floating 6s ease-in-out infinite,breatheGlow 4s ease-in-out infinite; }
+
+/* ─── 15. SCAN LINE SWEEP ───────────────────────────── */
+.scan-card { position:relative;overflow:hidden; }
+.scan-card::before {
+  content:''; position:absolute; top:-100%;left:0;right:0;
+  height:3px;
+  background:linear-gradient(90deg,transparent,rgba(14,165,233,.7),transparent);
+  z-index:10; pointer-events:none;
+}
+.scan-card:hover::before { top:110%;transition:top .7s ease; }
+
+/* ─── 16. NEON ANIMATED BORDER ─────────────────────── */
+.neon-border-card {
+  position:relative;padding:2px;border-radius:20px;
+  background:linear-gradient(var(--angle,0deg),#0ea5e9,#6366f1,#ec4899,#0ea5e9);
+  animation:borderRotate 4s linear infinite;
+}
+@property --angle { syntax:'<angle>';initial-value:0deg;inherits:false; }
+@keyframes borderRotate { to { --angle:360deg; } }
+.neon-border-inner { background:#090910;border-radius:18px;padding:32px;height:100%; }
+
+/* ─── 17. PARALLAX LAYER ────────────────────────────── */
+.parallax-layer { transition:transform .08s linear;will-change:transform; }
+
+/* ─── 18. AVAILABILITY PING BAR ─────────────────────── */
+.availability-bar {
+  display:flex;align-items:center;justify-content:center;gap:12px;
+  padding:12px 26px;
+  background:rgba(0,255,136,.06);border:1px solid rgba(0,255,136,.22);
+  border-radius:50px; font-size:.88rem;font-weight:600;color:#00ff88;
+  width:fit-content;margin:0 auto 28px;transition:all .3s;
+}
+.availability-bar:hover { background:rgba(0,255,136,.12);transform:scale(1.02); }
+.ping-ring { position:relative;width:10px;height:10px; }
+.ping-ring::before {
+  content:''; position:absolute;inset:0;background:#00ff88;border-radius:50%;
+  animation:pingAnim 1.5s cubic-bezier(0,0,.2,1) infinite;
+}
+.ping-ring::after { content:'';position:absolute;inset:1px;background:#00ff88;border-radius:50%; }
+@keyframes pingAnim { 75%,100% { transform:scale(2.5);opacity:0; } }
+
+/* Tooltip */
+[data-tooltip] { position:relative; }
+[data-tooltip]::after {
+  content:attr(data-tooltip); position:absolute;bottom:calc(100% + 10px);left:50%;
+  transform:translateX(-50%) scale(.88);
+  background:rgba(14,165,233,.92);color:#fff;font-size:.73rem;
+  padding:5px 12px;border-radius:6px;white-space:nowrap;
+  opacity:0;pointer-events:none;
+  transition:all .25s cubic-bezier(.16,1,.3,1);z-index:100;
+}
+[data-tooltip]:hover::after { opacity:1;transform:translateX(-50%) scale(1); }
+
+/* ─── 20. LIQUID FILL PROGRESS BARS ─────────────────── */
+.skill-progress { position:relative;overflow:hidden;height:100%;background:var(--accent);border-radius:10px;width:0;transition:width 1.8s cubic-bezier(.1,.5,.1,1); }
+.skill-progress::after {
+  content:''; position:absolute;top:0;left:0;right:0;bottom:0;
+  background:linear-gradient(90deg,transparent 0%,rgba(255,255,255,.25) 50%,transparent 100%);
+  background-size:200% 100%;
+  animation:liquidShimmer 2s ease-in-out infinite;
+}
+@keyframes liquidShimmer { 0% { background-position:-200% 0; } 100% { background-position:200% 0; } }
+
+/* ─── 21. IMAGE DISTORTION HOVER ───────────────────── */
+.img-distort { transition:filter .3s;overflow:hidden;border-radius:inherit; }
+.img-distort img { transition:transform .5s cubic-bezier(.16,1,.3,1),filter .4s; }
+.img-distort:hover img { transform:scale(1.08);filter:saturate(1.3) brightness(1.08); }
+.img-distort:hover { filter:drop-shadow(0 0 20px rgba(14,165,233,.3)); }
+
+/* ─── 22. ORBIT RING ─────────────────────────────────── */
+.orbit-container { position:relative;width:320px;height:320px;margin:50px auto; }
+.orbit-center {
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  width:86px;height:86px;border-radius:50%;
+  background:rgba(14,165,233,.12);border:2px solid rgba(14,165,233,.35);
+  display:flex;align-items:center;justify-content:center;
+  font-size:2rem;color:#0ea5e9;
+  box-shadow:0 0 30px rgba(14,165,233,.3);
+  animation:breatheGlow 3s ease-in-out infinite;z-index:2;
+}
+.orbit-ring { position:absolute;top:50%;left:50%;border-radius:50%;border:1px dashed rgba(14,165,233,.2);transform:translate(-50%,-50%); }
+.orbit-item {
+  position:absolute;width:46px;height:46px;border-radius:50%;
+  background:rgba(10,10,20,.9);border:1px solid rgba(14,165,233,.3);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.25rem;color:#0ea5e9;
+  box-shadow:0 4px 16px rgba(0,0,0,.5);
+  transition:transform .3s,box-shadow .3s;cursor:default;
+}
+.orbit-item:hover { box-shadow:0 0 22px rgba(14,165,233,.5);z-index:10; }
+
+/* ─── 23. NOISE GRAIN OVERLAY ───────────────────────── */
+#grain-overlay { display: none; } /* Disabled for performance */
+@keyframes grainAnim {
+  0%   { background-position:0 0; }    10% { background-position:-5% -10%; }
+  20%  { background-position:-15% 5%; }  30% { background-position:7% -25%; }
+  40%  { background-position:-5% 25%; }  50% { background-position:-15% 10%; }
+  60%  { background-position:15% 0%; }   70% { background-position:0 15%; }
+  80%  { background-position:3% 35%; }   90% { background-position:-10% 10%; }
+  100% { background-position:0 0; }
+}
+
+/* ─── 24. SECTION HEADING GLOW PULSE ───────────────── */
+@keyframes headingGlow {
+  0%,100% { text-shadow:none; }
+  50%     { text-shadow:0 0 40px rgba(14,165,233,.3); }
+}
+.section-title h2 { animation:headingGlow 5s ease-in-out infinite; }
+
+/* ─── 25. STAGGER CHILDREN ──────────────────────────── */
+.stagger-children > * { opacity:0;transform:translateY(28px);transition:opacity .55s,transform .55s; }
+.stagger-children.visible > *:nth-child(1)  { opacity:1;transform:none;transition-delay:.04s; }
+.stagger-children.visible > *:nth-child(2)  { opacity:1;transform:none;transition-delay:.13s; }
+.stagger-children.visible > *:nth-child(3)  { opacity:1;transform:none;transition-delay:.22s; }
+.stagger-children.visible > *:nth-child(4)  { opacity:1;transform:none;transition-delay:.31s; }
+.stagger-children.visible > *:nth-child(5)  { opacity:1;transform:none;transition-delay:.40s; }
+.stagger-children.visible > *:nth-child(6)  { opacity:1;transform:none;transition-delay:.49s; }
+.stagger-children.visible > *:nth-child(7)  { opacity:1;transform:none;transition-delay:.58s; }
+.stagger-children.visible > *:nth-child(8)  { opacity:1;transform:none;transition-delay:.67s; }
+.stagger-children.visible > *:nth-child(9)  { opacity:1;transform:none;transition-delay:.76s; }
+.stagger-children.visible > *:nth-child(10) { opacity:1;transform:none;transition-delay:.85s; }
+.stagger-children.visible > *:nth-child(11) { opacity:1;transform:none;transition-delay:.94s; }
+.stagger-children.visible > *:nth-child(12) { opacity:1;transform:none;transition-delay:1.03s; }
+
+/* ─── 26. NAV UNDERLINE SLIDE ───────────────────────── */
+.nav-links a { position:relative;padding-bottom:4px; }
+.nav-links a::after {
+  content:''; position:absolute; bottom:0;left:0;width:0;height:2px;
+  background:var(--accent); transition:width .32s cubic-bezier(.16,1,.3,1); border-radius:2px;
+}
+.nav-links a:hover::after { width:100%; }
+
+/* ─── 27. GLASS LIFT ────────────────────────────────── */
+.glass-lift { transition:transform .4s cubic-bezier(.16,1,.3,1),box-shadow .4s,border-color .4s; }
+.glass-lift:hover { transform:translateY(-10px);box-shadow:0 30px 60px rgba(0,0,0,.55),0 0 40px rgba(14,165,233,.08);border-color:rgba(14,165,233,.3) !important; }
+
+/* ─── 28. TOAST NOTIFICATIONS ──────────────────────── */
+#toast-container { position:fixed;bottom:32px;right:32px;z-index:99999;display:flex;flex-direction:column;gap:12px;pointer-events:none; }
+.toast {
+  display:flex;align-items:center;gap:14px;padding:16px 20px;
+  background:rgba(8,8,16,.96);border:1px solid rgba(14,165,233,.28);
+  border-radius:14px;color:#fff;font-size:.9rem;font-weight:500;
+  backdrop-filter:blur(16px);box-shadow:0 12px 32px rgba(0,0,0,.55);
+  pointer-events:all;transform:translateX(120%);opacity:0;
+  transition:transform .5s cubic-bezier(.16,1,.3,1),opacity .5s;
+  min-width:280px;max-width:360px;
+}
+.toast.show { transform:translateX(0);opacity:1; }
+.toast-icon { font-size:1.3rem;color:#0ea5e9;flex-shrink:0; }
+.toast-close { margin-left:auto;cursor:none;opacity:.45;font-size:1.1rem; }
+.toast-close:hover { opacity:1; }
+
+/* ─── 29. PAGE INTRO LOADER ─────────────────────────── */
+#page-intro {
+  position:fixed;inset:0;background:#000;z-index:999999;
+  display:flex;align-items:center;justify-content:center;
+  flex-direction:column;gap:20px;
+  animation:introFadeOut .6s ease 2s forwards;pointer-events:none;
+}
+.intro-logo {
+  font-family:'Outfit',sans-serif;font-size:2.5rem;font-weight:800;
+  color:#fff;letter-spacing:4px;
+  animation:introLogoIn .7s cubic-bezier(.16,1,.3,1) .2s forwards;
+  opacity:0;transform:translateY(24px);
+}
+.intro-logo span { color:#0ea5e9; }
+.intro-bar { width:200px;height:2px;background:rgba(255,255,255,.08);border-radius:2px;overflow:hidden; }
+.intro-fill { height:100%;width:0;background:linear-gradient(90deg,#0ea5e9,#38bdf8);animation:introFill 1.5s cubic-bezier(.16,1,.3,1) .4s forwards; }
+@keyframes introLogoIn { to { opacity:1;transform:translateY(0); } }
+@keyframes introFill   { to { width:100%; } }
+@keyframes introFadeOut { to { opacity:0;visibility:hidden; } }
+
+/* ─── 30. BACK TO TOP ───────────────────────────────── */
+#back-to-top {
+  position:fixed;bottom:32px;left:32px;
+  width:50px;height:50px;
+  background:rgba(14,165,233,.12);border:1px solid rgba(14,165,233,.4);
+  border-radius:50%;display:flex;align-items:center;justify-content:center;
+  color:#0ea5e9;font-size:1.1rem;z-index:9999;
+  opacity:0;pointer-events:none;
+  transition:all .4s cubic-bezier(.16,1,.3,1);
+}
+#back-to-top.visible { opacity:1;pointer-events:all; }
+#back-to-top:hover { background:rgba(14,165,233,.28);transform:translateY(-5px);box-shadow:0 10px 24px rgba(14,165,233,.35); }
+
+/* ─── 32. TIMELINE DOT PULSE ─────────────────────────── */
+@keyframes timelinePulse {
+  0%,100% { box-shadow:0 0 0 0 rgba(14,165,233,.6); }
+  50%     { box-shadow:0 0 0 10px rgba(14,165,233,0); }
+}
+.timeline-dot { animation:timelinePulse 2s ease-in-out infinite; }
+
+/* ─── 33. NEON GRID BACKGROUND ──────────────────────── */
+.neon-grid-bg {
+  background-image:
+    linear-gradient(rgba(14,165,233,.04) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(14,165,233,.04) 1px,transparent 1px);
+  background-size:60px 60px;
+}
+
+/* ─── 34. MAGNETIC BUTTON transition ─────────────────── */
+.btn-primary,.btn-primary-sm,.btn-secondary { will-change:transform; }
+
+/* ─── 35. AURORA FLOATING BLOBS ─────────────────────── */
+.aurora-blob {
+  position:absolute;border-radius:50%;pointer-events:none;
+  opacity:.12; will-change: transform;
+}
+.aurora-blob-1 {
+  width:500px;height:500px;
+  background:radial-gradient(circle, #0ea5e9 0%, transparent 60%);
+  top:-150px;left:-100px;
+  animation:auroraFloat1 14s ease-in-out infinite alternate;
+}
+.aurora-blob-2 {
+  width:400px;height:400px;
+  background:radial-gradient(circle, #6366f1 0%, transparent 60%);
+  bottom:-120px;right:-80px;
+  animation:auroraFloat2 18s ease-in-out infinite alternate;
+}
+.aurora-blob-3 {
+  width:300px;height:300px;
+  background:radial-gradient(circle, #ec4899 0%, transparent 60%);
+  top:40%;left:60%;
+  animation:auroraFloat3 11s ease-in-out infinite alternate;
+}
+@keyframes auroraFloat1 { 0% { transform:translate(0,0) scale(1); } 100% { transform:translate(80px,60px) scale(1.25); } }
+@keyframes auroraFloat2 { 0% { transform:translate(0,0) scale(1); } 100% { transform:translate(-60px,-80px) scale(1.2); } }
+@keyframes auroraFloat3 { 0% { transform:translate(0,0) scale(1); } 100% { transform:translate(40px,-50px) scale(1.15); } }
+/* =====================================================================
+   VIKASH PORTFOLIO — ANIMATION ADDONS v3
+   Drop-in AFTER animation-addons.css
+   Contains: 21 brand-new animation effects
+   ===================================================================== */
+
+
+/* ══════════════════════════════════════════════════════
+   NEW 1. SECTION PROGRESS SIDEBAR DOTS
+   ══════════════════════════════════════════════════════ */
+#section-nav {
+  position: fixed; right: 24px; top: 50%;
+  transform: translateY(-50%);
+  display: flex; flex-direction: column; gap: 12px;
+  z-index: 9990;
+}
+.section-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  border: 1.5px solid rgba(14,165,233,.4);
+  background: transparent;
+  cursor: none;
+  transition: all .35s cubic-bezier(.16,1,.3,1);
+  position: relative;
+}
+.section-dot::after {
+  content: attr(data-label);
+  position: absolute; right: 18px; top: 50%;
+  transform: translateY(-50%);
+  background: rgba(8,8,16,.9); color: #0ea5e9;
+  font-size: .72rem; font-weight: 700; letter-spacing: 1px;
+  padding: 4px 10px; border-radius: 5px;
+  white-space: nowrap; opacity: 0; pointer-events: none;
+  transition: opacity .25s, transform .25s;
+  text-transform: uppercase;
+  border: 1px solid rgba(14,165,233,.25);
+  transform: translateY(-50%) translateX(6px);
+}
+.section-dot:hover::after { opacity: 1; transform: translateY(-50%) translateX(0); }
+.section-dot.active {
+  background: #0ea5e9;
+  border-color: #0ea5e9;
+  box-shadow: 0 0 12px rgba(14,165,233,.7);
+  transform: scale(1.5);
+}
+@media(max-width:768px){ #section-nav { display:none; } }
+
+
+
+/* ══════════════════════════════════════════════════════
+   NEW 6. ACHIEVEMENT / XP POPUP
+   ══════════════════════════════════════════════════════ */
+.xp-popup {
+  position: fixed; top: 90px; right: 28px;
+  z-index: 99990;
+  display: flex; align-items: center; gap: 14px;
+  padding: 14px 20px;
+  background: linear-gradient(135deg, rgba(14,165,233,.18), rgba(99,102,241,.18));
+  border: 1px solid rgba(14,165,233,.45);
+  border-radius: 14px; backdrop-filter: blur(20px);
+  color: #fff; font-size: .9rem; font-weight: 600;
+  box-shadow: 0 8px 32px rgba(0,0,0,.55), 0 0 30px rgba(14,165,233,.15);
+  pointer-events: none;
+  transform: translateX(160%) scale(.9);
+  opacity: 0;
+  transition: transform .55s cubic-bezier(.16,1,.3,1), opacity .55s;
+  min-width: 240px;
+}
+.xp-popup.show { transform: translateX(0) scale(1); opacity: 1; }
+.xp-icon { font-size: 1.6rem; flex-shrink: 0; }
+.xp-title { font-size: .7rem; color: #0ea5e9; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700; }
+.xp-bar-wrap { width: 100%; height: 4px; background: rgba(255,255,255,.1); border-radius: 4px; margin-top: 6px; overflow: hidden; }
+.xp-bar-fill {
+  height: 100%; border-radius: 4px;
+  background: linear-gradient(90deg,#0ea5e9,#38bdf8);
+  width: 0;
+  transition: width 1.2s cubic-bezier(.16,1,.3,1) .3s;
+}
+
+/* ══════════════════════════════════════════════════════
+   NEW 7. MOUSE-REPEL FLOATING BOXES
+   ══════════════════════════════════════════════════════ */
+.repel-item {
+  transition: transform .35s cubic-bezier(.16,1,.3,1);
+  will-change: transform;
+}
+
+/* ══════════════════════════════════════════════════════
+   NEW 8. ANIMATED GRADIENT MESH HERO BG
+   ══════════════════════════════════════════════════════ */
+#mesh-gradient {
+  position: absolute; inset: 0;
+  z-index: 0; pointer-events: none;
+  overflow: hidden;
+}
+.mesh-blob {
+  position: absolute; border-radius: 50%;
+  filter: blur(40px); opacity: .07;
+  will-change: transform;
+}
+.mesh-blob-1 { width:700px;height:700px;background:#0ea5e9;top:-200px;left:-200px;animation:meshFloat1 18s ease-in-out infinite alternate; }
+.mesh-blob-2 { width:500px;height:500px;background:#6366f1;bottom:-100px;right:-150px;animation:meshFloat2 22s ease-in-out infinite alternate; }
+.mesh-blob-3 { width:400px;height:400px;background:#ec4899;top:30%;left:50%;animation:meshFloat3 14s ease-in-out infinite alternate; }
+.mesh-blob-4 { width:350px;height:350px;background:#06b6d4;bottom:20%;left:20%;animation:meshFloat4 16s ease-in-out infinite alternate; }
+
+@keyframes meshFloat1 { 0%{transform:translate(0,0) scale(1)}   100%{transform:translate(100px,80px) scale(1.3)} }
+@keyframes meshFloat2 { 0%{transform:translate(0,0) scale(1)}   100%{transform:translate(-80px,-100px) scale(1.2)} }
+@keyframes meshFloat3 { 0%{transform:translate(-50%,0) scale(1)} 100%{transform:translate(-50%,-60px) scale(1.15)} }
+@keyframes meshFloat4 { 0%{transform:translate(0,0) scale(1)}   100%{transform:translate(60px,40px) scale(1.1)} }
+
+/* ══════════════════════════════════════════════════════
+   NEW 9. LETTER-BY-LETTER HERO SUBTITLE REVEAL
+   ══════════════════════════════════════════════════════ */
+.letter-reveal .char-wrap {
+  display: inline-block; overflow: hidden;
+  vertical-align: bottom;
+}
+.letter-reveal .char-inner {
+  display: inline-block;
+  transform: translateY(105%);
+  transition: transform .6s cubic-bezier(.16,1,.3,1);
+}
+.letter-reveal.visible .char-inner { transform: translateY(0); }
+
+/* ══════════════════════════════════════════════════════
+   NEW 10. CARD AURA — hovering aura ring outside cards
+   ══════════════════════════════════════════════════════ */
+.aura-card {
+  position: relative;
+}
+.aura-card::before {
+  content: '';
+  position: absolute; inset: -2px;
+  border-radius: inherit;
+  background: conic-gradient(from var(--aura-angle,0deg), #0ea5e9, #6366f1, #ec4899, #0ea5e9);
+  z-index: -1; opacity: 0;
+  transition: opacity .4s;
+  animation: auraRotate 3s linear infinite;
+  filter: blur(6px);
+}
+.aura-card:hover::before { opacity: .55; }
+@property --aura-angle { syntax:'<angle>'; initial-value:0deg; inherits:false; }
+@keyframes auraRotate { to { --aura-angle: 360deg; } }
+
+/* ══════════════════════════════════════════════════════
+   NEW 11. SCROLL-TRIGGERED COUNTER ODOMETER
+   ══════════════════════════════════════════════════════ */
+.odometer-digit {
+  display: inline-flex;
+  flex-direction: column;
+  overflow: hidden;
+  height: 1em;
+  vertical-align: top;
+}
+.odometer-digit span {
+  display: block;
+  height: 1em;
+  transition: transform .6s cubic-bezier(.16,1,.3,1);
+}
+
+/* ══════════════════════════════════════════════════════
+   NEW 12. TYPEWRITER CURSOR BLINK
+   ══════════════════════════════════════════════════════ */
+.typewriter::after {
+  content: '|';
+  display: inline-block;
+  margin-left: 2px;
+  color: #0ea5e9;
+  animation: cursorBlink .9s step-end infinite;
+  font-weight: 300;
+}
+@keyframes cursorBlink { 50% { opacity: 0; } }
+
+/* ══════════════════════════════════════════════════════
+   NEW 13. ELASTIC SOCIAL ICON BOUNCE
+   ══════════════════════════════════════════════════════ */
+.social-links-hero a,
+.footer-btn {
+  display: inline-flex;
+  align-items: center;
+  transition: transform .5s cubic-bezier(.34,1.7,.64,1), color .3s;
+}
+.social-links-hero a:hover { transform: translateY(-8px) scale(1.22) rotate(-5deg) !important; }
+.footer-btn:hover i { animation: iconBounce .5s cubic-bezier(.34,1.7,.64,1); }
+@keyframes iconBounce {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.4) rotate(-10deg); }
+  70%  { transform: scale(.9) rotate(5deg); }
+  100% { transform: scale(1) rotate(0); }
+}
+
+/* ══════════════════════════════════════════════════════
+   NEW 14. GLITCH HOVER on PROJECT CARD TITLES
+   ══════════════════════════════════════════════════════ */
+.deep-dive-header h3 {
+  position: relative; display: inline-block;
+}
+.deep-dive-header h3:hover {
+  animation: glitchTitle .4s steps(2) infinite;
+}
+.deep-dive-header h3:hover::before,
+.deep-dive-header h3:hover::after {
+  content: attr(data-text);
+  position: absolute; top:0; left:0; width:100%; height:100%;
+  pointer-events: none;
+}
+.deep-dive-header h3:hover::before {
+  color: #f00; clip-path: polygon(0 30%,100% 30%,100% 50%,0 50%);
+  transform: translateX(-3px); animation: glitchA .3s steps(2) infinite;
+}
+.deep-dive-header h3:hover::after {
+  color: #0ea5e9; clip-path: polygon(0 62%,100% 62%,100% 76%,0 76%);
+  transform: translateX(3px); animation: glitchB .3s steps(2) infinite;
+}
+@keyframes glitchTitle { 0%,100%{transform:none} 25%{transform:skewX(2deg)} 75%{transform:skewX(-2deg)} }
+@keyframes glitchA { 0%,100%{transform:translateX(-3px)} 50%{transform:translateX(3px)} }
+@keyframes glitchB { 0%,100%{transform:translateX(3px)}  50%{transform:translateX(-3px)} }
+
+/* ══════════════════════════════════════════════════════
+   NEW 15. CONFETTI BURST
+   ══════════════════════════════════════════════════════ */
+.confetti-piece {
+  position: fixed; width: 8px; height: 8px;
+  pointer-events: none; z-index: 99996;
+  transform: translate(-50%,-50%);
+  animation: confettiFall var(--dur,1s) ease-out forwards;
+  border-radius: var(--br, 2px);
+}
+@keyframes confettiFall {
+  0%   { transform:translate(-50%,-50%) translate(0,0) rotate(0deg) scale(1); opacity:1; }
+  100% { transform:translate(-50%,-50%) translate(var(--tx),var(--ty)) rotate(var(--rot,720deg)) scale(.2); opacity:0; }
+}
+
+/* ══════════════════════════════════════════════════════
+   NEW 16. TWINKLING STAR FIELD (section backgrounds)
+   ══════════════════════════════════════════════════════ */
+.starfield-section { position: relative; overflow: hidden; }
+.star-dot {
+  position: absolute; border-radius: 50%;
+  background: #fff; pointer-events: none;
+  animation: twinkle var(--t,3s) ease-in-out var(--d,0s) infinite alternate;
+}
+@keyframes twinkle {
+  0%   { opacity: .05; transform: scale(.8); }
+  100% { opacity: .6;  transform: scale(1.2); }
+}
+
+/* ══════════════════════════════════════════════════════
+   NEW 17. IMAGE NOISE FILTER ON HOVER
+   ══════════════════════════════════════════════════════ */
+.noise-img { position: relative; overflow: hidden; }
+.noise-img::after {
+  content: '';
+  position: absolute; inset: 0; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='f'%3E%3CfeTurbulence baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)' opacity='0.08'/%3E%3C/svg%3E");
+  background-size: cover;
+  opacity: 0; transition: opacity .4s;
+  border-radius: inherit;
+}
+.noise-img:hover::after { opacity: 1; }
+
+/* ══════════════════════════════════════════════════════
+   NEW 18. CURSOR COMET TRAIL on hero section
+   ══════════════════════════════════════════════════════ */
+.comet-trail {
+  position: fixed; pointer-events: none; z-index: 99988;
+  border-radius: 50%;
+  transform: translate(-50%,-50%);
+  animation: cometFade var(--cf,.5s) ease-out forwards;
+}
+@keyframes cometFade {
+  0%   { opacity: .8; transform: translate(-50%,-50%) scale(1); }
+  100% { opacity: 0;  transform: translate(-50%,-50%) scale(0); }
+}
+
+/* ══════════════════════════════════════════════════════
+   NEW 19. NAV GLASSMORPHISM COLOR SHIFT on scroll
+   ══════════════════════════════════════════════════════ */
+.navbar { transition: background .5s, border-color .5s, box-shadow .5s; }
+.navbar.deep-scroll {
+  background: rgba(5,5,12,.95) !important;
+  border-color: rgba(14,165,233,.2) !important;
+  box-shadow: 0 0 40px rgba(14,165,233,.06) !important;
+}
+
+/* ══════════════════════════════════════════════════════
+   NEW 20. TAG PULSE WAVE
+   ══════════════════════════════════════════════════════ */
+.tag {
+  position: relative; overflow: hidden;
+  transition: all .3s;
+}
+.tag::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: rgba(14,165,233,.15);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform .35s cubic-bezier(.16,1,.3,1);
+  border-radius: inherit;
+}
+.deep-dive-header:hover .tag::before { transform: scaleX(1); }
+.deep-dive-header:hover .tag { color: #fff; border-color: rgba(14,165,233,.4); }
+
+/* ══════════════════════════════════════════════════════
+   NEW 21. TYPING INDICATOR on footer "get in touch"
+   ══════════════════════════════════════════════════════ */
+.typing-dots {
+  display: inline-flex; align-items: center; gap: 4px;
+  vertical-align: middle; margin-left: 8px;
+}
+.typing-dots span {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: #0ea5e9; animation: typingDot 1.2s ease-in-out infinite;
+}
+.typing-dots span:nth-child(2) { animation-delay: .2s; }
+.typing-dots span:nth-child(3) { animation-delay: .4s; }
+@keyframes typingDot {
+  0%,80%,100% { transform: scale(.8); opacity:.4; }
+  40%          { transform: scale(1.2); opacity:1; }
+}
+
+/* ══════════════════════════════════════════════════════
+   NEW 22. HERO SUBTITLE RAINBOW SHIFT
+   ══════════════════════════════════════════════════════ */
+@keyframes rainbowShift {
+  0%   { filter: hue-rotate(0deg); }
+  100% { filter: hue-rotate(360deg); }
+}
+.text-accent:hover { animation: rainbowShift 2s linear infinite; }
+
+/* ══════════════════════════════════════════════════════
+   NEW 23. SECTION DIVIDER ANIMATED LINE
+   ══════════════════════════════════════════════════════ */
+.section-divider {
+  width: 100%; height: 1px;
+  background: linear-gradient(90deg, transparent, #0ea5e9, #6366f1, transparent);
+  background-size: 200% 100%;
+  animation: dividerFlow 4s linear infinite;
+  margin: 0; opacity: .4;
+}
+@keyframes dividerFlow { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+
+/* ══════════════════════════════════════════════════════
+   NEW 24. PERSPECTIVE TILT on profile separators
+   ══════════════════════════════════════════════════════ */
+.persp-section {
+  perspective: 1200px;
+}
+.persp-section .certs-bordered-card {
+  transform-style: preserve-3d;
+  transition: transform .5s cubic-bezier(.16,1,.3,1);
+}
+.persp-section:hover .certs-bordered-card {
+  transform: rotateX(2deg) rotateY(-1deg) scale(1.01);
+}
