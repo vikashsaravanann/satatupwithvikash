@@ -19,11 +19,16 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { input, model } = req.body;
-
-  if (!input) {
-    return res.status(400).json({ error: 'Input is required' });
+  let messages = req.body.messages;
+  if (!messages && req.body.input) {
+    messages = Array.isArray(req.body.input) ? req.body.input : [{ role: 'user', content: req.body.input }];
   }
+
+  if (!messages || messages.length === 0) {
+    return res.status(400).json({ error: 'Messages array is required' });
+  }
+
+  const model = req.body.model;
 
   const API_KEY = process.env.GROQ_API_KEY;
   const API_URL = 'https://api.groq.com/openai/v1/chat/completions';

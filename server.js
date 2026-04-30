@@ -27,10 +27,22 @@ app.get('/api/chat', (req, res) => {
 });
 
 app.post('/api/chat', async (req, res) => {
+  console.log('Incoming request body:', JSON.stringify(req.body, null, 2));
   if (!API_KEY) {
     return res.status(500).json({ error: 'GROQ_API_KEY is missing on server' });
   }
-  const { messages, model } = req.body;
+  
+  // Handle both 'messages' (new) and 'input' (old) formats
+  let messages = req.body.messages;
+  if (!messages && req.body.input) {
+    messages = Array.isArray(req.body.input) ? req.body.input : [{ role: 'user', content: req.body.input }];
+  }
+
+  if (!messages || messages.length === 0) {
+     return res.status(400).json({ error: 'Messages array is required and cannot be empty' });
+  }
+
+  const model = req.body.model;
 
   try {
     const response = await fetch(API_URL, {
