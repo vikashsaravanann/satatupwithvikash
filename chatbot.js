@@ -64,11 +64,21 @@ If asked something unrelated to Vikash, politely redirect: "I'm here to help you
 
   if (!toggle || !panel) return;
 
+  let greetingSent = false;
+
   // Toggle panel
   toggle.addEventListener('click', () => {
     panel.classList.toggle('open');
     if (panel.classList.contains('open')) {
       setTimeout(() => inputEl.focus(), 300);
+      
+      // Auto-greeting
+      if (!greetingSent) {
+        setTimeout(() => {
+          addMessage("Hello! I'm Vikash's AI assistant. How can I help you learn more about him today? ⚡", 'bot');
+          greetingSent = true;
+        }, 600);
+      }
     }
   });
 
