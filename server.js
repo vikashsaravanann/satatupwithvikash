@@ -43,6 +43,8 @@ app.post('/api/chat', async (req, res) => {
   }
 
   const model = req.body.model;
+  // Force a Groq-compatible model (ignore old grok-4.20-reasoning from cached clients)
+  const groqModel = (model && model.includes('llama')) ? model : 'llama-3.3-70b-versatile';
 
   try {
     const response = await fetch(API_URL, {
@@ -52,8 +54,8 @@ app.post('/api/chat', async (req, res) => {
         'Authorization': `Bearer ${API_KEY}`,
       },
       body: JSON.stringify({
-        model: model || 'llama-3.3-70b-versatile', 
-        messages: messages || [],
+        model: groqModel, 
+        messages: messages,
         stream: false
       }),
     });

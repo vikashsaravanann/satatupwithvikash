@@ -28,7 +28,8 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'Messages array is required' });
   }
 
-  const model = req.body.model;
+  // Force a Groq-compatible model
+  const groqModel = (model && model.includes('llama')) ? model : 'llama-3.3-70b-versatile';
 
   const API_KEY = process.env.GROQ_API_KEY;
   const API_URL = 'https://api.groq.com/openai/v1/chat/completions';
@@ -41,8 +42,8 @@ export default async function handler(req, res) {
         'Authorization': `Bearer ${API_KEY}`,
       },
       body: JSON.stringify({
-        model: model || 'llama-3.3-70b-versatile',
-        messages: req.body.messages || [],
+        model: groqModel,
+        messages: messages,
         stream: false
       }),
     });
