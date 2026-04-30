@@ -13,6 +13,10 @@
   // Point to our new bridge server (works for local node or Vercel /api/chat)
   const API_URL = '/api/chat'; 
   
+  // 🔗 IMPORTANT: Update this to your actual Vercel URL (e.g., https://your-project.vercel.app)
+  // This allows the AI to work on your GitHub Pages site!
+  const VERCEL_URL = 'https://portfolio-information-vikash.vercel.app'; 
+
   // For local testing without Vercel, use: http://localhost:3000/api/chat
   const LOCAL_API_URL = 'http://localhost:3000/api/chat';
 
@@ -137,10 +141,12 @@ If asked something unrelated to Vikash, politely redirect: "I'm here to help you
       ]
     };
 
-    // Try relative URL first (Vercel), then local fallback
+    // Try relative URL first (Vercel), then local fallback, then Vercel absolute fallback
     let url = API_URL;
-    if (window.location.protocol === 'file:') {
+    if (window.location.protocol === 'file:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
         url = LOCAL_API_URL;
+    } else if (window.location.hostname.includes('github.io')) {
+        url = VERCEL_URL + API_URL;
     }
 
     try {
