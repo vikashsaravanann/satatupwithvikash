@@ -1894,6 +1894,9 @@ section {
     position: relative;
     border-radius: 24px;
     overflow: hidden;
+    /* Safari overflow clip bug fixes */
+    -webkit-mask-image: -webkit-radial-gradient(white, black);
+    isolation: isolate;
     box-shadow: 0 15px 35px rgba(0,0,0,0.5);
     transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s;
     background: transparent;
@@ -1949,6 +1952,9 @@ section {
     height: 400px;
     border-radius: 16px;
     overflow: hidden;
+    /* Safari overflow clip bug fixes */
+    -webkit-mask-image: -webkit-radial-gradient(white, black);
+    isolation: isolate;
     box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     position: relative;
 }
