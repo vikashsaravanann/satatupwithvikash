@@ -1913,13 +1913,11 @@ section {
     border: 8px solid #ffffff; /* Crisp white border added */
     border-radius: 12px;
     box-sizing: border-box;
-    filter: grayscale(85%) brightness(0.85); /* Moody grayscale default */
-    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s ease;
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .responsive-intro-card:hover img, .responsive-staggered-card:hover img {
-    transform: scale(1.08);
-    filter: grayscale(0%) brightness(1.05); /* Full color pop on hover */
+    transform: scale(1.08); /* Keep just the zoom effect on hover */
 }
 
 /* Card Container Variants for CSS-only Hover */
@@ -1937,9 +1935,6 @@ section {
     transform: translateY(-20px);
     z-index: 2;
     box-shadow: 0 0 40px rgba(14,165,233,0.3);
-}
-.widget-card-center img {
-    filter: grayscale(0%) brightness(1); /* Center is always colorful */
 }
 .widget-card-center:hover {
     transform: translateY(-35px);
