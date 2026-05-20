@@ -1183,20 +1183,22 @@
                 <div class="chat-header-info">
                     <div class="chat-avatar"><i class="fas fa-robot"></i></div>
                     <div>
-                        <div class="chat-title">Ask about Vikash</div>
-                        <div class="chat-subtitle">Powered by Grok AI</div>
+                        <div class="chat-title">Vikash's AI Assistant</div>
+                        <div class="chat-subtitle"><span class="chat-status-dot"></span> Online — Powered by Grok AI</div>
                     </div>
                 </div>
                 <button class="chat-close" id="ai-chat-close"><i class="fas fa-times"></i></button>
             </div>
-            <div class="chat-messages" id="chatMessages">
-                <div class="chat-msg bot">
-                    <div class="msg-bubble">Hey! 👋 I'm Vikash's AI assistant. Ask me anything about his skills,
-                        projects, certifications, or how to hire him!</div>
-                </div>
+            <div class="chat-messages" id="chatMessages"></div>
+            <!-- Quick Action Chips -->
+            <div class="chat-chips" id="chatChips">
+                <button class="chat-chip" data-msg="What are your top skills?">🧠 Skills</button>
+                <button class="chat-chip" data-msg="Tell me about your projects">🚀 Projects</button>
+                <button class="chat-chip" data-msg="What certifications do you have?">🏆 Certifications</button>
+                <button class="chat-chip" data-msg="How can I hire or contact you?">📩 Contact</button>
             </div>
             <div class="chat-input-wrap">
-                <input type="text" id="chatInput" placeholder="Ask about skills, projects..." autocomplete="off">
+                <input type="text" id="chatInput" placeholder="Ask me anything about Vikash..." autocomplete="off">
                 <button id="chatSend"><i class="fas fa-paper-plane"></i></button>
             </div>
         </div>

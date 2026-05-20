@@ -1,6 +1,9 @@
 /**
- * VIKASH PORTFOLIO — AI CHATBOT + VISITOR COUNTER
- * Powered by Google Gemini API
+ * VIKASH PORTFOLIO — AI CHATBOT (UPGRADED)
+ * ✅ Conversation Memory (multi-turn context)
+ * ✅ Quick-Action Chips
+ * ✅ Enriched System Prompt with latest 15 certs
+ * ✅ Smooth streaming-style reply animation
  */
 
 (function () {
@@ -10,102 +13,147 @@
      CONFIGURATION
      ═══════════════════════════════════════════ */
   const XAI_MODEL = 'grok-4.20-reasoning';
-  // Point to our new bridge server (works for local node or Vercel /api/chat)
-  const API_URL = '/api/chat'; 
-  
-  // 🔗 This allows the AI to work on your GitHub Pages site!
-  const VERCEL_URL = 'https://portfolio-information.vercel.app'; 
-
-  // For local testing without Vercel, use: http://localhost:3000/api/chat
+  const API_URL = '/api/chat';
+  const VERCEL_URL = 'https://portfolio-information.vercel.app';
   const LOCAL_API_URL = 'http://localhost:3000/api/chat';
 
-  const SYSTEM_PROMPT = `You are Vikash's AI portfolio assistant. Answer questions about Vikash Saravanan in a friendly, professional tone. Keep replies concise (2-4 sentences max). Use emojis sparingly.
+  const SYSTEM_PROMPT = `You are Vikash's intelligent AI portfolio assistant. Be friendly, concise, and professional. Keep replies under 4 sentences unless listing items. Use emojis sparingly but effectively.
 
-VIKASH SARAVANAN — PROFILE:
-• B.Tech AI & Data Science, 1st Year, Rathinam Technical Campus, Coimbatore (2025-2029)
+VIKASH SARAVANAN — FULL PROFILE:
+• Degree: B.Tech in AI & Data Science, 1st Year (2025–2029)
+• College: Rathinam Technical Campus, Coimbatore
 • Native: Karur, Tamil Nadu, India
 • Email: vikash07052008@gmail.com | Phone: +91 9342877474
 • LinkedIn: linkedin.com/in/vikash-saravanan-j7528
 • GitHub: github.com/vikashsaravanann
 • Instagram: @startupwithvikash
 
-SKILLS:
-• Languages: Python, JavaScript, SQL, HTML/CSS
+TECHNICAL SKILLS:
+• Languages: Python, JavaScript, TypeScript, SQL, HTML/CSS
 • Frameworks: React, Next.js, Node.js, Flask
-• AI/ML: PyTorch, TensorFlow, Computer Vision, NLP, LLMs
-• Automation: n8n (workflow automation), web scraping
-• DevOps: Docker, Git, GitHub Pages
-• Data: Pandas, NumPy, Matplotlib, Power BI
+• AI/ML: PyTorch, TensorFlow, Computer Vision, NLP, LLMs, Generative AI
+• Automation: n8n (workflow automation), web scraping, autonomous agents
+• DevOps: Docker, Git, GitHub Pages, Vercel
+• Data: Pandas, NumPy, Matplotlib, Power BI, Data Annotation
 
 PROJECTS:
-• HearWise — Production-ready hearing assistance app using AI for real-time audio processing
-• AI Automation Systems — Enterprise-grade n8n workflow automations
-• Portfolio Website — This site, built with vanilla HTML/CSS/JS with 30+ custom animations
+• HearWise — Production-ready AI-powered hearing assistance platform with ocean-themed UI
+• AI Automation Systems — Enterprise-grade n8n workflow automations for businesses
+• Portfolio Website — This site, built with vanilla HTML/CSS/JS with 30+ custom animations and AI chatbot
 
 ACHIEVEMENTS:
 • Hackathon Finalist — Meta PyTorch (OpenEnv)
-• 15+ Professional Certifications (Google, Microsoft, IBM, Cisco, Coursera, LinkedIn)
-• 3+ Live Production Architectures
+• 15+ Professional Certifications
+• 3+ Live Production Architectures deployed
 • 5000+ Lines of Code written
+
+CERTIFICATIONS (all 15):
+1. Data Analysis — Microsoft & LinkedIn
+2. Coding Essentials — Scaler
+3. Full-Stack Development — Rathinam Workshop
+4. Data Analytics 1 — LinkedIn
+5. Data Analytics 2 — LinkedIn
+6. Data Analysis with Python — freeCodeCamp
+7. Networking Basics & Troubleshooting — Cisco Academy
+8. Design Thinking — IIT Bombay
+9. Career Essentials in Data Analysis — Microsoft & LinkedIn
+10. Applied Machine Learning: Ensemble Learning — LinkedIn Learning
+11. Generative AI vs. Traditional AI — LinkedIn Learning
+12. Generative AI vs. Traditional AI (NASBA) — LinkedIn Learning
+13. Hands-On Data Annotation: Applied Machine Learning — LinkedIn Learning
+14. Introduction to Career Skills in Data Analytics — LinkedIn Learning
+15. The Cybersecurity Threat Landscape — LinkedIn Learning
 
 AVAILABILITY:
 • Open for Remote & Coimbatore-based internships
-• Interested in: Data Analysis, AI Engineering, Full-Stack Development, Automation
+• Interested in: Data Analysis, AI Engineering, Full-Stack Dev, Automation
 • Currently building: Autonomous AI agents and scalable data pipelines
 
-If asked something unrelated to Vikash, politely redirect: "I'm here to help you learn about Vikash! Try asking about his skills, projects, or how to hire him."`;
+If asked something unrelated to Vikash, politely say: "I'm focused on helping you learn about Vikash! Try asking about his skills, projects, or how to contact him. 😊"`;
 
   /* ═══════════════════════════════════════════
-     CHAT WIDGET LOGIC
+     CONVERSATION HISTORY (MEMORY)
      ═══════════════════════════════════════════ */
-  const toggle = document.getElementById('ai-chat-toggle');
-  const panel = document.getElementById('ai-chat-panel');
+  const conversationHistory = [];
+
+  /* ═══════════════════════════════════════════
+     DOM ELEMENTS
+     ═══════════════════════════════════════════ */
+  const toggle   = document.getElementById('ai-chat-toggle');
+  const panel    = document.getElementById('ai-chat-panel');
   const closeBtn = document.getElementById('ai-chat-close');
   const messagesEl = document.getElementById('chatMessages');
-  const inputEl = document.getElementById('chatInput');
-  const sendBtn = document.getElementById('chatSend');
+  const inputEl  = document.getElementById('chatInput');
+  const sendBtn  = document.getElementById('chatSend');
+  const chipsEl  = document.getElementById('chatChips');
 
   if (!toggle || !panel) return;
 
   let greetingSent = false;
 
-  // Toggle panel
+  /* ═══════════════════════════════════════════
+     TOGGLE PANEL OPEN/CLOSE
+     ═══════════════════════════════════════════ */
   toggle.addEventListener('click', () => {
     panel.classList.toggle('open');
     if (panel.classList.contains('open')) {
       setTimeout(() => inputEl.focus(), 300);
-      
-      // Auto-greeting
       if (!greetingSent) {
         setTimeout(() => {
-          addMessage("Hello! I'm Vikash's AI assistant. How can I help you learn more about him today? ⚡", 'bot');
+          addMessage("Hey there! 👋 I'm Vikash's AI assistant. I know everything about his skills, projects, and 15 certifications. What would you like to know?", 'bot');
           greetingSent = true;
-        }, 600);
+        }, 500);
       }
     }
   });
 
   closeBtn.addEventListener('click', () => panel.classList.remove('open'));
 
-  // Send message
-  function sendMessage() {
-    const text = inputEl.value.trim();
+  /* ═══════════════════════════════════════════
+     QUICK ACTION CHIPS
+     ═══════════════════════════════════════════ */
+  if (chipsEl) {
+    chipsEl.querySelectorAll('.chat-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        const msg = chip.getAttribute('data-msg');
+        if (msg) triggerSend(msg);
+      });
+    });
+  }
+
+  /* ═══════════════════════════════════════════
+     SEND MESSAGE
+     ═══════════════════════════════════════════ */
+  sendBtn.addEventListener('click', () => triggerSend(inputEl.value));
+  inputEl.addEventListener('keydown', e => { if (e.key === 'Enter') triggerSend(inputEl.value); });
+
+  function triggerSend(text) {
+    text = text.trim();
     if (!text) return;
-    addMessage(text, 'user');
     inputEl.value = '';
     inputEl.disabled = true;
     sendBtn.disabled = true;
 
-    // Show typing indicator
-    const typingEl = addMessage('<span class="typing-dots-chat"><span></span><span></span><span></span></span>', 'bot', true);
+    addMessage(text, 'user');
 
-    callBridge(text).then(reply => {
+    // Hide chips after first interaction
+    if (chipsEl) chipsEl.style.display = 'none';
+
+    // Add to conversation history
+    conversationHistory.push({ role: 'user', content: text });
+
+    // Show typing indicator
+    const typingEl = addTyping();
+
+    callBridge().then(reply => {
       typingEl.remove();
-      addMessage(reply, 'bot');
-    }).catch(err => {
-      console.error('Bridge Error:', err);
+      // Animate the reply character-by-character
+      addAnimatedMessage(reply, 'bot');
+      // Add reply to memory
+      conversationHistory.push({ role: 'assistant', content: reply });
+    }).catch(() => {
       typingEl.remove();
-      addMessage("Sorry, I couldn't connect right now. You can reach Vikash directly at vikash07052008@gmail.com 📧", 'bot');
+      addMessage("Sorry, I'm having trouble connecting right now. Reach Vikash directly at vikash07052008@gmail.com 📧", 'bot');
     }).finally(() => {
       inputEl.disabled = false;
       sendBtn.disabled = false;
@@ -113,74 +161,81 @@ If asked something unrelated to Vikash, politely redirect: "I'm here to help you
     });
   }
 
-  sendBtn.addEventListener('click', sendMessage);
-  inputEl.addEventListener('keydown', e => {
-    if (e.key === 'Enter') sendMessage();
-  });
-
-  function addMessage(content, role, isHTML = false) {
+  /* ═══════════════════════════════════════════
+     ADD MESSAGE HELPERS
+     ═══════════════════════════════════════════ */
+  function addMessage(content, role) {
     const wrap = document.createElement('div');
     wrap.className = `chat-msg ${role}`;
     const bubble = document.createElement('div');
     bubble.className = 'msg-bubble';
-    if (isHTML) bubble.innerHTML = content;
-    else bubble.textContent = content;
+    bubble.textContent = content;
     wrap.appendChild(bubble);
     messagesEl.appendChild(wrap);
     messagesEl.scrollTop = messagesEl.scrollHeight;
     return wrap;
   }
 
-  async function callBridge(userMessage) {
-    const body = {
-      model: XAI_MODEL,
-      input: [
-        { role: 'system', content: SYSTEM_PROMPT },
-        { role: 'user', content: userMessage }
-      ]
-    };
-
-    // Try relative URL first (Vercel), then local fallback, then Vercel absolute fallback
-    let url = API_URL;
-    if (window.location.protocol === 'file:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-        url = LOCAL_API_URL;
-    } else if (window.location.hostname.includes('github.io')) {
-        url = VERCEL_URL + API_URL;
-    }
-
-    try {
-      const res = await fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body),
-      });
-
-      if (!res.ok) throw new Error('Bridge error');
-
-      const data = await res.json();
-      return data.message?.content || 
-             data.choices?.[0]?.message?.content || 
-             data.response || 
-             data.message || 
-             "I'm not sure how to answer that.";
-    } catch (err) {
-      console.warn('Primary API failed, trying fallback...');
-      if (url !== LOCAL_API_URL) {
-          const fallbackRes = await fetch(LOCAL_API_URL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(body),
-          });
-          const fallbackData = await fallbackRes.json();
-          return fallbackData.message?.content || fallbackData.response || fallbackData.message;
-      }
-      throw err;
-    }
+  function addTyping() {
+    const wrap = document.createElement('div');
+    wrap.className = 'chat-msg bot';
+    wrap.innerHTML = '<div class="msg-bubble"><span class="typing-dots-chat"><span></span><span></span><span></span></span></div>';
+    messagesEl.appendChild(wrap);
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+    return wrap;
   }
 
+  function addAnimatedMessage(content, role) {
+    const wrap = document.createElement('div');
+    wrap.className = `chat-msg ${role}`;
+    const bubble = document.createElement('div');
+    bubble.className = 'msg-bubble';
+    wrap.appendChild(bubble);
+    messagesEl.appendChild(wrap);
+
+    let i = 0;
+    const interval = setInterval(() => {
+      bubble.textContent += content[i];
+      i++;
+      messagesEl.scrollTop = messagesEl.scrollHeight;
+      if (i >= content.length) clearInterval(interval);
+    }, 18);
+    return wrap;
+  }
 
   /* ═══════════════════════════════════════════
-     END
+     API CALL WITH CONVERSATION MEMORY
      ═══════════════════════════════════════════ */
+  async function callBridge() {
+    const messages = [
+      { role: 'system', content: SYSTEM_PROMPT },
+      ...conversationHistory
+    ];
+
+    const body = { model: XAI_MODEL, input: messages };
+
+    let url = API_URL;
+    if (window.location.protocol === 'file:' ||
+        window.location.hostname === 'localhost' ||
+        window.location.hostname === '127.0.0.1') {
+      url = LOCAL_API_URL;
+    } else if (window.location.hostname.includes('github.io')) {
+      url = VERCEL_URL + API_URL;
+    }
+
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+
+    if (!res.ok) throw new Error('Bridge error');
+    const data = await res.json();
+    return data.message?.content ||
+           data.choices?.[0]?.message?.content ||
+           data.response ||
+           data.message ||
+           "I'm not sure how to answer that.";
+  }
 
 })();
