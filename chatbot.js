@@ -245,10 +245,41 @@ If asked something unrelated to Vikash, politely say: "I'm focused on helping yo
     const utterance = new SpeechSynthesisUtterance(cleanText);
     currentUtterance = utterance;
 
-    // Try to find a friendly natural English voice
+    // Try to find a high-quality Siri-style English female voice
     const voices = window.speechSynthesis.getVoices();
-    const optimalVoice = voices.find(v => v.lang.startsWith('en') && v.name.toLowerCase().includes('google') || v.name.toLowerCase().includes('natural'));
-    if (optimalVoice) utterance.voice = optimalVoice;
+    let femaleVoice = voices.find(v => {
+      const name = v.name.toLowerCase();
+      const lang = v.lang.toLowerCase();
+      return lang.startsWith('en') && (
+        name.includes('siri') ||
+        name.includes('samantha') || 
+        name.includes('zira') || 
+        name.includes('google us english') || 
+        name.includes('victoria') || 
+        name.includes('tessa') || 
+        name.includes('karen') ||
+        name.includes('veena')
+      );
+    });
+
+    // Fallback: search for any English voice with 'female' in the name
+    if (!femaleVoice) {
+      femaleVoice = voices.find(v => v.lang.startsWith('en') && v.name.toLowerCase().includes('female'));
+    }
+
+    // Secondary fallback: just use Google's English voice
+    if (!femaleVoice) {
+      femaleVoice = voices.find(v => v.lang.startsWith('en') && v.name.toLowerCase().includes('google'));
+    }
+
+    // Final fallback: any English voice
+    if (!femaleVoice) {
+      femaleVoice = voices.find(v => v.lang.startsWith('en'));
+    }
+
+    if (femaleVoice) {
+      utterance.voice = femaleVoice;
+    }
 
     utterance.onstart = () => {
       buttonElement.innerHTML = '<i class="fas fa-volume-mute"></i> Mute';
