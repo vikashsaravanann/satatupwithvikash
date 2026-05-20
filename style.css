@@ -1892,15 +1892,16 @@ section {
     max-width: 350px;
     height: 380px; /* Force container height */
     position: relative;
-    border-radius: 12px;
+    border-radius: 20px;
     overflow: hidden;
     /* Safari overflow clip bug fixes */
     -webkit-mask-image: -webkit-radial-gradient(white, black);
     mask-image: radial-gradient(white, black);
     isolation: isolate;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.5);
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s;
-    background: transparent;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s, border-color 0.4s;
+    background: rgba(10, 10, 15, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.08); /* Subtle dark border */
 }
 
 .responsive-intro-card img, .responsive-staggered-card img {
@@ -1911,40 +1912,42 @@ section {
     display: block;
     margin: 0;
     padding: 0;
-    border: 8px solid #ffffff; /* Crisp white border added */
-    border-radius: 12px;
-    box-sizing: border-box;
-    /* Removed transition on img since we don't scale the img anymore */
+    border: none;
+    border-radius: 20px;
 }
 
 /* Card Container Variants for CSS-only Hover */
 .widget-card-left {
-    transform: translateY(20px) rotate(-6deg);
+    transform: translateY(0) rotate(0deg);
 }
 .widget-card-left:hover {
-    transform: translateY(5px) rotate(-2deg) scale(1.04);
-    box-shadow: 0 25px 45px rgba(14,165,233,0.25) !important;
+    transform: translateY(-10px) rotate(0deg) scale(1.02);
+    box-shadow: 0 25px 45px rgba(14,165,233,0.3) !important;
+    border-color: rgba(14, 165, 233, 0.6);
     z-index: 10;
 }
 
 .widget-card-center {
-    height: 440px;
-    transform: translateY(-20px);
+    height: 400px; /* Slightly taller for emphasis */
+    transform: translateY(-10px) rotate(0deg);
     z-index: 2;
-    box-shadow: 0 0 40px rgba(14,165,233,0.3);
+    box-shadow: 0 15px 40px rgba(14,165,233,0.2);
+    border-color: rgba(14, 165, 233, 0.3);
 }
 .widget-card-center:hover {
-    transform: translateY(-35px) scale(1.04);
-    box-shadow: 0 0 55px rgba(14,165,233,0.5) !important;
+    transform: translateY(-20px) scale(1.02);
+    box-shadow: 0 25px 55px rgba(14,165,233,0.5) !important;
+    border-color: rgba(14, 165, 233, 0.8);
     z-index: 10;
 }
 
 .widget-card-right {
-    transform: translateY(20px) rotate(6deg);
+    transform: translateY(0) rotate(0deg);
 }
 .widget-card-right:hover {
-    transform: translateY(5px) rotate(2deg) scale(1.04);
-    box-shadow: 0 25px 45px rgba(14,165,233,0.25) !important;
+    transform: translateY(-10px) rotate(0deg) scale(1.02);
+    box-shadow: 0 25px 45px rgba(14,165,233,0.3) !important;
+    border-color: rgba(14, 165, 233, 0.6);
     z-index: 10;
 }
 
