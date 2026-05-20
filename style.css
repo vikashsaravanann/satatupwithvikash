@@ -1896,6 +1896,7 @@ section {
     overflow: hidden;
     /* Safari overflow clip bug fixes */
     -webkit-mask-image: -webkit-radial-gradient(white, black);
+    mask-image: radial-gradient(white, black);
     isolation: isolate;
     box-shadow: 0 15px 35px rgba(0,0,0,0.5);
     transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s;
@@ -1913,11 +1914,7 @@ section {
     border: 8px solid #ffffff; /* Crisp white border added */
     border-radius: 12px;
     box-sizing: border-box;
-    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.responsive-intro-card:hover img, .responsive-staggered-card:hover img {
-    transform: scale(1.08); /* Keep just the zoom effect on hover */
+    /* Removed transition on img since we don't scale the img anymore */
 }
 
 /* Card Container Variants for CSS-only Hover */
@@ -1925,7 +1922,7 @@ section {
     transform: translateY(20px) rotate(-6deg);
 }
 .widget-card-left:hover {
-    transform: translateY(5px) rotate(-2deg);
+    transform: translateY(5px) rotate(-2deg) scale(1.04);
     box-shadow: 0 25px 45px rgba(14,165,233,0.25) !important;
     z-index: 10;
 }
@@ -1937,19 +1934,16 @@ section {
     box-shadow: 0 0 40px rgba(14,165,233,0.3);
 }
 .widget-card-center:hover {
-    transform: translateY(-35px);
+    transform: translateY(-35px) scale(1.04);
     box-shadow: 0 0 55px rgba(14,165,233,0.5) !important;
     z-index: 10;
-}
-.widget-card-center:hover img {
-    transform: scale(1.05);
 }
 
 .widget-card-right {
     transform: translateY(20px) rotate(6deg);
 }
 .widget-card-right:hover {
-    transform: translateY(5px) rotate(2deg);
+    transform: translateY(5px) rotate(2deg) scale(1.04);
     box-shadow: 0 25px 45px rgba(14,165,233,0.25) !important;
     z-index: 10;
 }
