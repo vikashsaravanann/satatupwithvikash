@@ -1893,13 +1893,13 @@ section {
     height: 380px; /* Force container height */
     position: relative;
     border-radius: 24px;
-    overflow: hidden;
-    /* Safari overflow clip bug fixes */
-    -webkit-mask-image: -webkit-radial-gradient(white, black);
-    isolation: isolate;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
     box-shadow: 0 15px 35px rgba(0,0,0,0.5);
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s;
-    background: transparent;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s, border-color 0.4s;
+    overflow: hidden;
 }
 
 .responsive-intro-card img, .responsive-staggered-card img {
@@ -1911,12 +1911,16 @@ section {
     margin: 0;
     padding: 0;
     border: none;
-    border-radius: 24px;
+    border-radius: 14px;
     transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+.responsive-intro-card:hover, .responsive-staggered-card:hover {
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
 .responsive-intro-card:hover img, .responsive-staggered-card:hover img {
-    transform: scale(1.08);
+    transform: scale(1.05);
 }
 
 /* Card Container Variants for CSS-only Hover */
@@ -1929,13 +1933,15 @@ section {
 }
 .widget-card-center {
     height: 440px;
-    background: linear-gradient(135deg, rgba(0,0,0,0.4), rgba(135,206,235,0.05));
+    background: linear-gradient(135deg, rgba(255,255,255,0.06), rgba(14,165,233,0.15));
+    border: 1px solid rgba(14, 165, 233, 0.4);
     transform: translateY(-20px);
     z-index: 2;
     box-shadow: 0 0 35px rgba(14,165,233,0.35);
 }
 .widget-card-center:hover {
     transform: translateY(-35px);
+    border-color: rgba(14, 165, 233, 0.7);
     box-shadow: 0 0 55px rgba(14,165,233,0.6) !important;
 }
 .widget-card-right {
