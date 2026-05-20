@@ -44,7 +44,7 @@ PROJECTS:
 
 ACHIEVEMENTS:
 • Hackathon Finalist — Meta PyTorch (OpenEnv)
-• 9+ Professional Certifications (Google, Microsoft, IBM, Coursera)
+• 15+ Professional Certifications (Google, Microsoft, IBM, Cisco, Coursera, LinkedIn)
 • 3+ Live Production Architectures
 • 5000+ Lines of Code written
 

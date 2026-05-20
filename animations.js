@@ -285,7 +285,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="stats-counter-grid stagger-children">
             <div class="counter-card">
               <i class="fas fa-certificate counter-icon"></i>
-              <div class="counter-number" data-target="9">0</div>
+              <div class="counter-number" data-target="15">0</div>
               <span class="counter-suffix">+</span>
               <div class="counter-label">Certifications</div>
             </div>
@@ -564,7 +564,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const achievements = [
     { icon:'🏆', title:'ACHIEVEMENT UNLOCKED', msg:'Hackathon Finalist — Meta PyTorch', bar:90 },
     { icon:'🚀', title:'PROJECT DEPLOYED',     msg:'HearWise — Live Production App',  bar:100 },
-    { icon:'📜', title:'CERTIFICATION EARNED', msg:'9+ Professional Credentials',      bar:100 },
+    { icon:'📜', title:'CERTIFICATION EARNED', msg:'15+ Professional Credentials',      bar:100 },
     { icon:'⚡', title:'SKILL MASTERED',       msg:'n8n Automation — 88% Proficiency', bar:88 },
   ];
   let achIdx = 0;
