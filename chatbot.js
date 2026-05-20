@@ -1,9 +1,10 @@
 /**
- * VIKASH PORTFOLIO — AI CHATBOT (UPGRADED)
- * ✅ Conversation Memory (multi-turn context)
- * ✅ Quick-Action Chips
- * ✅ Enriched System Prompt with latest 15 certs
- * ✅ Smooth streaming-style reply animation
+ * VIKASH PORTFOLIO — AI CHATBOT (ULTIMATE UPGRADE)
+ * ✅ Conversation Memory & Session Persistence (localStorage)
+ * ✅ Text-To-Speech Voice Synthesis (Web Speech API)
+ * ✅ Proactive Welcome Greeting (Auto-open after 8s)
+ * ✅ Dynamic Time-Based Greeting
+ * ✅ Rich Interactive Cards (HearWise, Certifications, Contact)
  */
 
 (function () {
@@ -72,9 +73,17 @@ AVAILABILITY:
 If asked something unrelated to Vikash, politely say: "I'm focused on helping you learn about Vikash! Try asking about his skills, projects, or how to contact him. 😊"`;
 
   /* ═══════════════════════════════════════════
-     CONVERSATION HISTORY (MEMORY)
+     STATE MANAGEMENT & LOCAL STORAGE
      ═══════════════════════════════════════════ */
-  const conversationHistory = [];
+  let conversationHistory = [];
+  try {
+    const stored = localStorage.getItem('vikash_chat_history');
+    if (stored) {
+      conversationHistory = JSON.parse(stored);
+    }
+  } catch (e) {
+    console.error('Failed to parse chat history', e);
+  }
 
   /* ═══════════════════════════════════════════
      DOM ELEMENTS
@@ -89,25 +98,64 @@ If asked something unrelated to Vikash, politely say: "I'm focused on helping yo
 
   if (!toggle || !panel) return;
 
-  let greetingSent = false;
+  // Track speech state globally to toggle/cancel
+  let currentUtterance = null;
 
   /* ═══════════════════════════════════════════
-     TOGGLE PANEL OPEN/CLOSE
+     INITIALIZE & GREETINGS
+     ═══════════════════════════════════════════ */
+  // Load saved history or print greeting
+  if (conversationHistory.length > 0) {
+    // Hide default chips if conversation is already active
+    if (chipsEl) chipsEl.style.display = 'none';
+    conversationHistory.forEach(msg => {
+      addMessage(msg.content, msg.role, false); // Render saved messages instantly without animation
+    });
+  } else {
+    // Generate greeting based on time of day
+    const hour = new Date().getHours();
+    let timeGreeting = "Hey there! 👋";
+    if (hour >= 5 && hour < 12) timeGreeting = "Good morning! 🌅";
+    else if (hour >= 12 && hour < 17) timeGreeting = "Good afternoon! ☀️";
+    else if (hour >= 17 && hour < 22) timeGreeting = "Good evening! 🌃";
+    else timeGreeting = "Burning the midnight oil? 🌌";
+
+    const greeting = `${timeGreeting} I'm Vikash's AI assistant. Ask me anything about his projects, skills, or certifications. I can read my answers out loud too!`;
+    addMessage(greeting, 'bot', false);
+    // Note: We don't save the default greeting in localStorage history to keep it clean.
+  }
+
+  /* ═══════════════════════════════════════════
+     PROACTIVE AUTO-OPEN TIMER (8 seconds)
+     ═══════════════════════════════════════════ */
+  const autoOpenKey = 'vikash_chat_auto_opened';
+  if (!sessionStorage.getItem(autoOpenKey) && conversationHistory.length === 0) {
+    setTimeout(() => {
+      if (!panel.classList.contains('open')) {
+        panel.classList.add('open');
+        sessionStorage.setItem(autoOpenKey, 'true');
+        setTimeout(() => inputEl.focus(), 300);
+      }
+    }, 8000);
+  }
+
+  /* ═══════════════════════════════════════════
+     TOGGLE PANEL
      ═══════════════════════════════════════════ */
   toggle.addEventListener('click', () => {
     panel.classList.toggle('open');
     if (panel.classList.contains('open')) {
       setTimeout(() => inputEl.focus(), 300);
-      if (!greetingSent) {
-        setTimeout(() => {
-          addMessage("Hey there! 👋 I'm Vikash's AI assistant. I know everything about his skills, projects, and 15 certifications. What would you like to know?", 'bot');
-          greetingSent = true;
-        }, 500);
-      }
+    } else {
+      // Cancel speech if chat panel is closed
+      if (window.speechSynthesis) window.speechSynthesis.cancel();
     }
   });
 
-  closeBtn.addEventListener('click', () => panel.classList.remove('open'));
+  closeBtn.addEventListener('click', () => {
+    panel.classList.remove('open');
+    if (window.speechSynthesis) window.speechSynthesis.cancel();
+  });
 
   /* ═══════════════════════════════════════════
      QUICK ACTION CHIPS
@@ -122,7 +170,7 @@ If asked something unrelated to Vikash, politely say: "I'm focused on helping yo
   }
 
   /* ═══════════════════════════════════════════
-     SEND MESSAGE
+     SEND MESSAGE LOGIC
      ═══════════════════════════════════════════ */
   sendBtn.addEventListener('click', () => triggerSend(inputEl.value));
   inputEl.addEventListener('keydown', e => { if (e.key === 'Enter') triggerSend(inputEl.value); });
@@ -134,26 +182,26 @@ If asked something unrelated to Vikash, politely say: "I'm focused on helping yo
     inputEl.disabled = true;
     sendBtn.disabled = true;
 
-    addMessage(text, 'user');
+    // Add user message to UI and history
+    addMessage(text, 'user', false);
+    conversationHistory.push({ role: 'user', content: text });
+    saveHistory();
 
-    // Hide chips after first interaction
+    // Hide chips container once chat starts
     if (chipsEl) chipsEl.style.display = 'none';
 
-    // Add to conversation history
-    conversationHistory.push({ role: 'user', content: text });
-
-    // Show typing indicator
+    // Show typing dots
     const typingEl = addTyping();
 
     callBridge().then(reply => {
       typingEl.remove();
-      // Animate the reply character-by-character
-      addAnimatedMessage(reply, 'bot');
-      // Add reply to memory
+      // Print message with smooth typing animation
+      addMessage(reply, 'bot', true);
       conversationHistory.push({ role: 'assistant', content: reply });
+      saveHistory();
     }).catch(() => {
       typingEl.remove();
-      addMessage("Sorry, I'm having trouble connecting right now. Reach Vikash directly at vikash07052008@gmail.com 📧", 'bot');
+      addMessage("Sorry, I'm having trouble connecting right now. Reach Vikash directly at vikash07052008@gmail.com 📧", 'bot', false);
     }).finally(() => {
       inputEl.disabled = false;
       sendBtn.disabled = false;
@@ -161,17 +209,148 @@ If asked something unrelated to Vikash, politely say: "I'm focused on helping yo
     });
   }
 
+  function saveHistory() {
+    try {
+      localStorage.setItem('vikash_chat_history', JSON.stringify(conversationHistory));
+    } catch (e) {
+      console.error('Failed to save chat history', e);
+    }
+  }
+
   /* ═══════════════════════════════════════════
-     ADD MESSAGE HELPERS
+     TEXT TO SPEECH (VOICE RESPONSES)
      ═══════════════════════════════════════════ */
-  function addMessage(content, role) {
+  function speakMessage(text, buttonElement) {
+    if (!window.speechSynthesis) return;
+
+    // If currently speaking the SAME text, stop it
+    if (window.speechSynthesis.speaking && currentUtterance && currentUtterance.text === text) {
+      window.speechSynthesis.cancel();
+      buttonElement.innerHTML = '<i class="fas fa-volume-up"></i> Speak';
+      buttonElement.classList.remove('speaking');
+      return;
+    }
+
+    // Cancel any current speech
+    window.speechSynthesis.cancel();
+    document.querySelectorAll('.chat-sound-btn').forEach(btn => {
+      btn.innerHTML = '<i class="fas fa-volume-up"></i> Speak';
+      btn.classList.remove('speaking');
+    });
+
+    // Clean emojis & formatting links out of speech text for better pronunciation
+    const cleanText = text.replace(/[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2011-\u26FF]|\uD83E[\uDD10-\uDDFF]/g, '')
+                          .replace(/\[([^\]]+)\]\([^\)]+\)/g, '$1');
+
+    const utterance = new SpeechSynthesisUtterance(cleanText);
+    currentUtterance = utterance;
+
+    // Try to find a friendly natural English voice
+    const voices = window.speechSynthesis.getVoices();
+    const optimalVoice = voices.find(v => v.lang.startsWith('en') && v.name.toLowerCase().includes('google') || v.name.toLowerCase().includes('natural'));
+    if (optimalVoice) utterance.voice = optimalVoice;
+
+    utterance.onstart = () => {
+      buttonElement.innerHTML = '<i class="fas fa-volume-mute"></i> Mute';
+      buttonElement.classList.add('speaking');
+    };
+
+    utterance.onend = () => {
+      buttonElement.innerHTML = '<i class="fas fa-volume-up"></i> Speak';
+      buttonElement.classList.remove('speaking');
+    };
+
+    window.speechSynthesis.speak(utterance);
+  }
+
+  /* ═══════════════════════════════════════════
+     RICH UI CARD & LINK GENERATOR
+     ═══════════════════════════════════════════ */
+  function getRichCardElement(text) {
+    const lower = text.toLowerCase();
+    const container = document.createElement('div');
+
+    if (lower.includes('hearwise')) {
+      container.className = 'chat-rich-card';
+      container.innerHTML = `
+        <h4>🚀 HearWise Platform</h4>
+        <p>AI-powered hearing screening & interactive gamified ocean platform designed for children.</p>
+        <a href="index.html#hearwise" class="chat-rich-btn"><i class="fas fa-external-link-alt"></i> View Project details</a>
+      `;
+      return container;
+    }
+    if (lower.includes('certifications') || lower.includes('certification') || lower.includes('certs')) {
+      container.className = 'chat-rich-card';
+      container.innerHTML = `
+        <h4>🏆 Certificates Gallery</h4>
+        <p>Explore Vikash's 15+ verified certifications in AI, Data Science & Networks.</p>
+        <a href="certifications.html" class="chat-rich-btn"><i class="fas fa-award"></i> Open Gallery</a>
+      `;
+      return container;
+    }
+    if (lower.includes('contact') || lower.includes('email') || lower.includes('hire') || lower.includes('phone')) {
+      container.className = 'chat-rich-card';
+      container.innerHTML = `
+        <h4>📩 Get In Touch</h4>
+        <p>Email: vikash07052008@gmail.com<br>Phone: +91 9342877474</p>
+        <a href="mailto:vikash07052008@gmail.com" class="chat-rich-btn"><i class="fas fa-envelope"></i> Send Email</a>
+      `;
+      return container;
+    }
+    return null;
+  }
+
+  /* ═══════════════════════════════════════════
+     DOM CREATION HELPERS
+     ═══════════════════════════════════════════ */
+  function addMessage(content, role, animate = false) {
     const wrap = document.createElement('div');
     wrap.className = `chat-msg ${role}`;
+
+    const wrapper = document.createElement('div');
+    wrapper.className = 'msg-wrapper';
+
     const bubble = document.createElement('div');
     bubble.className = 'msg-bubble';
-    bubble.textContent = content;
-    wrap.appendChild(bubble);
+
+    wrapper.appendChild(bubble);
+    wrap.appendChild(wrapper);
     messagesEl.appendChild(wrap);
+
+    if (role === 'bot') {
+      // Add sound text-to-speech button under bubble
+      const soundBtn = document.createElement('button');
+      soundBtn.className = 'chat-sound-btn';
+      soundBtn.innerHTML = '<i class="fas fa-volume-up"></i> Speak';
+      soundBtn.addEventListener('click', () => speakMessage(content, soundBtn));
+      wrapper.appendChild(soundBtn);
+    }
+
+    if (animate) {
+      let i = 0;
+      const interval = setInterval(() => {
+        bubble.textContent += content[i];
+        i++;
+        messagesEl.scrollTop = messagesEl.scrollHeight;
+        if (i >= content.length) {
+          clearInterval(interval);
+          // Check and append rich interactive cards if applicable
+          const card = getRichCardElement(content);
+          if (card) {
+            wrapper.appendChild(card);
+            messagesEl.scrollTop = messagesEl.scrollHeight;
+          }
+        }
+      }, 15);
+    } else {
+      bubble.textContent = content;
+      // Append rich cards immediately for loaded history
+      const card = getRichCardElement(content);
+      if (card) {
+        wrapper.appendChild(card);
+      }
+    }
+
     messagesEl.scrollTop = messagesEl.scrollHeight;
     return wrap;
   }
@@ -179,37 +358,22 @@ If asked something unrelated to Vikash, politely say: "I'm focused on helping yo
   function addTyping() {
     const wrap = document.createElement('div');
     wrap.className = 'chat-msg bot';
-    wrap.innerHTML = '<div class="msg-bubble"><span class="typing-dots-chat"><span></span><span></span><span></span></span></div>';
+    wrap.innerHTML = '<div class="msg-wrapper"><div class="msg-bubble"><span class="typing-dots-chat"><span></span><span></span><span></span></span></div></div>';
     messagesEl.appendChild(wrap);
     messagesEl.scrollTop = messagesEl.scrollHeight;
     return wrap;
   }
 
-  function addAnimatedMessage(content, role) {
-    const wrap = document.createElement('div');
-    wrap.className = `chat-msg ${role}`;
-    const bubble = document.createElement('div');
-    bubble.className = 'msg-bubble';
-    wrap.appendChild(bubble);
-    messagesEl.appendChild(wrap);
-
-    let i = 0;
-    const interval = setInterval(() => {
-      bubble.textContent += content[i];
-      i++;
-      messagesEl.scrollTop = messagesEl.scrollHeight;
-      if (i >= content.length) clearInterval(interval);
-    }, 18);
-    return wrap;
-  }
-
   /* ═══════════════════════════════════════════
-     API CALL WITH CONVERSATION MEMORY
+     API BRIDGE CALL WITH MULTI-TURN MEMORY
      ═══════════════════════════════════════════ */
   async function callBridge() {
+    // Only send the last 10 messages to avoid payload limits
+    const relevantHistory = conversationHistory.slice(-10);
+
     const messages = [
       { role: 'system', content: SYSTEM_PROMPT },
-      ...conversationHistory
+      ...relevantHistory
     ];
 
     const body = { model: XAI_MODEL, input: messages };
