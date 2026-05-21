@@ -9,207 +9,289 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <!-- Stylesheet -->
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="animations.css">
     <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 24px;
-            margin-top: 40px;
+        /* Portfolio Core Consistency */
+        body {
+            background-color: #0a0a0f;
+            color: #fff;
+            overflow-x: hidden;
         }
 
-        .project-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 16px;
-            padding: 24px;
+        /* Sequential Repository Layout */
+        .projects-sequential {
             display: flex;
             flex-direction: column;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
+            gap: 40px;
+            margin-top: 60px;
+            max-width: 1000px;
+            margin-inline: auto;
         }
 
-        .project-card::before {
+        .repo-panel {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 24px;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(10px);
+            z-index: 1;
+        }
+
+        .repo-panel::before {
             content: '';
             position: absolute;
             top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(90deg, #0ea5e9, #6366f1);
-            opacity: 0;
-            transition: opacity 0.3s ease;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+            transform: skewX(-20deg);
+            transition: 0.5s;
+            z-index: -1;
         }
 
-        .project-card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(14, 165, 233, 0.3);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        .repo-panel:hover {
+            transform: translateY(-5px) scale(1.02);
+            border-color: rgba(14, 165, 233, 0.4);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 40px rgba(14, 165, 233, 0.1);
+            background: rgba(255, 255, 255, 0.04);
         }
 
-        .project-card:hover::before {
-            opacity: 1;
+        .repo-panel:hover::before {
+            left: 150%;
+            transition: 0.7s;
         }
 
-        .project-header {
+        .repo-header {
             display: flex;
             justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 16px;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 20px;
         }
 
-        .project-icon {
-            width: 48px;
-            height: 48px;
-            background: rgba(14, 165, 233, 0.1);
-            border-radius: 12px;
+        .repo-title-group {
             display: flex;
             align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            color: #0ea5e9;
+            gap: 15px;
         }
 
-        .project-links a {
-            color: rgba(255, 255, 255, 0.5);
+        .repo-number {
+            font-family: 'Fira Code', monospace;
             font-size: 1.2rem;
-            transition: color 0.2s ease;
-            margin-left: 10px;
-        }
-
-        .project-links a:hover {
-            color: #0ea5e9;
-        }
-
-        .project-title {
-            font-family: 'Outfit', sans-serif;
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: #fff;
-            margin-bottom: 8px;
-            line-height: 1.3;
-        }
-
-        .project-desc {
-            font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.6);
-            line-height: 1.6;
-            margin-bottom: 20px;
-            flex-grow: 1;
-        }
-
-        .project-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: auto;
-            padding-top: 16px;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .tech-stack {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-
-        .tech-badge {
-            font-size: 0.75rem;
-            padding: 4px 10px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 6px;
-            color: #0ea5e9;
+            color: rgba(14, 165, 233, 0.5);
             font-weight: 600;
         }
 
-        .project-stats {
-            display: flex;
-            gap: 12px;
-            font-size: 0.8rem;
-            color: rgba(255, 255, 255, 0.4);
-        }
-
-        .project-stats span {
+        .repo-icon {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, rgba(14, 165, 233, 0.2), rgba(99, 102, 241, 0.2));
+            border-radius: 16px;
             display: flex;
             align-items: center;
-            gap: 4px;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: #0ea5e9;
+            box-shadow: inset 0 0 20px rgba(255,255,255,0.05);
         }
 
+        .repo-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(90deg, #fff, #a5b4fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px;
+        }
+
+        .repo-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .repo-links a:hover {
+            background: #0ea5e9;
+            color: #fff;
+            transform: rotate(360deg) scale(1.1);
+            box-shadow: 0 0 15px #0ea5e9;
+        }
+
+        .repo-body {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .repo-desc {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.05rem;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.8;
+        }
+
+        .tech-stack-row {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        .tech-pill {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.85rem;
+            padding: 8px 16px;
+            background: rgba(14, 165, 233, 0.1);
+            border: 1px solid rgba(14, 165, 233, 0.3);
+            border-radius: 30px;
+            color: #38bdf8;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* Filter Styles Update */
         .filter-tabs {
             display: flex;
             justify-content: center;
-            gap: 12px;
-            margin-top: 30px;
+            gap: 15px;
+            margin-top: 40px;
+            margin-bottom: 20px;
             flex-wrap: wrap;
         }
 
         .filter-tab {
-            padding: 8px 16px;
-            background: rgba(255, 255, 255, 0.05);
+            padding: 12px 24px;
+            background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
+            border-radius: 30px;
             color: #fff;
-            font-size: 0.85rem;
+            font-size: 0.95rem;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
 
         .filter-tab.active, .filter-tab:hover {
-            background: #0ea5e9;
+            background: linear-gradient(135deg, #0ea5e9, #6366f1);
+            border-color: transparent;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(14, 165, 233, 0.4);
+        }
+
+        .search-container {
+            max-width: 600px;
+            margin: 0 auto 50px auto;
+            position: relative;
+        }
+
+        .cert-search-input {
+            width: 100%;
+            padding: 16px 20px 16px 50px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 30px;
+            color: #fff;
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s;
+        }
+
+        .cert-search-input:focus {
+            outline: none;
             border-color: #0ea5e9;
+            box-shadow: 0 0 20px rgba(14, 165, 233, 0.2);
+            background: rgba(255,255,255,0.08);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255,255,255,0.4);
+            font-size: 1.2rem;
+        }
+
+        @media (max-width: 768px) {
+            .repo-panel { padding: 25px; }
+            .repo-title { font-size: 1.4rem; }
+            .repo-header { flex-direction: column; align-items: flex-start; gap: 15px; }
+            .repo-links { align-self: flex-end; margin-top: -50px; }
         }
     </style>
 </head>
 
 <body>
-    <div id="app-frame" class="page-border-light">
+    <div id="app-frame">
 
         <!-- Navigation -->
         <nav class="navbar">
             <div class="nav-content container">
-                <a href="index.html" class="logo">VIKASH <span>SARAVANAN</span></a>
-                <ul class="nav-links">
-                    <li><a href="index.html#summary">About</a></li>
-                    <li><a href="index.html#competencies">Skills</a></li>
-                    <li><a href="index.html#projects" class="active">Projects</a></li>
-                    <li><a href="certifications.html">Certifications</a></li>
-                    <li><a href="index.html#contact" class="btn-primary-sm">Contact</a></li>
+                <a href="index.html" class="logo">VIKASH'S <span>PORTFOLIO !!</span></a>
+                <div class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+                    <span></span><span></span><span></span>
+                </div>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="index.html#summary">ABOUT</a></li>
+                    <li><a href="index.html#competencies">SKILLS</a></li>
+                    <li><a href="projects.html" class="active">DEV PORTFOLIO</a></li>
+                    <li><a href="certifications.html">CERTIFICATES</a></li>
+                    <li><a href="index.html#contact" class="btn-primary-sm">CONTACT</a></li>
                 </ul>
             </div>
         </nav>
 
         <!-- Development Portfolio Section -->
-        <section class="certifications-gallery" style="padding: 150px 0 50px; min-height: 80vh;">
+        <section class="certifications-gallery" style="padding: 150px 0 80px; min-height: 80vh;">
             <div class="container">
-                <div class="certs-bordered-card fade-up">
-                    <div class="section-title text-center" style="text-align: center; margin-bottom: 20px;">
-                        <h2 class="mb-4">Development <span class="highlight">Portfolio</span></h2>
-                        <p style="color: var(--text-secondary); max-width: 600px; margin: 0 auto;">A comprehensive catalog of my open-source projects, technical implementations, and GitHub repositories demonstrating my journey in AI, Data Science, and Full-Stack Development.</p>
-                    </div>
+                <div class="section-title text-center fade-up" style="text-align: center; margin-bottom: 20px;">
+                    <h2 class="mb-4" style="font-size: 3.5rem;">Development <span class="highlight">Portfolio</span></h2>
+                    <p style="color: var(--text-secondary); max-width: 700px; margin: 0 auto; font-size: 1.2rem; line-height: 1.6;">A chronological deep-dive into my 16+ GitHub repositories. Architecting robust solutions across Artificial Intelligence, Full-Stack Engineering, and Data Science.</p>
+                </div>
 
-                    <!-- Filters -->
-                    <div class="filter-tabs fade-up">
-                        <button class="filter-tab active" data-filter="all">All Projects</button>
-                        <button class="filter-tab" data-filter="python">Python / Data</button>
-                        <button class="filter-tab" data-filter="web">Web Development</button>
-                        <button class="filter-tab" data-filter="ai">AI / ML</button>
-                    </div>
+                <!-- Filters -->
+                <div class="filter-tabs fade-up">
+                    <button class="filter-tab active" data-filter="all"><i class="fas fa-layer-group"></i> All Repositories</button>
+                    <button class="filter-tab" data-filter="ai"><i class="fas fa-brain"></i> AI / ML Models</button>
+                    <button class="filter-tab" data-filter="python"><i class="fab fa-python"></i> Data Science</button>
+                    <button class="filter-tab" data-filter="web"><i class="fas fa-code"></i> Full-Stack Web</button>
+                </div>
 
-                    <!-- Search -->
-                    <div class="cert-search-wrap fade-up" style="max-width: 400px; margin: 30px auto 0;">
-                        <i class="fas fa-search"></i>
-                        <input type="text" id="repoSearch" class="cert-search-input" placeholder="Search repositories by name or tech...">
-                    </div>
+                <!-- Search -->
+                <div class="search-container fade-up">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" id="repoSearch" class="cert-search-input" placeholder="Search repositories, technologies, or keywords...">
+                </div>
 
-                    <!-- Dynamic Grid -->
-                    <div class="projects-grid" id="projectsGrid">
-                        <!-- Populated by JavaScript -->
-                    </div>
+                <!-- Sequential Grid -->
+                <div class="projects-sequential" id="projectsGrid">
+                    <!-- Populated by JavaScript -->
                 </div>
             </div>
         </section>
@@ -251,127 +333,135 @@
                     }
                 });
 
-            // Repositories Data
+            // Repositories Data (Sorted by impact)
             const repos = [
                 {
-                    name: "Portfolio_Information",
-                    desc: "Professional portfolio and developer dossier showcasing skills, projects, and certifications. Built with modern UI/UX principles.",
-                    tech: ["HTML", "CSS", "JS"],
-                    url: "https://github.com/vikashsaravanann/Portfolio_Information",
-                    category: "web",
-                    icon: "fa-laptop-code"
-                },
-                {
-                    name: "hearwise-child-health",
-                    desc: "An innovative child health application focused on hearing screening and gamified engagement modules.",
-                    tech: ["TypeScript", "React", "Next.js"],
+                    name: "HearWise-Child-Health",
+                    desc: "An innovative child health application focused on clinical hearing screening and gamified engagement modules. Features an offline-first architecture built on React and Supabase.",
+                    tech: ["TypeScript", "React", "Next.js", "Supabase"],
                     url: "https://github.com/vikashsaravanann/hearwise-child-health",
                     category: "web",
                     icon: "fa-child"
                 },
                 {
-                    name: "Logic-Intelligence",
-                    desc: "Corporate platform for a tech agency featuring a dark-tech aesthetic, trust badges, and lead generation.",
-                    tech: ["HTML", "CSS", "JS"],
-                    url: "https://github.com/vikashsaravanann/Logic-Intelligence",
-                    category: "web",
-                    icon: "fa-building"
-                },
-                {
                     name: "OpenEnv-Debugger",
-                    desc: "Support Ticket Triage environment built for the Meta x Scaler Hackathon to streamline debugging processes.",
-                    tech: ["Python", "AI"],
+                    desc: "Stateful simulation API built for the Meta x Scaler Hackathon. Functions as a robust training ground for Reinforcement Learning AI agents evaluating customer support tickets.",
+                    tech: ["Python", "FastAPI", "Docker", "AI/ML"],
                     url: "https://github.com/vikashsaravanann/OpenEnv-Debugger",
                     category: "ai",
                     icon: "fa-bug"
                 },
                 {
-                    name: "AI-Traffic-Management-system",
-                    desc: "Intelligent traffic management system leveraging AI algorithms to optimize flow and reduce congestion.",
-                    tech: ["JavaScript", "AI", "Node.js"],
+                    name: "Logic-Intelligence",
+                    desc: "Corporate lead-generation platform for a tech agency featuring a dark-tech aesthetic, dynamic trust badges, and highly optimized B2B conversion funnels.",
+                    tech: ["HTML5", "CSS3", "JavaScript", "UI/UX"],
+                    url: "https://github.com/vikashsaravanann/Logic-Intelligence",
+                    category: "web",
+                    icon: "fa-building"
+                },
+                {
+                    name: "AI-Traffic-Management-System",
+                    desc: "Intelligent traffic management system leveraging computer vision (YOLO) and adaptive algorithms to optimize intersection flow and reduce urban congestion.",
+                    tech: ["JavaScript", "Node.js", "Computer Vision"],
                     url: "https://github.com/vikashsaravanann/AI-Traffic-Management-system",
                     category: "ai",
-                    icon: "fa-car"
+                    icon: "fa-traffic-light"
                 },
                 {
-                    name: "BroadcastAI-Portfolio",
-                    desc: "Portfolio implementation for an AI broadcasting platform, highlighting generative content pipelines.",
-                    tech: ["HTML", "CSS"],
-                    url: "https://github.com/vikashsaravanann/BroadcastAI-Portfolio",
+                    name: "Portfolio_Information",
+                    desc: "The source code for this very portfolio! Architected as a high-performance, SEO-optimized digital dossier showcasing technical skills and live production projects.",
+                    tech: ["HTML5", "CSS Grid", "Vanilla JS"],
+                    url: "https://github.com/vikashsaravanann/Portfolio_Information",
                     category: "web",
-                    icon: "fa-broadcast-tower"
+                    icon: "fa-id-badge"
                 },
                 {
-                    name: "dropout-alert-system",
-                    desc: "Predictive alert system analyzing student metrics to flag potential dropouts for early intervention.",
-                    tech: ["Python", "Machine Learning"],
+                    name: "Dropout-Alert-System",
+                    desc: "Predictive machine learning pipeline that analyzes complex student metrics to flag potential dropouts for early intervention by academic counselors.",
+                    tech: ["Python", "Scikit-Learn", "Data Analytics"],
                     url: "https://github.com/vikashsaravanann/dropout-alert-system",
                     category: "ai",
                     icon: "fa-graduation-cap"
                 },
                 {
-                    name: "Web-Development",
-                    desc: "A responsive single-page portfolio for an AI & Data Science student, built with HTML and modern CSS animations.",
-                    tech: ["HTML", "CSS"],
-                    url: "https://github.com/vikashsaravanann/Web-Development",
+                    name: "BroadcastAI-Portfolio",
+                    desc: "Front-end portfolio implementation for an AI broadcasting platform, highlighting generative content pipelines and media streaming capabilities.",
+                    tech: ["HTML5", "CSS3", "Responsive Design"],
+                    url: "https://github.com/vikashsaravanann/BroadcastAI-Portfolio",
                     category: "web",
-                    icon: "fa-code"
+                    icon: "fa-broadcast-tower"
                 },
                 {
-                    name: "fcc-sea-level-predictor",
-                    desc: "Data visualization project predicting future sea levels using linear regression and pandas.",
-                    tech: ["Python", "Pandas", "Matplotlib"],
+                    name: "FCC-Sea-Level-Predictor",
+                    desc: "Scientific data visualization project analyzing global historical data to predict future sea levels using linear regression and Pandas dataframes.",
+                    tech: ["Python", "Pandas", "Matplotlib", "SciPy"],
                     url: "https://github.com/vikashsaravanann/fcc-sea-level-predictor",
                     category: "python",
                     icon: "fa-water"
                 },
                 {
-                    name: "fcc-page-view-time-series",
-                    desc: "Time series data visualization of forum page views using Python, Pandas, and Seaborn.",
-                    tech: ["Python", "Seaborn"],
-                    url: "https://github.com/vikashsaravanann/fcc-page-view-time-series-visualizer",
-                    category: "python",
-                    icon: "fa-chart-line"
-                },
-                {
-                    name: "fcc-medical-data-visualizer",
-                    desc: "Analysis and visualization of a medical examination dataset using Python and Seaborn.",
-                    tech: ["Python", "Pandas"],
+                    name: "FCC-Medical-Data-Visualizer",
+                    desc: "Deep analysis and complex categorical visualization of a large-scale medical examination dataset using Python, Pandas, and Seaborn heatmaps.",
+                    tech: ["Python", "Pandas", "Seaborn"],
                     url: "https://github.com/vikashsaravanann/fcc-medical-data-visualizer",
                     category: "python",
-                    icon: "fa-file-medical-alt"
+                    icon: "fa-heartbeat"
                 },
                 {
-                    name: "fcc-demographic-data-analyzer",
-                    desc: "Comprehensive analysis of a 1994 US census dataset using Python and Pandas dataframes.",
-                    tech: ["Python", "Pandas"],
+                    name: "FCC-Demographic-Data-Analyzer",
+                    desc: "Comprehensive filtering and statistical analysis of a massive 1994 US census dataset, answering complex socio-economic queries via Python dataframes.",
+                    tech: ["Python", "Pandas", "Data Cleaning"],
                     url: "https://github.com/vikashsaravanann/fcc-demographic-data-analyzer",
                     category: "python",
                     icon: "fa-users"
                 },
                 {
-                    name: "fcc-mean-variance-calculator",
-                    desc: "A mathematical Python function that calculates statistical metrics (mean, variance, std dev) for matrices.",
-                    tech: ["Python", "NumPy"],
+                    name: "FCC-Page-View-Time-Series",
+                    desc: "Time series data visualization of freeCodeCamp forum page views over several years, utilizing advanced bar charts and box plots to identify trends.",
+                    tech: ["Python", "Matplotlib", "Seaborn"],
+                    url: "https://github.com/vikashsaravanann/fcc-page-view-time-series-visualizer",
+                    category: "python",
+                    icon: "fa-chart-area"
+                },
+                {
+                    name: "FCC-Mean-Variance-Calculator",
+                    desc: "A highly optimized mathematical Python function that calculates complex statistical metrics (mean, variance, standard deviation) across 3x3 matrices.",
+                    tech: ["Python", "NumPy", "Statistics"],
                     url: "https://github.com/vikashsaravanann/fcc-mean-variance-calculator",
                     category: "python",
                     icon: "fa-calculator"
                 },
                 {
                     name: "IPL-Data-Analysis-Project",
-                    desc: "Extensive analysis of IPL cricket data from 2008-2020 using Jupyter Notebooks and Python data tools.",
-                    tech: ["Jupyter", "Python", "Data Science"],
+                    desc: "Extensive exploratory data analysis (EDA) of IPL cricket data spanning 2008-2020. Uncovered match trends, player performance, and stadium statistics.",
+                    tech: ["Jupyter Notebook", "Python", "Data Science"],
                     url: "https://github.com/vikashsaravanann/IPL-Data-Analysis-Project",
                     category: "python",
                     icon: "fa-cricket-bat-ball"
                 },
                 {
-                    name: "gamehub",
-                    desc: "A Python terminal-based arcade with classic mini-games like Snake, Tic-Tac-Toe, and Rock-Paper-Scissors.",
-                    tech: ["Python", "Terminal"],
+                    name: "GameHub",
+                    desc: "A pure Python terminal-based arcade application featuring algorithmic implementations of classic mini-games like Snake, Tic-Tac-Toe, and Rock-Paper-Scissors.",
+                    tech: ["Python", "CLI", "Game Logic"],
                     url: "https://github.com/vikashsaravanann/gamehub",
                     category: "python",
                     icon: "fa-gamepad"
+                },
+                {
+                    name: "Web-Development",
+                    desc: "An early responsive single-page HTML portfolio demonstrating the foundational building blocks of modern CSS animations and layout design.",
+                    tech: ["HTML", "CSS", "Design"],
+                    url: "https://github.com/vikashsaravanann/Web-Development",
+                    category: "web",
+                    icon: "fa-file-code"
+                },
+                {
+                    name: "portfolio.vikashsaravanan",
+                    desc: "Archived portfolio asset repository managing specific profile data and legacy configurations for personal branding.",
+                    tech: ["Config", "Assets"],
+                    url: "https://github.com/vikashsaravanann/portfolio.vikashsaravanan",
+                    category: "web",
+                    icon: "fa-archive"
                 }
             ];
 
@@ -380,21 +470,37 @@
             const filterTabs = document.querySelectorAll('.filter-tab');
 
             function renderRepos(data) {
+                if (data.length === 0) {
+                    grid.innerHTML = \`
+                        <div style="text-align: center; padding: 50px; color: rgba(255,255,255,0.5);">
+                            <i class="fas fa-ghost" style="font-size: 3rem; margin-bottom: 20px; opacity: 0.5;"></i>
+                            <h3>No repositories found matching your criteria.</h3>
+                        </div>
+                    \`;
+                    return;
+                }
+
                 grid.innerHTML = data.map((repo, i) => \`
-                    <div class="project-card fade-up" style="animation-delay: \${i * 0.05}s">
-                        <div class="project-header">
-                            <div class="project-icon">
-                                <i class="fas \${repo.icon}"></i>
+                    <div class="repo-panel fade-up" style="animation-delay: \${(i * 0.1) % 1}s">
+                        <div class="repo-header">
+                            <div class="repo-title-group">
+                                <div class="repo-icon">
+                                    <i class="fas \${repo.icon}"></i>
+                                </div>
+                                <div>
+                                    <div class="repo-number">REPO // 0\${i + 1}</div>
+                                    <h3 class="repo-title">\${repo.name}</h3>
+                                </div>
                             </div>
-                            <div class="project-links">
-                                <a href="\${repo.url}" target="_blank" title="View Source"><i class="fab fa-github"></i></a>
+                            <div class="repo-links">
+                                <a href="\${repo.url}" target="_blank" title="View Source Code on GitHub"><i class="fab fa-github"></i></a>
                             </div>
                         </div>
-                        <h3 class="project-title">\${repo.name}</h3>
-                        <p class="project-desc">\${repo.desc}</p>
-                        <div class="project-footer">
-                            <div class="tech-stack">
-                                \${repo.tech.map(t => \`<span class="tech-badge">\${t}</span>\`).join('')}
+                        
+                        <div class="repo-body">
+                            <p class="repo-desc">\${repo.desc}</p>
+                            <div class="tech-stack-row">
+                                \${repo.tech.map(t => \`<span class="tech-pill"><i class="fas fa-microchip" style="font-size:0.7rem;"></i> \${t}</span>\`).join('')}
                             </div>
                         </div>
                     </div>
@@ -408,8 +514,8 @@
             filterTabs.forEach(tab => {
                 tab.addEventListener('click', (e) => {
                     filterTabs.forEach(t => t.classList.remove('active'));
-                    e.target.classList.add('active');
-                    const filter = e.target.getAttribute('data-filter');
+                    e.target.closest('button').classList.add('active');
+                    const filter = e.target.closest('button').getAttribute('data-filter');
                     
                     if (filter === 'all') {
                         renderRepos(repos);
@@ -424,6 +530,7 @@
                 const term = e.target.value.toLowerCase();
                 const filtered = repos.filter(r => 
                     r.name.toLowerCase().includes(term) || 
+                    r.desc.toLowerCase().includes(term) ||
                     r.tech.some(t => t.toLowerCase().includes(term))
                 );
                 renderRepos(filtered);
