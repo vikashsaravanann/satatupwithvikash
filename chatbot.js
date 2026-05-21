@@ -298,6 +298,59 @@ If asked something unrelated to Vikash, politely say: "I'm focused on helping yo
   /* ═══════════════════════════════════════════
      TEXT TO SPEECH (VOICE RESPONSES & SIRI SYNC)
      ═══════════════════════════════════════════ */
+
+  // Pre-load and cache the best available female voice
+  let cachedFemaleVoice = null;
+
+  // Siri-style female voice priority list (highest priority first)
+  const PREFERRED_VOICES = [
+    'samantha',          // macOS/iOS Siri female
+    'siri',             // Siri variants
+    'zarvox',           // macOS
+    'victoria',         // macOS
+    'karen',            // macOS Australian
+    'tessa',            // macOS South African
+    'fiona',            // macOS UK
+    'moira',            // macOS Irish
+    'google us english', // Chrome high-quality
+    'google uk english female',
+    'microsoft zira',    // Windows
+    'microsoft hazel',   // Windows UK
+    'female',
+  ];
+
+  function selectBestFemaleVoice() {
+    const voices = window.speechSynthesis.getVoices();
+    if (!voices.length) return null;
+
+    // Try each preferred voice name in priority order
+    for (const preferred of PREFERRED_VOICES) {
+      const match = voices.find(v => {
+        const name = v.name.toLowerCase();
+        const lang = v.lang.toLowerCase();
+        return lang.startsWith('en') && name.includes(preferred);
+      });
+      if (match) return match;
+    }
+
+    // Fallback: any English voice
+    return voices.find(v => v.lang.startsWith('en')) || voices[0];
+  }
+
+  // Load voices as soon as they become available
+  function loadVoices() {
+    cachedFemaleVoice = selectBestFemaleVoice();
+    if (cachedFemaleVoice) {
+      console.log('🎙️ AI Voice selected:', cachedFemaleVoice.name, `(${cachedFemaleVoice.lang})`);
+    }
+  }
+
+  // Voices load asynchronously — listen for the event
+  if (window.speechSynthesis) {
+    loadVoices();
+    window.speechSynthesis.onvoiceschanged = loadVoices;
+  }
+
   function speakMessage(text, buttonElement) {
     if (!window.speechSynthesis) return;
 
@@ -324,36 +377,16 @@ If asked something unrelated to Vikash, politely say: "I'm focused on helping yo
     const utterance = new SpeechSynthesisUtterance(cleanText);
     currentUtterance = utterance;
 
-    // Try to find a high-quality Siri-style English female voice
-    const voices = window.speechSynthesis.getVoices();
-    let femaleVoice = voices.find(v => {
-      const name = v.name.toLowerCase();
-      const lang = v.lang.toLowerCase();
-      return lang.startsWith('en') && (
-        name.includes('siri') ||
-        name.includes('samantha') || 
-        name.includes('zira') || 
-        name.includes('google us english') || 
-        name.includes('victoria') || 
-        name.includes('tessa') || 
-        name.includes('karen') ||
-        name.includes('veena')
-      );
-    });
-
-    if (!femaleVoice) {
-      femaleVoice = voices.find(v => v.lang.startsWith('en') && v.name.toLowerCase().includes('female'));
-    }
-    if (!femaleVoice) {
-      femaleVoice = voices.find(v => v.lang.startsWith('en') && v.name.toLowerCase().includes('google'));
-    }
-    if (!femaleVoice) {
-      femaleVoice = voices.find(v => v.lang.startsWith('en'));
+    // Set the cached Siri-style female voice
+    if (!cachedFemaleVoice) loadVoices(); // retry if not loaded yet
+    if (cachedFemaleVoice) {
+      utterance.voice = cachedFemaleVoice;
     }
 
-    if (femaleVoice) {
-      utterance.voice = femaleVoice;
-    }
+    // Tune for clear, natural female Siri-style delivery
+    utterance.pitch = 1.15;   // Slightly higher pitch for feminine clarity
+    utterance.rate = 0.95;    // Slightly slower for professional clarity
+    utterance.volume = 1.0;
 
     utterance.onstart = () => {
       buttonElement.innerHTML = '<i class="fas fa-volume-mute"></i> Mute';
