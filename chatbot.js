@@ -38,11 +38,23 @@ TECHNICAL SKILLS:
 • DevOps: Docker, Git, GitHub Pages, Vercel
 • Data: Pandas, NumPy, Matplotlib, Power BI, Data Annotation
 
-PROJECTS:
-• HearWise — Production-ready AI-powered hearing assistance platform with ocean-themed UI
-• AI Automation Systems — Enterprise-grade n8n workflow automations for businesses
-• Portfolio Website — This site, built with vanilla HTML/CSS/JS with 30+ custom animations and AI chatbot
-
+PROJECTS & GITHUB REPOSITORIES (16 total):
+1. Portfolio_Information: Personal portfolio website with an AI assistant (Grok), dynamic repository catalog, and PDF resume generation. (HTML, CSS, JS)
+2. HearWise Child Health: Mobile-first clinical hearing screening platform with offline-first async data queue, WHO-compliant readiness gates, and an enterprise admin dashboard. (React, TypeScript, Supabase)
+3. OpenEnv-Debugger: Stateful simulation environment for training AI agents on customer support ticket triage via API endpoints. Meta PyTorch Hackathon Finalist. (Python, FastAPI, Docker)
+4. AI Traffic Management System: Intelligent traffic management using YOLOv8 for vehicle density detection and live adaptive Arduino LED control via React dashboard. (Python, React, YOLOv8)
+5. Dropout Alert System: Edge AI predictive system using TFLite/ONNX to flag girl student dropout risks offline on Android, featuring SHAP Explainable AI and geospatial clustering. (Python, XGBoost, Flutter)
+6. IPL Data Analysis Project: Comprehensive EDA of IPL cricket data (2008–2020) analyzing team dominance, players, and toss impact. (Pandas, Matplotlib)
+7. GameHub: Console-based Python arcade featuring multi-user profiles, persistent scoreboards, and games like Tic-Tac-Toe with Minimax AI. (Python 3, Rich CLI)
+8. FCC Mean-Variance Calculator: Python certification function calculating statistical metrics across 3x3 matrices. (NumPy)
+9. FCC Demographic Data Analyzer: Analysis of 1994 US census dataset extracting precise demographic and educational insights. (Pandas)
+10. FCC Medical Data Visualizer: Categorical visualization of medical examination datasets using Seaborn heatmaps. (Seaborn, Matplotlib)
+11. FCC Page View Time Series: Time series visualization of forum page views (2016-2019) with line, bar, and box plots. (Pandas, Matplotlib)
+12. FCC Sea Level Predictor: Scientific modeling predicting sea level rise to 2050 using SciPy linear regression. (SciPy, Pandas)
+13. Logic-Intelligence: Early exploratory repository dealing with desktop technologies and frontend layouts for agency workflows.
+14. BroadcastAI-Portfolio: Private branding repository configuring an AI broadcasting concept.
+15. Web-Development: Early responsive single-page HTML structures and CSS layout learning.
+16. portfolio.vikashsaravanan: Archived asset repository managing specific legacy profile data and configs.
 ACHIEVEMENTS:
 • Hackathon Finalist — Meta PyTorch (OpenEnv)
 • 15+ Professional Certifications
