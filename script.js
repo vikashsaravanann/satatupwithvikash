@@ -319,4 +319,223 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(reg => console.log('SW registered:', reg.scope))
             .catch(err => console.warn('SW registration failed:', err));
     }
+
+    // ==============================
+    // AUTO-UPDATING COPYRIGHT YEAR
+    // ==============================
+    const copyrightEl = document.getElementById('copyrightYear');
+    if (copyrightEl) copyrightEl.textContent = new Date().getFullYear();
+
+    // ==============================
+    // QR CODE CONTACT CARD (vCard)
+    // ==============================
+    const qrContainer = document.getElementById('qrCodeContainer');
+    if (qrContainer && typeof QRCode !== 'undefined') {
+        const vCardData = `BEGIN:VCARD
+VERSION:3.0
+FN:Vikash Saravanan
+TITLE:AI Engineer & Data Scientist
+TEL;TYPE=CELL:+919342877474
+EMAIL:vikash07052008@gmail.com
+URL:https://vikashsaravanann.github.io/Portfolio_Information/
+ADR;TYPE=HOME:;;Karur;Tamil Nadu;;639102;India
+NOTE:B.Tech AI & Data Science Student | Hackathon Finalist | 15+ Certifications
+END:VCARD`;
+
+        new QRCode(qrContainer, {
+            text: vCardData,
+            width: 120,
+            height: 120,
+            colorDark: '#0a0a0f',
+            colorLight: '#ffffff',
+            correctLevel: QRCode.CorrectLevel.M
+        });
+    }
+
+    // ==============================
+    // VISITOR GUEST BOOK (localStorage)
+    // ==============================
+    const gbForm = document.getElementById('guestBookForm');
+    const gbEntries = document.getElementById('guestBookEntries');
+    const GB_KEY = 'vikash_portfolio_guestbook';
+
+    function loadGuestBook() {
+        if (!gbEntries) return;
+        const entries = JSON.parse(localStorage.getItem(GB_KEY) || '[]');
+        if (entries.length === 0) {
+            gbEntries.innerHTML = '<p style="text-align:center; color: rgba(255,255,255,0.3); font-size: 0.85rem;">No entries yet — be the first to sign! ✍️</p>';
+            return;
+        }
+        gbEntries.innerHTML = entries.slice(-10).reverse().map(e => `
+            <div style="padding: 12px 16px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <strong style="color: #0ea5e9; font-size: 0.85rem;">${e.name}</strong>
+                    <span style="color: rgba(255,255,255,0.6); font-size: 0.85rem; margin-left: 8px;">${e.message}</span>
+                </div>
+                <span style="color: rgba(255,255,255,0.25); font-size: 0.72rem; white-space: nowrap;">${e.date}</span>
+            </div>
+        `).join('');
+    }
+
+    if (gbForm) {
+        gbForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('gbName').value.trim();
+            const message = document.getElementById('gbMessage').value.trim();
+            if (!name || !message) return;
+
+            const entries = JSON.parse(localStorage.getItem(GB_KEY) || '[]');
+            entries.push({
+                name: name.substring(0, 30),
+                message: message.substring(0, 100),
+                date: new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })
+            });
+            localStorage.setItem(GB_KEY, JSON.stringify(entries));
+            gbForm.reset();
+            loadGuestBook();
+        });
+        loadGuestBook();
+    }
+
+    // ==============================
+    // PERFORMANCE: Add lazy loading to all remaining images
+    // ==============================
+    document.querySelectorAll('img:not([loading])').forEach(img => {
+        img.setAttribute('loading', 'lazy');
+    });
 });
+
+// ==============================
+// RESUME PDF GENERATOR (jsPDF)
+// Placed outside DOMContentLoaded so it's globally accessible
+// ==============================
+function generateResumePDF() {
+    if (typeof jspdf === 'undefined' && typeof window.jspdf === 'undefined') {
+        alert('PDF library is still loading. Please try again in a moment.');
+        return;
+    }
+
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF('p', 'mm', 'a4');
+    const pageWidth = 210;
+    const margin = 20;
+    const contentWidth = pageWidth - margin * 2;
+    let y = 20;
+
+    // Colors
+    const accent = [14, 165, 233];     // #0ea5e9
+    const dark = [10, 10, 15];         // #0a0a0f
+    const textPrimary = [30, 30, 30];
+    const textSecondary = [100, 100, 100];
+
+    // Header bar
+    doc.setFillColor(...dark);
+    doc.rect(0, 0, pageWidth, 45, 'F');
+    doc.setFillColor(...accent);
+    doc.rect(0, 45, pageWidth, 2, 'F');
+
+    // Name
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(24);
+    doc.setTextColor(255, 255, 255);
+    doc.text('VIKASH SARAVANAN', margin, 22);
+
+    // Title
+    doc.setFontSize(11);
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor(14, 165, 233);
+    doc.text('AI Engineer | Data Scientist | Full-Stack Developer', margin, 30);
+
+    // Contact line
+    doc.setFontSize(8.5);
+    doc.setTextColor(180, 180, 180);
+    doc.text('vikash07052008@gmail.com  |  +91 9342877474  |  Karur, Tamil Nadu  |  linkedin.com/in/vikash-saravanan-j7528', margin, 38);
+
+    y = 55;
+
+    // Section helper
+    function addSection(title) {
+        if (y > 270) { doc.addPage(); y = 20; }
+        doc.setFillColor(...accent);
+        doc.rect(margin, y, contentWidth, 0.5, 'F');
+        y += 5;
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(12);
+        doc.setTextColor(...accent);
+        doc.text(title.toUpperCase(), margin, y);
+        y += 7;
+    }
+
+    function addBullet(text) {
+        if (y > 275) { doc.addPage(); y = 20; }
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(9.5);
+        doc.setTextColor(...textPrimary);
+        const lines = doc.splitTextToSize('• ' + text, contentWidth);
+        doc.text(lines, margin, y);
+        y += lines.length * 5;
+    }
+
+    // Professional Summary
+    addSection('Professional Summary');
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(9.5);
+    doc.setTextColor(...textSecondary);
+    const summary = 'Ambitious B.Tech AI & Data Science student with expertise in machine learning, full-stack development, and enterprise-grade automation systems. Hackathon finalist at Meta PyTorch (OpenEnv). Building scalable, production-ready AI solutions from Coimbatore to the world.';
+    const summaryLines = doc.splitTextToSize(summary, contentWidth);
+    doc.text(summaryLines, margin, y);
+    y += summaryLines.length * 5 + 4;
+
+    // Education
+    addSection('Education');
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(10);
+    doc.setTextColor(...textPrimary);
+    doc.text('B.Tech in Artificial Intelligence & Data Science', margin, y);
+    y += 5;
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(9);
+    doc.setTextColor(...textSecondary);
+    doc.text('Rathinam Technical Campus, Coimbatore | 2024 - 2028', margin, y);
+    y += 8;
+
+    // Technical Skills
+    addSection('Technical Skills');
+    const skills = [
+        'Languages: Python, JavaScript, TypeScript, SQL, HTML/CSS',
+        'Frameworks: React, Next.js, Node.js, Express, TensorFlow, PyTorch',
+        'Tools: Git, Docker, VS Code, Jupyter, Vercel, Firebase',
+        'Databases: MongoDB, PostgreSQL, MySQL, Firebase Realtime DB',
+        'Specialization: Machine Learning, NLP, Computer Vision, Data Analytics'
+    ];
+    skills.forEach(s => addBullet(s));
+    y += 3;
+
+    // Projects
+    addSection('Key Projects');
+    const projects = [
+        'HearWise — AI-powered hearing screening & gamified ocean platform for children (React, Vercel)',
+        'Portfolio AI Chatbot — Interactive chatbot with TTS, STT, and persistent memory (JavaScript, Groq API)',
+        'Logic Intelligence Technologies — Full agency website with quote system (Next.js)',
+    ];
+    projects.forEach(p => addBullet(p));
+    y += 3;
+
+    // Certifications
+    addSection('Certifications');
+    const certs = [
+        '15+ Professional Certifications in AI, ML, Data Science, and Cybersecurity',
+        'Certified Ethical Hacker (CEH) Training',
+        'Meta PyTorch Hackathon Finalist',
+        'LinkedIn Learning: Applied ML, Ensemble Learning, and more'
+    ];
+    certs.forEach(c => addBullet(c));
+
+    // Footer
+    doc.setFontSize(7.5);
+    doc.setTextColor(150, 150, 150);
+    doc.text('Generated from vikashsaravanann.github.io/Portfolio_Information', margin, 287);
+    doc.text(`Generated: ${new Date().toLocaleDateString('en-IN')}`, pageWidth - margin - 40, 287);
+
+    doc.save('Vikash_Saravanan_Resume.pdf');
+}

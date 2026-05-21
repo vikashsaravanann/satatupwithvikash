@@ -4,32 +4,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vikash Saravanan | Web Developer & Professional Portfolio</title>
+    <title>Vikash Saravanan | AI Engineer & Data Scientist Portfolio</title>
     <meta name="description"
-        content="Professional portfolio and developer dossier of Vikash Saravanan, B.Tech AI & Data Science Student and Emerging AI Engineer.">
-    <!-- SEO Meta Tags -->
+        content="Professional portfolio of Vikash Saravanan — B.Tech AI & Data Science Student, Hackathon Finalist, 15+ Certifications, building enterprise-grade AI automation systems.">
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://vikashsaravanann.github.io/Portfolio_Information/">
+    <!-- SEO Open Graph Tags -->
     <meta property="og:title" content="Vikash Saravanan | AI Engineer & Data Scientist Portfolio">
     <meta property="og:description"
         content="B.Tech AI & Data Science student building enterprise-grade automation systems. Hackathon finalist, 15+ certifications, 3+ live projects.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://vikashsaravanann.github.io/Portfolio_Information/">
+    <meta property="og:image" content="https://vikashsaravanann.github.io/Portfolio_Information/assets/og-preview.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:site_name" content="Vikash Saravanan Portfolio">
+    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Vikash Saravanan | AI Engineer Portfolio">
     <meta name="twitter:description"
         content="B.Tech AI & Data Science student. Hackathon finalist, 15+ certifications, 3+ live production projects.">
+    <meta name="twitter:image" content="https://vikashsaravanann.github.io/Portfolio_Information/assets/og-preview.png">
     <meta name="keywords"
-        content="Vikash Saravanan, AI Engineer, Data Scientist, Portfolio, Python, React, Machine Learning">
-    <meta property="og:image" content="assets/profile/profile2.webp">
-    <meta name="twitter:image" content="assets/profile/profile2.webp">
+        content="Vikash Saravanan, AI Engineer, Data Scientist, Portfolio, Python, React, Machine Learning, Data Analyst, Coimbatore">
     <meta name="author" content="Vikash Saravanan">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#0ea5e9">
+    <!-- Structured Data (JSON-LD) — Schema.org Person -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Vikash Saravanan",
+        "jobTitle": "AI Engineer & Data Scientist",
+        "url": "https://vikashsaravanann.github.io/Portfolio_Information/",
+        "image": "https://vikashsaravanann.github.io/Portfolio_Information/assets/profile/profile2.webp",
+        "email": "vikash07052008@gmail.com",
+        "telephone": "+919342877474",
+        "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Karur",
+            "addressRegion": "Tamil Nadu",
+            "addressCountry": "IN"
+        },
+        "alumniOf": {
+            "@type": "CollegeOrUniversity",
+            "name": "Rathinam Technical Campus",
+            "address": "Coimbatore, Tamil Nadu"
+        },
+        "knowsAbout": ["Artificial Intelligence", "Machine Learning", "Data Science", "Python", "React", "Full-Stack Development"],
+        "sameAs": [
+            "https://www.linkedin.com/in/vikash-saravanan-j7528",
+            "https://github.com/vikashsaravanann",
+            "https://www.instagram.com/startupwithvikash/"
+        ]
+    }
+    </script>
     <!-- Favicon -->
     <link rel="icon"
         href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>"
         type="image/svg+xml">
     <link rel="manifest" href="manifest.json">
-    <!-- Google Fonts -->
+    <!-- Performance: Preconnect & Preload -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://api.github.com">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="preload" href="style.css" as="style">
+    <link rel="preload" href="script.js" as="script">
+    <!-- Google Fonts -->
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;600;700;800&display=swap"
         rel="stylesheet">
@@ -40,6 +84,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- EmailJS SDK for Client-Side Email Delivery -->
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <!-- jsPDF for Resume Generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <!-- QR Code Generator -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
 </head>
 
 <body>
@@ -1286,19 +1334,49 @@
                     </div>
                 </div>
 
-                <!-- Widget 3: Thank You -->
+                <!-- Widget 3: Quick Actions -->
                 <div class="footer-widget highlight-widget">
-                    <div class="widget-icon"><i class="fas fa-heart text-accent"></i></div>
-                    <h3 class="text-neon mb-2">Thank You</h3>
-                    <p class="text-sm text-secondary">Thank you for visiting my professional portfolio! I am constantly
-                        iterating on my codebase and expanding my technical stack. Feel free to reach out to collaborate
-                        on innovative AI projects.</p>
-                    <a href="#page-contact-form-container" class="btn-primary-sm mt-3 w-100"
-                        style="text-align: center; display: block;">Get In Touch</a>
+                    <div class="widget-icon"><i class="fas fa-bolt text-accent"></i></div>
+                    <h3 class="text-neon mb-2">Quick Actions</h3>
+                    <div style="display: flex; flex-direction: column; gap: 10px;">
+                        <button onclick="generateResumePDF()" class="btn-primary-sm w-100"
+                            style="text-align: center; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; border: none;">
+                            <i class="fas fa-file-pdf"></i> Download Resume PDF
+                        </button>
+                        <a href="#page-contact-form-container" class="btn-primary-sm w-100"
+                            style="text-align: center; display: block;">
+                            <i class="fas fa-envelope"></i> Get In Touch
+                        </a>
+                    </div>
+                    <!-- QR Code Contact Card -->
+                    <div style="margin-top: 16px; text-align: center;">
+                        <p class="text-sm text-secondary" style="margin-bottom: 8px;"><i class="fas fa-qrcode" style="color: #0ea5e9; margin-right: 4px;"></i> Scan to save my contact</p>
+                        <div id="qrCodeContainer" style="display: inline-block; padding: 8px; background: #fff; border-radius: 10px;"></div>
+                    </div>
                 </div>
             </div>
+
+            <!-- Visitor Guest Book -->
+            <div class="container" style="max-width: 680px; margin: 40px auto;">
+                <div class="section-title fade-up" style="margin-bottom: 20px;">
+                    <h3 style="font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 1.4rem; color: rgba(255,255,255,0.9);"><i class="fas fa-book-open" style="color: #0ea5e9; margin-right: 10px;"></i>Visitor Guest Book</h3>
+                    <p class="text-sm text-secondary">Leave a short note — I'd love to hear from you!</p>
+                </div>
+                <form id="guestBookForm" class="fade-up" style="display: flex; gap: 10px; margin-bottom: 16px;">
+                    <input type="text" id="gbName" placeholder="Your Name" required
+                        style="flex: 1; padding: 12px 16px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; color: #fff; font-size: 0.9rem; outline: none; font-family: 'Inter', sans-serif;">
+                    <input type="text" id="gbMessage" placeholder="Leave a note..." required
+                        style="flex: 2; padding: 12px 16px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; color: #fff; font-size: 0.9rem; outline: none; font-family: 'Inter', sans-serif;">
+                    <button type="submit"
+                        style="padding: 12px 20px; background: linear-gradient(135deg, #0ea5e9, #6366f1); border: none; border-radius: 12px; color: #fff; font-weight: 700; cursor: pointer; font-size: 0.9rem; white-space: nowrap;">
+                        <i class="fas fa-pen"></i> Sign
+                    </button>
+                </form>
+                <div id="guestBookEntries" class="fade-up" style="display: flex; flex-direction: column; gap: 8px;"></div>
+            </div>
+
             <div class="footer-bottom">
-                <p>&copy; 2026 Vikash Saravanan @HearWise Technologies Pvt.Ltd & Professional Portfolio.</p>
+                <p>&copy; <span id="copyrightYear"></span> Vikash Saravanan @HearWise Technologies Pvt.Ltd & Professional Portfolio.</p>
             </div>
         </footer>
     </div>
