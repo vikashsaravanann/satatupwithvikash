@@ -471,40 +471,36 @@
 
             function renderRepos(data) {
                 if (data.length === 0) {
-                    grid.innerHTML = \`
+                    grid.innerHTML = `
                         <div style="text-align: center; padding: 50px; color: rgba(255,255,255,0.5);">
                             <i class="fas fa-ghost" style="font-size: 3rem; margin-bottom: 20px; opacity: 0.5;"></i>
                             <h3>No repositories found matching your criteria.</h3>
                         </div>
-                    \`;
+                    `;
                     return;
                 }
 
-                grid.innerHTML = data.map((repo, i) => \`
-                    <div class="repo-panel fade-up" style="animation-delay: \${(i * 0.1) % 1}s">
-                        <div class="repo-header">
-                            <div class="repo-title-group">
-                                <div class="repo-icon">
-                                    <i class="fas \${repo.icon}"></i>
-                                </div>
-                                <div>
-                                    <div class="repo-number">REPO // 0\${i + 1}</div>
-                                    <h3 class="repo-title">\${repo.name}</h3>
-                                </div>
-                            </div>
-                            <div class="repo-links">
-                                <a href="\${repo.url}" target="_blank" title="View Source Code on GitHub"><i class="fab fa-github"></i></a>
+                grid.innerHTML = data.map((repo, i) => `
+                    <div class="deep-dive-card fade-up" data-category="${repo.category}" style="animation-delay: ${(i * 0.05) % 1}s; margin-top: 20px; margin-bottom: 20px;">
+                        <div class="deep-dive-header">
+                            <h3><i class="fas ${repo.icon} text-accent"></i> ${repo.name}</h3>
+                            <div class="tags">
+                                ${repo.tech.map(t => `<span class="tag">${t}</span>`).join('')}
                             </div>
                         </div>
-                        
-                        <div class="repo-body">
-                            <p class="repo-desc">\${repo.desc}</p>
-                            <div class="tech-stack-row">
-                                \${repo.tech.map(t => \`<span class="tech-pill"><i class="fas fa-microchip" style="font-size:0.7rem;"></i> \${t}</span>\`).join('')}
+                        <div class="deep-dive-body">
+                            <div class="problem-solution">
+                                <h4><span class="text-accent">Overview:</span> ${repo.desc}</h4>
+                            </div>
+                            <div class="tech-highlights mt-4">
+                                <h4>Repository Access</h4>
+                                <ul class="highlight-list">
+                                    <li><strong>GitHub Source:</strong> <a href="${repo.url}" target="_blank" style="color: #0ea5e9; text-decoration: none; font-weight: 600;"><i class="fab fa-github"></i> View Repository Code</a></li>
+                                </ul>
                             </div>
                         </div>
                     </div>
-                \`).join('');
+                `).join('');
             }
 
             // Initial render
