@@ -39,22 +39,23 @@ TECHNICAL SKILLS:
 • Data: Pandas, NumPy, Matplotlib, Power BI, Data Annotation
 
 PROJECTS & GITHUB REPOSITORIES (16 total):
-1. Portfolio_Information: Personal portfolio website with an AI assistant (Grok), dynamic repository catalog, and PDF resume generation. (HTML, CSS, JS)
-2. HearWise Child Health: Mobile-first clinical hearing screening platform with offline-first async data queue, WHO-compliant readiness gates, and an enterprise admin dashboard. (React, TypeScript, Supabase)
-3. OpenEnv-Debugger: Stateful simulation environment for training AI agents on customer support ticket triage via API endpoints. Meta PyTorch Hackathon Finalist. (Python, FastAPI, Docker)
-4. AI Traffic Management System: Intelligent traffic management using YOLOv8 for vehicle density detection and live adaptive Arduino LED control via React dashboard. (Python, React, YOLOv8)
-5. Dropout Alert System: Edge AI predictive system using TFLite/ONNX to flag girl student dropout risks offline on Android, featuring SHAP Explainable AI and geospatial clustering. (Python, XGBoost, Flutter)
-6. IPL Data Analysis Project: Comprehensive EDA of IPL cricket data (2008–2020) analyzing team dominance, players, and toss impact. (Pandas, Matplotlib)
-7. GameHub: Console-based Python arcade featuring multi-user profiles, persistent scoreboards, and games like Tic-Tac-Toe with Minimax AI. (Python 3, Rich CLI)
-8. FCC Mean-Variance Calculator: Python certification function calculating statistical metrics across 3x3 matrices. (NumPy)
-9. FCC Demographic Data Analyzer: Analysis of 1994 US census dataset extracting precise demographic and educational insights. (Pandas)
-10. FCC Medical Data Visualizer: Categorical visualization of medical examination datasets using Seaborn heatmaps. (Seaborn, Matplotlib)
-11. FCC Page View Time Series: Time series visualization of forum page views (2016-2019) with line, bar, and box plots. (Pandas, Matplotlib)
-12. FCC Sea Level Predictor: Scientific modeling predicting sea level rise to 2050 using SciPy linear regression. (SciPy, Pandas)
-13. Logic-Intelligence: Early exploratory repository dealing with desktop technologies and frontend layouts for agency workflows.
-14. BroadcastAI-Portfolio: Private branding repository configuring an AI broadcasting concept.
-15. Web-Development: Early responsive single-page HTML structures and CSS layout learning.
-16. portfolio.vikashsaravanan: Archived asset repository managing specific legacy profile data and configs.
+Always provide the relevant GitHub or Live URL when mentioning these projects.
+1. Portfolio_Information: Personal portfolio website with an AI assistant. GitHub: github.com/vikashsaravanann/Portfolio_Information | Live: vikashsaravanann.github.io/Portfolio_Information/
+2. HearWise Child Health: Mobile-first clinical hearing screening platform. GitHub: github.com/vikashsaravanann/hearwise-child-health | Live: hearwise-child-health.vercel.app
+3. OpenEnv-Debugger: Simulation environment for training AI agents (Meta Hackathon). GitHub: github.com/vikashsaravanann/OpenEnv-Debugger | Live API: huggingface.co/spaces/vikashsaravanan/openenv-support-triage
+4. AI Traffic Management System: Adaptive Arduino LED control via React dashboard and YOLOv8. GitHub: github.com/vikashsaravanann/AI-Traffic-Management-system
+5. Dropout Alert System: Edge AI predictive system using TFLite/ONNX on Android. GitHub: github.com/vikashsaravanann/dropout-alert-system
+6. IPL Data Analysis Project: Comprehensive EDA of IPL cricket data (2008–2020). GitHub: github.com/vikashsaravanann/IPL-Data-Analysis-Project
+7. GameHub: Console-based Python arcade featuring multi-user profiles. GitHub: github.com/vikashsaravanann/gamehub
+8. FCC Mean-Variance Calculator: Python certification function calculating statistical metrics. GitHub: github.com/vikashsaravanann/fcc-mean-variance-calculator
+9. FCC Demographic Data Analyzer: Analysis of 1994 US census dataset. GitHub: github.com/vikashsaravanann/fcc-demographic-data-analyzer
+10. FCC Medical Data Visualizer: Medical examination datasets using Seaborn heatmaps. GitHub: github.com/vikashsaravanann/fcc-medical-data-visualizer
+11. FCC Page View Time Series: Time series visualization of forum page views. GitHub: github.com/vikashsaravanann/fcc-page-view-time-series-visualizer
+12. FCC Sea Level Predictor: Scientific modeling predicting sea level rise. GitHub: github.com/vikashsaravanann/fcc-sea-level-predictor
+13. Logic-Intelligence: Early frontend layouts for agency workflows. GitHub: github.com/vikashsaravanann/Logic-Intelligence
+14. BroadcastAI-Portfolio: Private branding repository configuring an AI broadcasting concept. GitHub: github.com/vikashsaravanann/BroadcastAI-Portfolio
+15. Web-Development: Early responsive single-page HTML structures. GitHub: github.com/vikashsaravanann/Web-Development
+16. portfolio.vikashsaravanan: Archived asset repository for legacy profile data. GitHub: github.com/vikashsaravanann/portfolio.vikashsaravanan
 ACHIEVEMENTS:
 • Hackathon Finalist — Meta PyTorch (OpenEnv)
 • 15+ Professional Certifications
@@ -90,7 +91,7 @@ If asked something unrelated to Vikash, politely say: "I'm focused on helping yo
      STATE MANAGEMENT & LOCAL STORAGE
      ═══════════════════════════════════════════ */
   let conversationHistory = [];
-  const CHAT_VERSION = '1.1'; // Update this to clear old cached conversations
+  const CHAT_VERSION = '1.2'; // Update this to clear old cached conversations
 
   try {
     const storedVer = localStorage.getItem('vikash_chat_version');
