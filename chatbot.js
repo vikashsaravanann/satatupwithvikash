@@ -90,10 +90,18 @@ If asked something unrelated to Vikash, politely say: "I'm focused on helping yo
      STATE MANAGEMENT & LOCAL STORAGE
      ═══════════════════════════════════════════ */
   let conversationHistory = [];
+  const CHAT_VERSION = '1.1'; // Update this to clear old cached conversations
+
   try {
-    const stored = localStorage.getItem('vikash_chat_history');
-    if (stored) {
-      conversationHistory = JSON.parse(stored);
+    const storedVer = localStorage.getItem('vikash_chat_version');
+    if (storedVer !== CHAT_VERSION) {
+      localStorage.removeItem('vikash_chat_history');
+      localStorage.setItem('vikash_chat_version', CHAT_VERSION);
+    } else {
+      const stored = localStorage.getItem('vikash_chat_history');
+      if (stored) {
+        conversationHistory = JSON.parse(stored);
+      }
     }
   } catch (e) {
     console.error('Failed to parse chat history', e);
