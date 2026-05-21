@@ -346,128 +346,131 @@
             // Repositories Data (Sorted by impact)
             const repos = [
                 {
-                    name: "HearWise-Child-Health",
-                    desc: "An innovative child health application focused on clinical hearing screening and gamified engagement modules. Features an offline-first architecture built on React and Supabase.",
-                    tech: ["TypeScript", "React", "Next.js", "Supabase"],
+                    name: "HearWise Child Health",
+                    desc: "A mobile-first school hearing screening platform built to eliminate undetected childhood hearing loss in India. Empowers non-specialists to run clinically valid screenings in under 10 minutes — no specialist hardware required. Features offline-first architecture (async data queue), four-frequency audiometric sweep (500–4000 Hz), and WHO/AAA-compliant pre-test readiness gates.",
+                    tech: ["React", "TypeScript", "Vite", "Supabase", "Vercel"],
                     url: "https://github.com/vikashsaravanann/hearwise-child-health",
+                    liveUrl: "https://hearwise-child-health.vercel.app",
                     category: "web",
-                    icon: "fa-child"
+                    icon: "fa-ear-listen"
                 },
                 {
                     name: "OpenEnv-Debugger",
-                    desc: "Stateful simulation API built for the Meta x Scaler Hackathon. Functions as a robust training ground for Reinforcement Learning AI agents evaluating customer support tickets.",
-                    tech: ["Python", "FastAPI", "Docker", "AI/ML"],
+                    desc: "A production-ready simulation environment for training AI agents on customer support ticket triage. Built for the Meta PyTorch OpenEnv Hackathon × Scaler School of Technology (Finalist). Agents practice classifying, prioritizing, and routing tickets via stateful API endpoints.",
+                    tech: ["Python", "FastAPI", "Docker", "Pydantic", "Hugging Face"],
                     url: "https://github.com/vikashsaravanann/OpenEnv-Debugger",
+                    liveUrl: "https://huggingface.co/spaces/vikashsaravanan/openenv-support-triage",
                     category: "ai",
-                    icon: "fa-bug"
+                    icon: "fa-robot"
                 },
                 {
-                    name: "Logic-Intelligence",
-                    desc: "Corporate lead-generation platform for a tech agency featuring a dark-tech aesthetic, dynamic trust badges, and highly optimized B2B conversion funnels.",
-                    tech: ["HTML5", "CSS3", "JavaScript", "UI/UX"],
-                    url: "https://github.com/vikashsaravanann/Logic-Intelligence",
-                    category: "web",
-                    icon: "fa-building"
-                },
-                {
-                    name: "AI-Traffic-Management-System",
-                    desc: "Intelligent traffic management system leveraging computer vision (YOLO) and adaptive algorithms to optimize intersection flow and reduce urban congestion.",
-                    tech: ["JavaScript", "Node.js", "Computer Vision"],
+                    name: "TrafficVision AI (Yudhisthra)",
+                    desc: "An intelligent traffic management system that replaces fixed-timer lights with real-time vision-based adaptive control. Detects vehicle density and emergency vehicles using YOLOv8, controls physical Arduino LED traffic lights, and visualizes data on a live React dashboard.",
+                    tech: ["Python", "YOLOv8", "React", "Flask", "Arduino (C++)"],
                     url: "https://github.com/vikashsaravanann/AI-Traffic-Management-system",
                     category: "ai",
                     icon: "fa-traffic-light"
                 },
                 {
+                    name: "Dropout Alert System",
+                    desc: "An edge AI-powered system to predict girl student dropout risk in rural Indian schools. Runs fully offline on Android using TFLite/ONNX. Features Explainable AI (SHAP values) for teachers and geospatial clustering to optimize CSR school bus logistics.",
+                    tech: ["Python", "XGBoost", "Edge AI", "FastAPI", "Flutter"],
+                    url: "https://github.com/vikashsaravanann/dropout-alert-system",
+                    category: "ai",
+                    icon: "fa-user-graduate"
+                },
+                {
                     name: "Portfolio_Information",
-                    desc: "The source code for this very portfolio! Architected as a high-performance, SEO-optimized digital dossier showcasing technical skills and live production projects.",
-                    tech: ["HTML5", "CSS Grid", "Vanilla JS"],
+                    desc: "My personal portfolio website (you are here!) featuring a dark-tech aesthetic, an integrated AI assistant powered by Grok AI, automated PDF resume generation, and a fully functional dynamic repository catalog.",
+                    tech: ["HTML5", "CSS3", "JavaScript", "GitHub Pages"],
                     url: "https://github.com/vikashsaravanann/Portfolio_Information",
+                    liveUrl: "https://vikashsaravanann.github.io/Portfolio_Information/",
                     category: "web",
                     icon: "fa-id-badge"
                 },
                 {
-                    name: "Dropout-Alert-System",
-                    desc: "Predictive machine learning pipeline that analyzes complex student metrics to flag potential dropouts for early intervention by academic counselors.",
-                    tech: ["Python", "Scikit-Learn", "Data Analytics"],
-                    url: "https://github.com/vikashsaravanann/dropout-alert-system",
-                    category: "ai",
-                    icon: "fa-graduation-cap"
-                },
-                {
-                    name: "BroadcastAI-Portfolio",
-                    desc: "Front-end portfolio implementation for an AI broadcasting platform, highlighting generative content pipelines and media streaming capabilities.",
-                    tech: ["HTML5", "CSS3", "Responsive Design"],
-                    url: "https://github.com/vikashsaravanann/BroadcastAI-Portfolio",
-                    category: "web",
-                    icon: "fa-broadcast-tower"
-                },
-                {
-                    name: "FCC-Sea-Level-Predictor",
-                    desc: "Scientific data visualization project analyzing global historical data to predict future sea levels using linear regression and Pandas dataframes.",
-                    tech: ["Python", "Pandas", "Matplotlib", "SciPy"],
-                    url: "https://github.com/vikashsaravanann/fcc-sea-level-predictor",
+                    name: "IPL Data Analysis Project",
+                    desc: "A comprehensive Exploratory Data Analysis (EDA) of IPL cricket data from 2008–2020. Uncovered insights into team dominance, player performance (e.g., AB de Villiers' record awards), and the statistical impact of winning the toss.",
+                    tech: ["Python", "Pandas", "Matplotlib", "Seaborn", "Jupyter"],
+                    url: "https://github.com/vikashsaravanann/IPL-Data-Analysis-Project",
                     category: "python",
-                    icon: "fa-water"
+                    icon: "fa-chart-pie"
                 },
                 {
-                    name: "FCC-Medical-Data-Visualizer",
-                    desc: "Deep analysis and complex categorical visualization of a large-scale medical examination dataset using Python, Pandas, and Seaborn heatmaps.",
-                    tech: ["Python", "Pandas", "Seaborn"],
-                    url: "https://github.com/vikashsaravanann/fcc-medical-data-visualizer",
+                    name: "GameHub",
+                    desc: "A modular, console-based Python game arcade featuring multiple classic mini-games (Tic-Tac-Toe with Minimax AI, Snake, Rock-Paper-Scissors). Includes multi-user profiles, persistent scoreboards, and dynamic difficulty via a beautiful Rich-powered terminal UI.",
+                    tech: ["Python 3", "OOP", "Rich CLI", "JSON"],
+                    url: "https://github.com/vikashsaravanann/gamehub",
                     category: "python",
-                    icon: "fa-heartbeat"
+                    icon: "fa-gamepad"
                 },
                 {
-                    name: "FCC-Demographic-Data-Analyzer",
-                    desc: "Comprehensive filtering and statistical analysis of a massive 1994 US census dataset, answering complex socio-economic queries via Python dataframes.",
-                    tech: ["Python", "Pandas", "Data Cleaning"],
-                    url: "https://github.com/vikashsaravanann/fcc-demographic-data-analyzer",
-                    category: "python",
-                    icon: "fa-users"
-                },
-                {
-                    name: "FCC-Page-View-Time-Series",
-                    desc: "Time series data visualization of freeCodeCamp forum page views over several years, utilizing advanced bar charts and box plots to identify trends.",
-                    tech: ["Python", "Matplotlib", "Seaborn"],
-                    url: "https://github.com/vikashsaravanann/fcc-page-view-time-series-visualizer",
-                    category: "python",
-                    icon: "fa-chart-area"
-                },
-                {
-                    name: "FCC-Mean-Variance-Calculator",
-                    desc: "A highly optimized mathematical Python function that calculates complex statistical metrics (mean, variance, standard deviation) across 3x3 matrices.",
+                    name: "FCC Mean-Variance Calculator",
+                    desc: "freeCodeCamp Certification Project: A Python function utilizing NumPy to mathematically calculate the mean, variance, standard deviation, max, min, and sum across the axes of a 3x3 matrix.",
                     tech: ["Python", "NumPy", "Statistics"],
                     url: "https://github.com/vikashsaravanann/fcc-mean-variance-calculator",
                     category: "python",
                     icon: "fa-calculator"
                 },
                 {
-                    name: "IPL-Data-Analysis-Project",
-                    desc: "Extensive exploratory data analysis (EDA) of IPL cricket data spanning 2008-2020. Uncovered match trends, player performance, and stadium statistics.",
-                    tech: ["Jupyter Notebook", "Python", "Data Science"],
-                    url: "https://github.com/vikashsaravanann/IPL-Data-Analysis-Project",
+                    name: "FCC Demographic Data Analyzer",
+                    desc: "freeCodeCamp Certification Project: Extensive analysis of a 1994 US census (Adult) dataset. Used Pandas to extract precise demographic insights, salary correlations, and educational breakdowns.",
+                    tech: ["Python", "Pandas", "Data Cleaning"],
+                    url: "https://github.com/vikashsaravanann/fcc-demographic-data-analyzer",
                     category: "python",
-                    icon: "fa-cricket-bat-ball"
+                    icon: "fa-users"
                 },
                 {
-                    name: "GameHub",
-                    desc: "A pure Python terminal-based arcade application featuring algorithmic implementations of classic mini-games like Snake, Tic-Tac-Toe, and Rock-Paper-Scissors.",
-                    tech: ["Python", "CLI", "Game Logic"],
-                    url: "https://github.com/vikashsaravanann/gamehub",
+                    name: "FCC Medical Data Visualizer",
+                    desc: "freeCodeCamp Certification Project: Complex categorical visualization of a large-scale medical examination dataset. Normalized health metrics to plot Seaborn heatmaps and categorical split graphs.",
+                    tech: ["Python", "Pandas", "Seaborn", "Matplotlib"],
+                    url: "https://github.com/vikashsaravanann/fcc-medical-data-visualizer",
                     category: "python",
-                    icon: "fa-gamepad"
+                    icon: "fa-heartbeat"
+                },
+                {
+                    name: "FCC Page View Time Series",
+                    desc: "freeCodeCamp Certification Project: Time series data visualization of freeCodeCamp forum page views (2016-2019). Cleaned anomalous data to generate insightful line, bar, and box plots identifying yearly growth trends.",
+                    tech: ["Python", "Pandas", "Matplotlib", "Seaborn"],
+                    url: "https://github.com/vikashsaravanann/fcc-page-view-time-series-visualizer",
+                    category: "python",
+                    icon: "fa-chart-line"
+                },
+                {
+                    name: "FCC Sea Level Predictor",
+                    desc: "freeCodeCamp Certification Project: Scientific predictive modeling using global historical sea level data. Applied SciPy's linear regression to predict future sea level rise up to the year 2050.",
+                    tech: ["Python", "Pandas", "SciPy", "Matplotlib"],
+                    url: "https://github.com/vikashsaravanann/fcc-sea-level-predictor",
+                    category: "python",
+                    icon: "fa-water"
+                },
+                {
+                    name: "Logic-Intelligence",
+                    desc: "Early exploratory repository dealing with desktop technologies. Contains early learning structures and experimental frontend deployments for agency business workflows.",
+                    tech: ["HTML5", "CSS"],
+                    url: "https://github.com/vikashsaravanann/Logic-Intelligence",
+                    category: "web",
+                    icon: "fa-building"
+                },
+                {
+                    name: "BroadcastAI-Portfolio",
+                    desc: "Private personal branding repository associated with the @startupwithvikash initiative. Contains specialized portfolio configurations for an AI broadcasting concept.",
+                    tech: ["HTML5", "Configurations"],
+                    url: "https://github.com/vikashsaravanann/BroadcastAI-Portfolio",
+                    category: "web",
+                    icon: "fa-broadcast-tower"
                 },
                 {
                     name: "Web-Development",
-                    desc: "An early responsive single-page HTML portfolio demonstrating the foundational building blocks of modern CSS animations and layout design.",
-                    tech: ["HTML", "CSS", "Design"],
+                    desc: "An early foundational repository demonstrating responsive single-page HTML structures and the building blocks of modern CSS web layouts.",
+                    tech: ["HTML", "CSS"],
                     url: "https://github.com/vikashsaravanann/Web-Development",
                     category: "web",
                     icon: "fa-file-code"
                 },
                 {
                     name: "portfolio.vikashsaravanan",
-                    desc: "Archived portfolio asset repository managing specific profile data and legacy configurations for personal branding.",
+                    desc: "Archived asset repository managing specific profile data, legacy configurations, and early web development experiments prior to the main portfolio launch.",
                     tech: ["Config", "Assets"],
                     url: "https://github.com/vikashsaravanann/portfolio.vikashsaravanan",
                     category: "web",
@@ -505,7 +508,8 @@
                             <div class="tech-highlights mt-4">
                                 <h4>Repository Access</h4>
                                 <ul class="highlight-list">
-                                    <li><strong>GitHub Source:</strong> <a href="${repo.url}" target="_blank" style="color: #0ea5e9; text-decoration: none; font-weight: 600;"><i class="fab fa-github"></i> View Repository Code</a></li>
+                                    <li><strong>GitHub Source:</strong> <a href="${repo.url}" target="_blank" style="color: #0ea5e9; text-decoration: none; font-weight: 600;"><i class="fab fa-github"></i> View Repository</a></li>
+                                    ${repo.liveUrl ? `<li><strong>Live Deployment:</strong> <a href="${repo.liveUrl}" target="_blank" style="color: #10b981; text-decoration: none; font-weight: 600;"><i class="fas fa-external-link-alt"></i> View Live Site / API</a></li>` : ''}
                                 </ul>
                             </div>
                         </div>
