@@ -238,6 +238,16 @@
             font-size: 1.2rem;
         }
 
+        @keyframes staggerIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .stagger-in {
+            opacity: 0;
+            animation: staggerIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
         @media (max-width: 768px) {
             .repo-panel { padding: 25px; }
             .repo-title { font-size: 1.4rem; }
@@ -481,7 +491,7 @@
                 }
 
                 grid.innerHTML = data.map((repo, i) => `
-                    <div class="deep-dive-card fade-up" data-category="${repo.category}" style="animation-delay: ${(i * 0.05) % 1}s; margin-top: 20px; margin-bottom: 20px;">
+                    <div class="deep-dive-card stagger-in" data-category="${repo.category}" style="animation-delay: ${(i * 0.05) % 1}s; margin-top: 20px; margin-bottom: 20px;">
                         <div class="deep-dive-header">
                             <h3><i class="fas ${repo.icon} text-accent"></i> ${repo.name}</h3>
                             <div class="tags">
