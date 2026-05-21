@@ -404,8 +404,10 @@ If asked something unrelated to Vikash, politely say: "I'm focused on helping yo
     if (lower.includes('contact') || lower.includes('email') || lower.includes('hire') || lower.includes('phone')) {
       container.className = 'chat-rich-card';
       container.innerHTML = `
-        <h4>📩 Quick Contact</h4>
-        <p style="margin-bottom:6px;">Your message will be sent via <strong>Email</strong>, <strong>WhatsApp</strong> & <strong>SMS</strong> simultaneously.</p>
+        <h4 style="font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 1.25rem;">📩 Quick Contact</h4>
+        <p style="font-family: 'Inter', sans-serif; font-weight: 600; font-size: 0.95rem; color: rgba(255, 255, 255, 0.9); line-height: 1.5; margin-bottom: 16px;">
+          Hi, I am Vikash! If you have an opportunity or want to collaborate, fill out this form to contact me directly via WhatsApp, SMS, and Email.
+        </p>
         <form class="chat-contact-form">
           <input type="text" class="chat-form-input chat-form-name" placeholder="Full Name" required>
           <input type="email" class="chat-form-input chat-form-email" placeholder="Email Address" required>
