@@ -93,7 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initialize EmailJS with public key
     if (typeof emailjs !== 'undefined') {
-        emailjs.init('vikash_portfolio_key'); // Will be replaced with real key
+        emailjs.init('Mlfg-rt0zHLrAPz62'); 
     }
 
     // Toast notification helper
