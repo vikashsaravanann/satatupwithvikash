@@ -417,7 +417,7 @@ If asked something unrelated to Vikash, politely say: "I'm focused on helping yo
 
       // Bind the form action logic
       const form = container.querySelector('.chat-contact-form');
-      form.addEventListener('submit', async (e) => {
+      form.addEventListener('submit', (e) => {
         e.preventDefault();
         const submitBtn = form.querySelector('.chat-form-submit');
         const name = form.querySelector('.chat-form-name').value;
@@ -425,48 +425,37 @@ If asked something unrelated to Vikash, politely say: "I'm focused on helping yo
         const subject = form.querySelector('.chat-form-subject').value;
         const msg = form.querySelector('.chat-form-msg').value;
 
-        submitBtn.textContent = 'Sending...';
+        submitBtn.textContent = 'Launching Apps...';
         submitBtn.disabled = true;
 
-        // Dynamically set API URL based on host environment
-        let apiUrl = '/api/contact';
-        if (window.location.protocol === 'file:' || 
-            window.location.hostname === 'localhost' || 
-            window.location.hostname === '127.0.0.1') {
-            apiUrl = 'http://localhost:3000/api/contact';
-        } else if (window.location.hostname.includes('github.io')) {
-            apiUrl = 'https://portfolio-information.vercel.app/api/contact';
-        }
+        // Construct the unified message body
+        const messageBody = `Hi Vikash,\n\nI am contacting you from your AI Chatbot.\n\nName: ${name}\nEmail: ${email}\n\nMessage:\n${msg}`;
+        const encodedBody = encodeURIComponent(messageBody);
+        const encodedSubject = encodeURIComponent(subject);
 
-        try {
-          const response = await fetch(apiUrl, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              name: name,
-              email: email,
-              subject: subject,
-              message: msg
-            })
-          });
+        // 1. WhatsApp Trigger (Opens in new tab/app)
+        window.open(`https://wa.me/919342877474?text=${encodedBody}`, '_blank');
 
-          if (response.ok) {
-            form.reset();
-            submitBtn.textContent = 'Sent!';
-            addMessage("Awesome! Your message has been sent directly to Vikash's backend! 🚀", 'bot', false);
-          } else {
-            throw new Error('Failed to send');
-          }
-        } catch (err) {
-          console.error(err);
-          submitBtn.textContent = 'Failed to Send';
-          addMessage("Oops! I couldn't deliver that to the backend. Try emailing Vikash directly at vikash07052008@gmail.com 📧", 'bot', false);
-        } finally {
-          setTimeout(() => {
+        // 2. Email Trigger (Opens default Mail app)
+        setTimeout(() => {
+            window.location.href = `mailto:vikash07052008@gmail.com?subject=${encodedSubject}&body=${encodedBody}`;
+        }, 500);
+
+        // 3. SMS Trigger (Opens default Messages app)
+        setTimeout(() => {
+            window.location.href = `sms:+919342877474?body=${encodedBody}`;
+        }, 1000);
+
+        // Show Success State on Button
+        form.reset();
+        submitBtn.textContent = 'Apps Launched!';
+        addMessage("Awesome! I'm launching WhatsApp, SMS, and your Email app so you can send your message directly to Vikash! 🚀", 'bot', false);
+
+        // Reset Button after a few seconds
+        setTimeout(() => {
             submitBtn.textContent = 'Send Message';
             submitBtn.disabled = false;
-          }, 4000);
-        }
+        }, 4000);
       });
 
       return container;

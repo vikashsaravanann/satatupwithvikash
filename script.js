@@ -86,68 +86,57 @@ document.addEventListener('DOMContentLoaded', () => {
     const progressBars = document.querySelectorAll('.skill-progress');
     progressBars.forEach(bar => progressObserver.observe(bar));
 
-    // Handle Contact Form Submission
+    // Handle Contact Form Submission (WhatsApp, SMS, Email Triggers)
     const contactForm = document.getElementById('contactForm');
     if (contactForm) {
-        contactForm.addEventListener('submit', async (e) => {
+        contactForm.addEventListener('submit', (e) => {
             e.preventDefault();
             const submitBtn = contactForm.querySelector('button[type="submit"]');
             const originalText = submitBtn.innerHTML;
-            submitBtn.textContent = 'Sending...';
+            submitBtn.textContent = 'Launching Apps...';
             submitBtn.style.opacity = '0.7';
             submitBtn.disabled = true;
             
             const formData = new FormData(contactForm);
-            const payload = {
-                name: formData.get('name'),
-                email: formData.get('_replyto') || formData.get('email'),
-                message: formData.get('message'),
-                subject: 'Website Portfolio Submission'
-            };
+            const name = formData.get('name') || '';
+            const email = formData.get('_replyto') || formData.get('email') || '';
+            const subject = 'Website Portfolio Submission';
+            const msg = formData.get('message') || '';
 
-            // Dynamically set API URL based on host environment
-            let apiUrl = '/api/contact';
-            if (window.location.protocol === 'file:' || 
-                window.location.hostname === 'localhost' || 
-                window.location.hostname === '127.0.0.1') {
-                apiUrl = 'http://localhost:3000/api/contact';
-            } else if (window.location.hostname.includes('github.io')) {
-                apiUrl = 'https://portfolio-information.vercel.app/api/contact';
-            }
+            // Construct the unified message body
+            const messageBody = `Hi Vikash,\n\nI am contacting you from your portfolio website.\n\nName: ${name}\nEmail: ${email}\n\nMessage:\n${msg}`;
+            const encodedBody = encodeURIComponent(messageBody);
+            const encodedSubject = encodeURIComponent(subject);
 
-            try {
-                const response = await fetch(apiUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
+            // 1. WhatsApp Trigger (Opens in new tab/app)
+            window.open(`https://wa.me/919342877474?text=${encodedBody}`, '_blank');
 
-                const data = await response.json();
+            // 2. Email Trigger (Opens default Mail app)
+            setTimeout(() => {
+                window.location.href = `mailto:vikash07052008@gmail.com?subject=${encodedSubject}&body=${encodedBody}`;
+            }, 500);
 
-                if (response.ok) {
-                    contactForm.reset();
-                    submitBtn.textContent = 'Sent Successfully!';
-                    submitBtn.style.color = '#000';
-                    submitBtn.style.background = '#00ffcc'; // neon green success
-                    submitBtn.style.boxShadow = '0 0 15px #00ffcc';
-                } else {
-                    throw new Error(data.error || 'Failed to send message.');
-                }
-            } catch (err) {
-                console.error(err);
-                submitBtn.textContent = 'Failed to Send';
-                submitBtn.style.background = '#ff3b30'; // neon red error
-                submitBtn.style.boxShadow = '0 0 15px #ff3b30';
-            } finally {
-                setTimeout(() => {
-                    submitBtn.innerHTML = originalText;
-                    submitBtn.style.background = '';
-                    submitBtn.style.color = '';
-                    submitBtn.style.boxShadow = '';
-                    submitBtn.style.opacity = '1';
-                    submitBtn.disabled = false;
-                }, 4000);
-            }
+            // 3. SMS Trigger (Opens default Messages app)
+            setTimeout(() => {
+                window.location.href = `sms:+919342877474?body=${encodedBody}`;
+            }, 1000);
+
+            // Show Success State on Button
+            contactForm.reset();
+            submitBtn.textContent = 'Apps Launched!';
+            submitBtn.style.color = '#000';
+            submitBtn.style.background = '#00ffcc'; // neon green success
+            submitBtn.style.boxShadow = '0 0 15px #00ffcc';
+
+            // Reset Button after a few seconds
+            setTimeout(() => {
+                submitBtn.innerHTML = originalText;
+                submitBtn.style.background = '';
+                submitBtn.style.color = '';
+                submitBtn.style.boxShadow = '';
+                submitBtn.style.opacity = '1';
+                submitBtn.disabled = false;
+            }, 4000);
         });
     }
 
