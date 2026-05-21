@@ -344,8 +344,8 @@ END:VCARD`;
 
         new QRCode(qrContainer, {
             text: vCardData,
-            width: 120,
-            height: 120,
+            width: 180,
+            height: 180,
             colorDark: '#0a0a0f',
             colorLight: '#ffffff',
             correctLevel: QRCode.CorrectLevel.M

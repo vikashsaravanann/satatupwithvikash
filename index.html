@@ -1202,11 +1202,14 @@
                 </div>
                 <!-- Contribution Graph -->
                 <div class="gh-contrib-wrap fade-up">
-                    <img src="https://ghchart.rshah.org/0ea5e9/vikashsaravanann" alt="GitHub Contribution Graph" class="gh-contrib-chart" loading="lazy">
+                    <img src="https://ghchart.rshah.org/0ea5e9/vikashsaravanann" alt="GitHub Contribution Graph"
+                        class="gh-contrib-chart" loading="lazy">
                 </div>
                 <!-- Top Repositories -->
                 <div class="gh-top-repos fade-up">
-                    <h3 style="font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 1.3rem; margin-bottom: 20px; color: rgba(255,255,255,0.9);"><i class="fas fa-fire" style="color: #0ea5e9; margin-right: 8px;"></i>Top Repositories</h3>
+                    <h3
+                        style="font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 1.3rem; margin-bottom: 20px; color: rgba(255,255,255,0.9);">
+                        <i class="fas fa-fire" style="color: #0ea5e9; margin-right: 8px;"></i>Top Repositories</h3>
                     <div class="gh-repos-grid" id="ghReposGrid">
                         <!-- Populated by JS -->
                     </div>
@@ -1224,7 +1227,8 @@
                     <p>Technical insights, tutorials, and thought leadership in AI & Data Science.</p>
                 </div>
                 <div class="blog-grid fade-up" id="blogGrid">
-                    <a href="https://www.linkedin.com/in/vikash-saravanan-j7528/recent-activity/articles/" target="_blank" class="blog-card">
+                    <a href="https://www.linkedin.com/in/vikash-saravanan-j7528/recent-activity/articles/"
+                        target="_blank" class="blog-card">
                         <div class="blog-card-icon"><i class="fab fa-linkedin"></i></div>
                         <div class="blog-card-content">
                             <span class="blog-tag">LinkedIn</span>
@@ -1238,7 +1242,8 @@
                         <div class="blog-card-content">
                             <span class="blog-tag">GitHub</span>
                             <h4>Open Source Projects & Documentation</h4>
-                            <p>Well-documented repositories with README guides, architecture docs, and code walkthroughs.</p>
+                            <p>Well-documented repositories with README guides, architecture docs, and code
+                                walkthroughs.</p>
                         </div>
                         <span class="blog-arrow"><i class="fas fa-arrow-right"></i></span>
                     </a>
@@ -1290,7 +1295,8 @@
                     </div>
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="cf-phone"><i class="fas fa-phone-alt"></i> Phone <span class="optional-tag">Optional</span></label>
+                            <label for="cf-phone"><i class="fas fa-phone-alt"></i> Phone <span
+                                    class="optional-tag">Optional</span></label>
                             <input type="tel" id="cf-phone" name="phone">
                         </div>
                         <div class="form-group">
@@ -1349,32 +1355,48 @@
                 <div class="footer-widget highlight-widget">
                     <div class="widget-icon"><i class="fas fa-bolt text-accent"></i></div>
                     <h3 class="text-neon mb-2">Quick Actions</h3>
-                    <div style="display: flex; flex-direction: column; gap: 10px;">
-                        <button onclick="generateResumePDF()" class="btn-primary-sm w-100"
-                            style="text-align: center; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; border: none;">
-                            <i class="fas fa-file-pdf"></i> Download Resume PDF
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                        <button onclick="generateResumePDF()" class="btn-primary-sm"
+                            style="display: flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer; border: none; padding: 12px 10px; font-size: 0.78rem;">
+                            <i class="fas fa-file-pdf"></i> Resume PDF
                         </button>
-                        <a href="#page-contact-form-container" class="btn-primary-sm w-100"
-                            style="text-align: center; display: block;">
+                        <a href="#page-contact-form-container" class="btn-primary-sm"
+                            style="display: flex; align-items: center; justify-content: center; gap: 6px; text-decoration: none; padding: 12px 10px; font-size: 0.78rem;">
                             <i class="fas fa-envelope"></i> Get In Touch
+                        </a>
+                        <button onclick="document.getElementById('ai-chat-toggle').click();" class="btn-primary-sm"
+                            style="display: flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer; border: none; padding: 12px 10px; font-size: 0.78rem; background: linear-gradient(135deg, #6366f1, #a855f7);">
+                            <i class="fas fa-robot"></i> AI Chat
+                        </button>
+                        <a href="certifications.html" class="btn-primary-sm"
+                            style="display: flex; align-items: center; justify-content: center; gap: 6px; text-decoration: none; padding: 12px 10px; font-size: 0.78rem; background: linear-gradient(135deg, #10b981, #06b6d4);">
+                            <i class="fas fa-certificate"></i> Certifications
                         </a>
                     </div>
                 </div>
 
                 <!-- Widget 4: QR Contact Card -->
-                <div class="footer-widget" style="text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                <div class="footer-widget"
+                    style="text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center;">
                     <div class="widget-icon"><i class="fas fa-qrcode text-accent"></i></div>
                     <h3 class="text-neon mb-2">Contact Card</h3>
-                    <p class="text-sm text-secondary" style="margin-bottom: 12px;">Scan with your phone camera to instantly save my contact info</p>
-                    <div id="qrCodeContainer" style="display: inline-block; padding: 10px; background: #fff; border-radius: 12px; box-shadow: 0 0 20px rgba(14, 165, 233, 0.15);"></div>
-                    <p class="text-sm" style="margin-top: 10px; color: rgba(255,255,255,0.35); font-size: 0.72rem;">vCard • Name, Email, Phone, Website</p>
+                    <p class="text-sm text-secondary" style="margin-bottom: 12px;">Scan with your phone camera to
+                        instantly save my contact info</p>
+                    <div id="qrCodeContainer"
+                        style="display: inline-block; padding: 10px; background: #fff; border-radius: 12px; box-shadow: 0 0 20px rgba(14, 165, 233, 0.15);">
+                    </div>
+                    <p class="text-sm" style="margin-top: 10px; color: rgba(255,255,255,0.35); font-size: 0.72rem;">
+                        vCard • Name, Email, Phone, Website</p>
                 </div>
             </div>
 
             <!-- Visitor Guest Book -->
             <div class="container" style="max-width: 680px; margin: 40px auto;">
                 <div class="section-title fade-up" style="margin-bottom: 20px;">
-                    <h3 style="font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 1.4rem; color: rgba(255,255,255,0.9);"><i class="fas fa-book-open" style="color: #0ea5e9; margin-right: 10px;"></i>Visitor Guest Book</h3>
+                    <h3
+                        style="font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 1.4rem; color: rgba(255,255,255,0.9);">
+                        <i class="fas fa-book-open" style="color: #0ea5e9; margin-right: 10px;"></i>Visitor Guest Book
+                    </h3>
                     <p class="text-sm text-secondary">Leave a short note — I'd love to hear from you!</p>
                 </div>
                 <form id="guestBookForm" class="fade-up" style="display: flex; gap: 10px; margin-bottom: 16px;">
@@ -1387,11 +1409,13 @@
                         <i class="fas fa-pen"></i> Sign
                     </button>
                 </form>
-                <div id="guestBookEntries" class="fade-up" style="display: flex; flex-direction: column; gap: 8px;"></div>
+                <div id="guestBookEntries" class="fade-up" style="display: flex; flex-direction: column; gap: 8px;">
+                </div>
             </div>
 
             <div class="footer-bottom">
-                <p>&copy; <span id="copyrightYear"></span> Vikash Saravanan @HearWise Technologies Pvt.Ltd & Professional Portfolio.</p>
+                <p>&copy; <span id="copyrightYear"></span> Vikash Saravanan @HearWise Technologies Pvt.Ltd &
+                    Professional Portfolio.</p>
             </div>
         </footer>
     </div>
