@@ -22,7 +22,7 @@
   const SYSTEM_PROMPT = `You are Vikash's intelligent AI portfolio assistant. Be friendly, concise, and professional. Keep replies under 4 sentences unless listing items. Use emojis sparingly but effectively.
 
 VIKASH SARAVANAN — FULL PROFILE:
-• Degree: B.Tech in AI & Data Science, 1st Year (2025–2029)
+• Degree: B.Tech in AI & Data Science (2024–2028)
 • College: Rathinam Technical Campus, Coimbatore
 • Native: Karur, Tamil Nadu, India
 • Email: vikash07052008@gmail.com | Phone: +91 9342877474
@@ -63,8 +63,9 @@ CERTIFICATIONS (all 15):
 11. Generative AI vs. Traditional AI — LinkedIn Learning
 12. Generative AI vs. Traditional AI (NASBA) — LinkedIn Learning
 13. Hands-On Data Annotation: Applied Machine Learning — LinkedIn Learning
-14. Introduction to Career Skills in Data Analytics — LinkedIn Learning
+14. Certified Ethical Hacker (CEH) — LinkedIn Learning
 15. The Cybersecurity Threat Landscape — LinkedIn Learning
+16. Introduction to Career Skills in Data Analytics — LinkedIn Learning
 
 AVAILABILITY:
 • Open for Remote & Coimbatore-based internships

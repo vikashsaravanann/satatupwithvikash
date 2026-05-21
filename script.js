@@ -481,7 +481,7 @@ function generateResumePDF() {
     doc.setFont('helvetica', 'normal');
     doc.setFontSize(9.5);
     doc.setTextColor(...textSecondary);
-    const summary = 'Ambitious B.Tech AI & Data Science student with expertise in machine learning, full-stack development, and enterprise-grade automation systems. Hackathon finalist at Meta PyTorch (OpenEnv). Building scalable, production-ready AI solutions from Coimbatore to the world.';
+    const summary = 'Ambitious B.Tech AI & Data Science student at Rathinam Technical Campus, Coimbatore, with hands-on expertise in machine learning, full-stack web development, and enterprise-grade automation systems. Meta PyTorch Hackathon Finalist. 16+ professional certifications across AI, Cybersecurity, and Data Analytics. Experienced in building production-ready platforms deployed to live environments, autonomous AI agents, and scalable data pipelines.';
     const summaryLines = doc.splitTextToSize(summary, contentWidth);
     doc.text(summaryLines, margin, y);
     y += summaryLines.length * 5 + 4;
@@ -496,17 +496,21 @@ function generateResumePDF() {
     doc.setFont('helvetica', 'normal');
     doc.setFontSize(9);
     doc.setTextColor(...textSecondary);
-    doc.text('Rathinam Technical Campus, Coimbatore | 2024 - 2028', margin, y);
+    doc.text('Rathinam Technical Campus, Coimbatore, Tamil Nadu | 2024 - 2028', margin, y);
+    y += 4;
+    doc.text('Relevant Coursework: Machine Learning, Data Structures, Computer Vision, NLP, Statistics', margin, y);
     y += 8;
 
     // Technical Skills
     addSection('Technical Skills');
     const skills = [
-        'Languages: Python, JavaScript, TypeScript, SQL, HTML/CSS',
-        'Frameworks: React, Next.js, Node.js, Express, TensorFlow, PyTorch',
-        'Tools: Git, Docker, VS Code, Jupyter, Vercel, Firebase',
-        'Databases: MongoDB, PostgreSQL, MySQL, Firebase Realtime DB',
-        'Specialization: Machine Learning, NLP, Computer Vision, Data Analytics'
+        'Languages: Python, JavaScript, TypeScript, SQL, HTML/CSS, Java',
+        'AI/ML: PyTorch, TensorFlow, Scikit-learn, Computer Vision, NLP, LLMs, Generative AI',
+        'Frameworks: React, Next.js, Node.js, Express.js, Flask',
+        'Automation: n8n Workflow Automation, Web Scraping, Autonomous AI Agents',
+        'Data: Pandas, NumPy, Matplotlib, Power BI, Data Annotation, ETL Pipelines',
+        'DevOps & Tools: Git, Docker, GitHub Pages, Vercel, Firebase, VS Code, Jupyter',
+        'Databases: MongoDB, PostgreSQL, MySQL, Firebase Realtime DB'
     ];
     skills.forEach(s => addBullet(s));
     y += 3;
@@ -514,28 +518,56 @@ function generateResumePDF() {
     // Projects
     addSection('Key Projects');
     const projects = [
-        'HearWise — AI-powered hearing screening & gamified ocean platform for children (React, Vercel)',
-        'Portfolio AI Chatbot — Interactive chatbot with TTS, STT, and persistent memory (JavaScript, Groq API)',
-        'Logic Intelligence Technologies — Full agency website with quote system (Next.js)',
+        'HearWise — AI-powered hearing screening & gamified ocean platform for children with 12+ interactive modules (React, Vercel, GitHub Pages)',
+        'Portfolio AI Chatbot — Intelligent assistant with Text-to-Speech, Speech-to-Text, persistent memory, and Siri-style voice (JavaScript, Groq API)',
+        'Logic Intelligence Technologies — Full agency website with multi-step quote system & CRM integration (Next.js)',
+        'IPL Data Analysis — Comprehensive cricket analytics project with data visualization (Python, Pandas, Jupyter)',
+        'GameHub — Terminal-based arcade with classic games: Snake, Tic-Tac-Toe, Rock-Paper-Scissors (Python)',
+        'OpenEnv Debugger — Support Ticket Triage environment for Meta x Scaler Hackathon (Python)'
     ];
     projects.forEach(p => addBullet(p));
     y += 3;
 
+    // Achievements
+    addSection('Achievements');
+    const achievements = [
+        'Meta PyTorch Hackathon Finalist (OpenEnv) — Selected from thousands of participants globally',
+        '16+ Professional Certifications spanning AI, ML, Data Science, Cybersecurity, and Ethical Hacking',
+        '3+ Live Production Architectures deployed and maintained on cloud platforms',
+        '5,000+ Lines of production-quality code written across multiple technology stacks'
+    ];
+    achievements.forEach(a => addBullet(a));
+    y += 3;
+
     // Certifications
-    addSection('Certifications');
+    addSection('Certifications (Select)');
     const certs = [
-        '15+ Professional Certifications in AI, ML, Data Science, and Cybersecurity',
-        'Certified Ethical Hacker (CEH) Training',
-        'Meta PyTorch Hackathon Finalist',
-        'LinkedIn Learning: Applied ML, Ensemble Learning, and more'
+        'Certified Ethical Hacker (CEH) — LinkedIn Learning',
+        'Data Analysis — Microsoft & LinkedIn',
+        'Applied Machine Learning: Ensemble Learning — LinkedIn Learning',
+        'Generative AI vs. Traditional AI — LinkedIn Learning',
+        'Data Analysis with Python — freeCodeCamp',
+        'Networking Basics & Troubleshooting — Cisco Academy',
+        'Design Thinking — IIT Bombay (via MyCaptain)',
+        'Full-Stack Development — Rathinam Technical Campus',
+        'The Cybersecurity Threat Landscape — LinkedIn Learning'
     ];
     certs.forEach(c => addBullet(c));
+
+    // Contact & Links
+    if (y > 260) { doc.addPage(); y = 20; }
+    addSection('Contact & Links');
+    addBullet('Portfolio: vikashsaravanann.github.io/Portfolio_Information');
+    addBullet('LinkedIn: linkedin.com/in/vikash-saravanan-j7528');
+    addBullet('GitHub: github.com/vikashsaravanann');
+    addBullet('Instagram: @startupwithvikash');
 
     // Footer
     doc.setFontSize(7.5);
     doc.setTextColor(150, 150, 150);
-    doc.text('Generated from vikashsaravanann.github.io/Portfolio_Information', margin, 287);
-    doc.text(`Generated: ${new Date().toLocaleDateString('en-IN')}`, pageWidth - margin - 40, 287);
+    const footerY = doc.internal.pageSize.height - 10;
+    doc.text('Generated from vikashsaravanann.github.io/Portfolio_Information', margin, footerY);
+    doc.text(`Generated: ${new Date().toLocaleDateString('en-IN')}`, pageWidth - margin - 40, footerY);
 
     doc.save('Vikash_Saravanan_Resume.pdf');
 }
