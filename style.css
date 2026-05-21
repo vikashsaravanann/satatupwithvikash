@@ -971,8 +971,8 @@ section {
 
 .footer-widget-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 30px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
     margin-bottom: 60px;
 }
 
@@ -1830,10 +1830,13 @@ section {
 }
 
 @media (max-width: 992px) {
+    .footer-widget-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
     .summary-grid,
     .grid-2-col,
     .widget-grid,
-    .footer-widget-grid,
     .cert-container {
         grid-template-columns: 1fr;
     }
@@ -2801,6 +2804,9 @@ section {
 }
 @media (max-width: 600px) {
     .form-row {
+        grid-template-columns: 1fr;
+    }
+    .footer-widget-grid {
         grid-template-columns: 1fr;
     }
 }
