@@ -235,4 +235,88 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+
+    // ==============================
+    // GITHUB LIVE STATS FETCHER
+    // ==============================
+    const GITHUB_USERNAME = 'vikashsaravanann';
+
+    // Language color map
+    const langColors = {
+        'JavaScript': '#f1e05a', 'Python': '#3572A5', 'HTML': '#e34c26',
+        'CSS': '#563d7c', 'TypeScript': '#3178c6', 'Jupyter Notebook': '#DA5B0B',
+        'Java': '#b07219', 'C++': '#f34b7d', 'C': '#555555', 'Shell': '#89e051'
+    };
+
+    // Animate counter
+    function animateCount(el, target) {
+        let current = 0;
+        const step = Math.max(1, Math.ceil(target / 40));
+        const interval = setInterval(() => {
+            current += step;
+            if (current >= target) {
+                current = target;
+                clearInterval(interval);
+            }
+            el.textContent = current;
+        }, 30);
+    }
+
+    async function fetchGitHubStats() {
+        try {
+            // Fetch user profile
+            const userRes = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}`);
+            const user = await userRes.json();
+
+            // Fetch all repos
+            const reposRes = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?per_page=100&sort=updated`);
+            const repos = await reposRes.json();
+
+            if (!Array.isArray(repos)) return;
+
+            // Calculate totals
+            const totalStars = repos.reduce((sum, r) => sum + (r.stargazers_count || 0), 0);
+            const totalForks = repos.reduce((sum, r) => sum + (r.forks_count || 0), 0);
+
+            // Animate stats
+            animateCount(document.getElementById('gh-repos'), user.public_repos || repos.length);
+            animateCount(document.getElementById('gh-stars'), totalStars);
+            animateCount(document.getElementById('gh-followers'), user.followers || 0);
+            animateCount(document.getElementById('gh-forks'), totalForks);
+
+            // Render top repos (sorted by stars, then updated)
+            const topRepos = repos
+                .filter(r => !r.fork)
+                .sort((a, b) => b.stargazers_count - a.stargazers_count)
+                .slice(0, 6);
+
+            const grid = document.getElementById('ghReposGrid');
+            if (grid) {
+                grid.innerHTML = topRepos.map(r => `
+                    <a href="${r.html_url}" target="_blank" class="gh-repo-card">
+                        <h5><i class="fas fa-book" style="margin-right:6px; font-size:0.85rem;"></i>${r.name}</h5>
+                        <p>${r.description || 'No description provided.'}</p>
+                        <div class="gh-repo-meta">
+                            ${r.language ? `<span><span class="gh-lang-dot" style="background:${langColors[r.language] || '#888'}"></span> ${r.language}</span>` : ''}
+                            <span><i class="fas fa-star"></i> ${r.stargazers_count}</span>
+                            <span><i class="fas fa-code-branch"></i> ${r.forks_count}</span>
+                        </div>
+                    </a>
+                `).join('');
+            }
+        } catch (err) {
+            console.warn('GitHub API fetch failed:', err);
+        }
+    }
+
+    fetchGitHubStats();
+
+    // ==============================
+    // PWA SERVICE WORKER REGISTRATION
+    // ==============================
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('sw.js')
+            .then(reg => console.log('SW registered:', reg.scope))
+            .catch(err => console.warn('SW registration failed:', err));
+    }
 });
