@@ -125,27 +125,43 @@ app.post('/api/contact', async (req, res) => {
     }
   }
 
+  // 4. ZERO-CONFIG FALLBACK ROUTING (FormSubmit.co AJAX API)
+  // If no Telegram bot, Discord Webhook, or SMTP keys are set, this delivers messages
+  // directly to your default inbox for free without requiring signup or authentication.
+  if (!sent) {
+    try {
+      const receiver = process.env.CONTACT_RECEIVER_EMAIL || 'vikash07052008@gmail.com';
+      const response = await fetch(`https://formsubmit.co/ajax/${receiver}`, {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          name: name,
+          email: email,
+          subject: emailSubject,
+          message: message
+        })
+      });
+      
+      const resData = await response.json();
+      if (response.ok && (resData.success === 'true' || resData.success === true)) {
+        sent = true;
+      } else {
+        deliveryErrors.fallback = resData.message || `FormSubmit API returned status ${response.status}`;
+      }
+    } catch (e) {
+      deliveryErrors.fallback = e.message;
+    }
+  }
+
   if (sent) {
     return res.status(200).json({ success: true, message: 'Message sent successfully!' });
   } else {
-    const configuredChannels = {
-      discord: !!process.env.DISCORD_WEBHOOK_URL,
-      telegram: !!(process.env.TELEGRAM_BOT_TOKEN && process.env.TELEGRAM_CHAT_ID),
-      email: !!(process.env.SMTP_HOST && process.env.SMTP_USER && process.env.SMTP_PASS)
-    };
-
-    const hasConfig = Object.values(configuredChannels).some(val => val === true);
-
-    if (!hasConfig) {
-      return res.status(501).json({
-        success: false,
-        error: 'Backend is configured, but no notification channels (Discord, Telegram, or SMTP) have been set up in environment variables.'
-      });
-    }
-
     return res.status(500).json({
       success: false,
-      error: 'Failed to deliver message via configured channels.',
+      error: 'Failed to deliver message via all configured channels.',
       details: deliveryErrors
     });
   }
