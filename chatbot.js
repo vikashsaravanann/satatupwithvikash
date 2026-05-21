@@ -1,10 +1,11 @@
 /**
- * VIKASH PORTFOLIO — AI CHATBOT (ULTIMATE UPGRADE)
+ * VIKASH PORTFOLIO — AI CHATBOT (ULTIMATE UPGRADE EDITION)
  * ✅ Conversation Memory & Session Persistence (localStorage)
- * ✅ Text-To-Speech Voice Synthesis (Web Speech API)
- * ✅ Proactive Welcome Greeting (Auto-open after 8s)
- * ✅ Dynamic Time-Based Greeting
- * ✅ Rich Interactive Cards (HearWise, Certifications, Contact)
+ * ✅ Text-To-Speech Voice Synthesis (Web Speech API) with Siri Waveform Sync
+ * ✅ Voice Input / Speech-to-Text Dictation (Web Speech Recognition API)
+ * ✅ Clear Chat Memory Reset Action
+ * ✅ Proactive Welcome Greeting (Auto-open after 8s) & Time-Based Greetings
+ * ✅ Rich Interactive Contact Form Bubble & Cards
  */
 
 (function () {
@@ -88,31 +89,74 @@ If asked something unrelated to Vikash, politely say: "I'm focused on helping yo
   /* ═══════════════════════════════════════════
      DOM ELEMENTS
      ═══════════════════════════════════════════ */
-  const toggle   = document.getElementById('ai-chat-toggle');
-  const panel    = document.getElementById('ai-chat-panel');
-  const closeBtn = document.getElementById('ai-chat-close');
+  const toggle     = document.getElementById('ai-chat-toggle');
+  const panel      = document.getElementById('ai-chat-panel');
+  const closeBtn   = document.getElementById('ai-chat-close');
+  const resetBtn   = document.getElementById('ai-chat-reset');
   const messagesEl = document.getElementById('chatMessages');
-  const inputEl  = document.getElementById('chatInput');
-  const sendBtn  = document.getElementById('chatSend');
-  const chipsEl  = document.getElementById('chatChips');
+  const inputEl    = document.getElementById('chatInput');
+  const sendBtn    = document.getElementById('chatSend');
+  const chipsEl    = document.getElementById('chatChips');
+  const micBtn     = document.getElementById('chatMic');
+  const waveformEl = document.getElementById('chatWaveform');
 
   if (!toggle || !panel) return;
 
-  // Track speech state globally to toggle/cancel
+  // Speech recognition global variable
+  let recognition = null;
+  // Speech synthesis global variable
   let currentUtterance = null;
 
   /* ═══════════════════════════════════════════
-     INITIALIZE & GREETINGS
+     SPEECH TO TEXT (MICROPHONE DICTATION)
      ═══════════════════════════════════════════ */
-  // Load saved history or print greeting
-  if (conversationHistory.length > 0) {
-    // Hide default chips if conversation is already active
-    if (chipsEl) chipsEl.style.display = 'none';
-    conversationHistory.forEach(msg => {
-      addMessage(msg.content, msg.role, false); // Render saved messages instantly without animation
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (SpeechRecognition) {
+    recognition = new SpeechRecognition();
+    recognition.continuous = false;
+    recognition.lang = 'en-US';
+    recognition.interimResults = false;
+
+    recognition.onstart = () => {
+      micBtn.classList.add('listening');
+      inputEl.placeholder = 'Listening... Speak now';
+    };
+
+    recognition.onresult = (event) => {
+      const transcript = event.results[0][0].transcript;
+      inputEl.value = transcript;
+    };
+
+    recognition.onerror = (event) => {
+      console.warn('Speech Recognition Error: ', event.error);
+      micBtn.classList.remove('listening');
+      inputEl.placeholder = 'Ask me anything about Vikash...';
+    };
+
+    recognition.onend = () => {
+      micBtn.classList.remove('listening');
+      inputEl.placeholder = 'Ask me anything about Vikash...';
+    };
+
+    micBtn.addEventListener('click', () => {
+      if (micBtn.classList.contains('listening')) {
+        recognition.stop();
+      } else {
+        // Stop any text-to-speech playing
+        if (window.speechSynthesis) window.speechSynthesis.cancel();
+        if (waveformEl) waveformEl.classList.remove('active');
+        recognition.start();
+      }
     });
   } else {
-    // Generate greeting based on time of day
+    // Hide mic button if SpeechRecognition is not supported in browser
+    if (micBtn) micBtn.style.display = 'none';
+  }
+
+  /* ═══════════════════════════════════════════
+     INITIALIZE GREETINGS & MEMORY
+     ═══════════════════════════════════════════ */
+  function getDynamicGreeting() {
     const hour = new Date().getHours();
     let timeGreeting = "Hey there! 👋";
     if (hour >= 5 && hour < 12) timeGreeting = "Good morning! 🌅";
@@ -120,9 +164,42 @@ If asked something unrelated to Vikash, politely say: "I'm focused on helping yo
     else if (hour >= 17 && hour < 22) timeGreeting = "Good evening! 🌃";
     else timeGreeting = "Burning the midnight oil? 🌌";
 
-    const greeting = `${timeGreeting} I'm Vikash's AI assistant. Ask me anything about his projects, skills, or certifications. I can read my answers out loud too!`;
-    addMessage(greeting, 'bot', false);
-    // Note: We don't save the default greeting in localStorage history to keep it clean.
+    return `${timeGreeting} I'm Vikash's AI assistant. Ask me anything about his projects, skills, or certifications. I can read my answers out loud too!`;
+  }
+
+  function initChat() {
+    messagesEl.innerHTML = '';
+    if (conversationHistory.length > 0) {
+      if (chipsEl) chipsEl.style.display = 'none';
+      conversationHistory.forEach(msg => {
+        addMessage(msg.content, msg.role, false);
+      });
+    } else {
+      if (chipsEl) chipsEl.style.display = 'flex';
+      const greeting = getDynamicGreeting();
+      addMessage(greeting, 'bot', false);
+    }
+  }
+
+  initChat();
+
+  /* ═══════════════════════════════════════════
+     CLEAR CHAT (RESET SYSTEM)
+     ═══════════════════════════════════════════ */
+  if (resetBtn) {
+    resetBtn.addEventListener('click', () => {
+      if (confirm('Clear entire conversation history?')) {
+        // Cancel voice
+        if (window.speechSynthesis) window.speechSynthesis.cancel();
+        if (waveformEl) waveformEl.classList.remove('active');
+        if (recognition) recognition.stop();
+
+        // Clear local storage and state
+        localStorage.removeItem('vikash_chat_history');
+        conversationHistory = [];
+        initChat();
+      }
+    });
   }
 
   /* ═══════════════════════════════════════════
@@ -147,14 +224,15 @@ If asked something unrelated to Vikash, politely say: "I'm focused on helping yo
     if (panel.classList.contains('open')) {
       setTimeout(() => inputEl.focus(), 300);
     } else {
-      // Cancel speech if chat panel is closed
       if (window.speechSynthesis) window.speechSynthesis.cancel();
+      if (waveformEl) waveformEl.classList.remove('active');
     }
   });
 
   closeBtn.addEventListener('click', () => {
     panel.classList.remove('open');
     if (window.speechSynthesis) window.speechSynthesis.cancel();
+    if (waveformEl) waveformEl.classList.remove('active');
   });
 
   /* ═══════════════════════════════════════════
@@ -218,7 +296,7 @@ If asked something unrelated to Vikash, politely say: "I'm focused on helping yo
   }
 
   /* ═══════════════════════════════════════════
-     TEXT TO SPEECH (VOICE RESPONSES)
+     TEXT TO SPEECH (VOICE RESPONSES & SIRI SYNC)
      ═══════════════════════════════════════════ */
   function speakMessage(text, buttonElement) {
     if (!window.speechSynthesis) return;
@@ -228,6 +306,7 @@ If asked something unrelated to Vikash, politely say: "I'm focused on helping yo
       window.speechSynthesis.cancel();
       buttonElement.innerHTML = '<i class="fas fa-volume-up"></i> Speak';
       buttonElement.classList.remove('speaking');
+      if (waveformEl) waveformEl.classList.remove('active');
       return;
     }
 
@@ -262,17 +341,12 @@ If asked something unrelated to Vikash, politely say: "I'm focused on helping yo
       );
     });
 
-    // Fallback: search for any English voice with 'female' in the name
     if (!femaleVoice) {
       femaleVoice = voices.find(v => v.lang.startsWith('en') && v.name.toLowerCase().includes('female'));
     }
-
-    // Secondary fallback: just use Google's English voice
     if (!femaleVoice) {
       femaleVoice = voices.find(v => v.lang.startsWith('en') && v.name.toLowerCase().includes('google'));
     }
-
-    // Final fallback: any English voice
     if (!femaleVoice) {
       femaleVoice = voices.find(v => v.lang.startsWith('en'));
     }
@@ -284,18 +358,26 @@ If asked something unrelated to Vikash, politely say: "I'm focused on helping yo
     utterance.onstart = () => {
       buttonElement.innerHTML = '<i class="fas fa-volume-mute"></i> Mute';
       buttonElement.classList.add('speaking');
+      if (waveformEl) waveformEl.classList.add('active'); // Activate glowing audio waveform
     };
 
     utterance.onend = () => {
       buttonElement.innerHTML = '<i class="fas fa-volume-up"></i> Speak';
       buttonElement.classList.remove('speaking');
+      if (waveformEl) waveformEl.classList.remove('active'); // Disable waveform
+    };
+
+    utterance.onerror = () => {
+      buttonElement.innerHTML = '<i class="fas fa-volume-up"></i> Speak';
+      buttonElement.classList.remove('speaking');
+      if (waveformEl) waveformEl.classList.remove('active');
     };
 
     window.speechSynthesis.speak(utterance);
   }
 
   /* ═══════════════════════════════════════════
-     RICH UI CARD & LINK GENERATOR
+     RICH UI CARD & FORM GENERATOR
      ═══════════════════════════════════════════ */
   function getRichCardElement(text) {
     const lower = text.toLowerCase();
@@ -322,10 +404,30 @@ If asked something unrelated to Vikash, politely say: "I'm focused on helping yo
     if (lower.includes('contact') || lower.includes('email') || lower.includes('hire') || lower.includes('phone')) {
       container.className = 'chat-rich-card';
       container.innerHTML = `
-        <h4>📩 Get In Touch</h4>
-        <p>Email: vikash07052008@gmail.com<br>Phone: +91 9342877474</p>
-        <a href="mailto:vikash07052008@gmail.com" class="chat-rich-btn"><i class="fas fa-envelope"></i> Send Email</a>
+        <h4>📩 Interactive Contact Form</h4>
+        <p>Fill out the fields to instantly launch a draft email to Vikash.</p>
+        <form class="chat-contact-form">
+          <input type="text" class="chat-form-input chat-form-name" placeholder="Your Name" required>
+          <input type="text" class="chat-form-input chat-form-subject" placeholder="Subject" required>
+          <textarea class="chat-form-textarea chat-form-msg" placeholder="Your message here..." required></textarea>
+          <button type="submit" class="chat-form-submit">Send Email</button>
+        </form>
       `;
+
+      // Bind the form action logic
+      const form = container.querySelector('.chat-contact-form');
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const name = form.querySelector('.chat-form-name').value;
+        const subject = form.querySelector('.chat-form-subject').value;
+        const msg = form.querySelector('.chat-form-msg').value;
+
+        const mailtoUrl = `mailto:vikash07052008@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent("Hi Vikash,\n\n" + msg + "\n\nBest regards,\n" + name)}`;
+        window.open(mailtoUrl, '_blank');
+
+        addMessage("Awesome! I've opened a pre-filled draft in your default mail app. Let me know if you need anything else! 📧", 'bot', false);
+      });
+
       return container;
     }
     return null;
@@ -365,7 +467,7 @@ If asked something unrelated to Vikash, politely say: "I'm focused on helping yo
         messagesEl.scrollTop = messagesEl.scrollHeight;
         if (i >= content.length) {
           clearInterval(interval);
-          // Check and append rich interactive cards if applicable
+          // Check and append rich interactive cards / form if applicable
           const card = getRichCardElement(content);
           if (card) {
             wrapper.appendChild(card);
@@ -399,7 +501,6 @@ If asked something unrelated to Vikash, politely say: "I'm focused on helping yo
      API BRIDGE CALL WITH MULTI-TURN MEMORY
      ═══════════════════════════════════════════ */
   async function callBridge() {
-    // Only send the last 10 messages to avoid payload limits
     const relevantHistory = conversationHistory.slice(-10);
 
     const messages = [

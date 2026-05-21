@@ -1187,18 +1187,31 @@
                         <div class="chat-subtitle"><span class="chat-status-dot"></span> Online — Powered by Grok AI</div>
                     </div>
                 </div>
-                <button class="chat-close" id="ai-chat-close"><i class="fas fa-times"></i></button>
+                <div class="chat-header-actions">
+                    <button class="chat-reset" id="ai-chat-reset" title="Clear Chat History"><i class="fas fa-trash-alt"></i></button>
+                    <button class="chat-close" id="ai-chat-close" title="Close"><i class="fas fa-times"></i></button>
+                </div>
             </div>
             <div class="chat-messages" id="chatMessages"></div>
+            <!-- Siri-style Voice Waveform -->
+            <div class="chat-waveform" id="chatWaveform">
+                <span class="wave-bar"></span>
+                <span class="wave-bar"></span>
+                <span class="wave-bar"></span>
+                <span class="wave-bar"></span>
+                <span class="wave-bar"></span>
+                <span class="wave-text">Voice Active</span>
+            </div>
             <!-- Quick Action Chips -->
             <div class="chat-chips" id="chatChips">
                 <button class="chat-chip" data-msg="What are your top skills?">🧠 Skills</button>
                 <button class="chat-chip" data-msg="Tell me about your projects">🚀 Projects</button>
                 <button class="chat-chip" data-msg="What certifications do you have?">🏆 Certifications</button>
-                <button class="chat-chip" data-msg="How can I hire or contact you?">📩 Contact</button>
+                <button class="chat-chip" data-msg="How can I hire or contact you?">📩 Contact Form</button>
             </div>
             <div class="chat-input-wrap">
                 <input type="text" id="chatInput" placeholder="Ask me anything about Vikash..." autocomplete="off">
+                <button id="chatMic" title="Voice Input (Speech-to-Text)"><i class="fas fa-microphone"></i></button>
                 <button id="chatSend"><i class="fas fa-paper-plane"></i></button>
             </div>
         </div>

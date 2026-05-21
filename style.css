@@ -2378,6 +2378,140 @@ section {
     box-shadow: 0 4px 12px rgba(14, 165, 233, 0.4);
 }
 
+/* Chat Header Actions (Reset & Close side-by-side) */
+.chat-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+.chat-reset {
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.45);
+    font-size: 0.92rem;
+    cursor: pointer;
+    transition: color 0.2s, transform 0.2s;
+    padding: 2px;
+}
+.chat-reset:hover {
+    color: #ef4444;
+    transform: scale(1.1);
+}
+
+/* Microphone Button styling */
+#chatMic {
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 1.15rem;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.25s ease;
+}
+#chatMic:hover {
+    color: #0ea5e9;
+    background: rgba(255, 255, 255, 0.05);
+}
+#chatMic.listening {
+    color: #ef4444;
+    background: rgba(239, 68, 68, 0.15);
+    animation: micPulse 1.5s infinite;
+}
+
+@keyframes micPulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
+    50% { box-shadow: 0 0 0 8px rgba(239, 68, 68, 0); }
+}
+
+/* Siri-style Voice Waveform styles */
+.chat-waveform {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px 16px;
+    background: rgba(14, 165, 233, 0.06);
+    border-top: 1px solid rgba(255, 255, 255, 0.04);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+.chat-waveform.active {
+    display: flex;
+}
+.wave-bar {
+    width: 3px;
+    height: 14px;
+    background: linear-gradient(to top, #0ea5e9, #6366f1);
+    border-radius: 4px;
+    animation: siriWave 0.8s ease-in-out infinite alternate;
+}
+.wave-bar:nth-child(1) { height: 8px; animation-delay: 0.1s; }
+.wave-bar:nth-child(2) { height: 18px; animation-delay: 0.3s; }
+.wave-bar:nth-child(3) { height: 12px; animation-delay: 0.5s; }
+.wave-bar:nth-child(4) { height: 22px; animation-delay: 0.2s; }
+.wave-bar:nth-child(5) { height: 10px; animation-delay: 0.4s; }
+
+.wave-text {
+    font-size: 0.72rem;
+    color: rgba(255, 255, 255, 0.5);
+    margin-left: 6px;
+    font-weight: 500;
+}
+
+@keyframes siriWave {
+    0% { transform: scaleY(0.4); }
+    100% { transform: scaleY(1.4); }
+}
+
+/* Chat Interactive Contact Form */
+.chat-contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 10px;
+    width: 100%;
+    box-sizing: border-box;
+}
+.chat-form-input, .chat-form-textarea {
+    width: 100%;
+    padding: 8px 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: #fff;
+    font-size: 0.78rem;
+    outline: none;
+    transition: border-color 0.2s;
+    box-sizing: border-box;
+    font-family: inherit;
+}
+.chat-form-input:focus, .chat-form-textarea:focus {
+    border-color: #0ea5e9;
+}
+.chat-form-textarea {
+    resize: none;
+    height: 60px;
+}
+.chat-form-submit {
+    width: 100%;
+    padding: 8px;
+    background: linear-gradient(135deg, #0ea5e9, #6366f1);
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 0.78rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+.chat-form-submit:hover {
+    transform: scale(1.02);
+}
+
 
 
 /* ==============================
