@@ -202,51 +202,102 @@
                 <!-- Widget 1: About Us / Contact -->
                 <div class="footer-widget">
                     <div class="widget-icon"><i class="fas fa-user-circle text-accent"></i></div>
-                    <h3 class="text-neon mb-4">About the Engineer</h3>
+                    <h3 class="text-neon mb-2">About the Engineer</h3>
                     <p class="text-sm text-secondary">B.Tech AI & Data Science Student and aspiring Data Analyst.
                         Building scalable solutions from Coimbatore to the world. Open for remote internships.</p>
                     <div class="contact-details mt-3">
                         <p><i class="fas fa-map-marker-alt"></i> Karur-639102, Tamilnadu</p>
-                        <p><i class="fas fa-phone-alt"></i> +91 9342877474</p>
                         <p><i class="fas fa-envelope"></i> vikash07052008@gmail.com</p>
+                        <p><i class="fas fa-phone"></i> +91 9342877474</p>
                     </div>
                 </div>
 
                 <!-- Widget 2: Digital Presence -->
-                <div class="footer-widget">
-                    <div class="widget-icon"><i class="fas fa-network-wired text-accent"></i></div>
-                    <h3 class="text-neon mb-4">Digital Presence</h3>
-                    <div class="footer-links">
+                <div class="footer-widget" style="padding: 0; overflow: hidden; display: flex; flex-direction: column;">
+                    <div style="padding: 20px 24px 12px;">
+                        <div class="widget-icon"><i class="fas fa-network-wired text-accent"></i></div>
+                        <h3 class="text-neon mb-2">Digital Presence</h3>
+                    </div>
+                    <div style="display: flex; flex-direction: column; flex: 1;">
                         <a href="https://www.linkedin.com/in/vikash-saravanan-j7528" target="_blank"
-                            class="footer-btn"><i class="fab fa-linkedin"></i> LinkedIn</a>
-                        <a href="https://github.com/vikashsaravanann" target="_blank" class="footer-btn"><i
-                                class="fab fa-github"></i> GitHub</a>
+                            style="flex: 1; display: flex; align-items: center; gap: 10px; padding: 14px 24px; text-decoration: none; border-top: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.03); color: #fff; font-weight: 600; font-size: 0.85rem; font-family: 'Inter', sans-serif;">
+                            <i class="fab fa-linkedin" style="color: #0a66c2; font-size: 1.1rem;"></i> LinkedIn
+                        </a>
+                        <a href="https://github.com/vikashsaravanann" target="_blank"
+                            style="flex: 1; display: flex; align-items: center; gap: 10px; padding: 14px 24px; text-decoration: none; border-top: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.03); color: #fff; font-weight: 600; font-size: 0.85rem; font-family: 'Inter', sans-serif;">
+                            <i class="fab fa-github" style="color: #e6edf3; font-size: 1.1rem;"></i> GitHub
+                        </a>
                         <a href="https://www.instagram.com/startupwithvikash/?__pwa=1" target="_blank"
-                            class="footer-btn"><i class="fab fa-instagram"></i> Instagram</a>
+                            style="flex: 1; display: flex; align-items: center; gap: 10px; padding: 14px 24px; text-decoration: none; border-top: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.03); color: #fff; font-weight: 600; font-size: 0.85rem; font-family: 'Inter', sans-serif;">
+                            <i class="fab fa-instagram" style="color: #e1306c; font-size: 1.1rem;"></i> Instagram
+                        </a>
+                        <a href="mailto:vikash07052008@gmail.com"
+                            style="flex: 1; display: flex; align-items: center; gap: 10px; padding: 14px 24px; text-decoration: none; border-top: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.03); color: #fff; font-weight: 600; font-size: 0.85rem; font-family: 'Inter', sans-serif;">
+                            <i class="fas fa-envelope" style="color: #0ea5e9; font-size: 1.1rem;"></i> Email
+                        </a>
+                        <a href="https://vikashsaravanann.github.io/Portfolio_Information/" target="_blank"
+                            style="flex: 1; display: flex; align-items: center; gap: 10px; padding: 14px 24px; text-decoration: none; border-top: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.03); color: #fff; font-weight: 600; font-size: 0.85rem; font-family: 'Inter', sans-serif; border-radius: 0 0 16px 16px;">
+                            <i class="fas fa-globe" style="color: #10b981; font-size: 1.1rem;"></i> Portfolio Website
+                        </a>
                     </div>
                 </div>
 
-                <!-- Widget 3: Thank You -->
-                <div class="footer-widget highlight-widget">
-                    <div class="widget-icon"><i class="fas fa-heart text-accent"></i></div>
-                    <h3 class="text-neon mb-4">Thank You</h3>
-                    <p class="text-sm text-secondary">Thank you for visiting my professional portfolio! I am constantly
-                        iterating on my codebase and expanding my technical stack. Feel free to reach out to collaborate
-                        on innovative AI projects.</p>
-                    <a href="mailto:vikash07052008@gmail.com" class="btn-primary-sm mt-3 w-100"
-                        style="text-align: center; display: block;">Get In Touch</a>
+                <!-- Widget 3: Quick Actions -->
+                <div class="footer-widget" style="padding: 0; overflow: hidden; display: flex; flex-direction: column;">
+                    <div style="padding: 20px 24px 12px;">
+                        <div class="widget-icon"><i class="fas fa-bolt text-accent"></i></div>
+                        <h3 class="text-neon mb-2">Quick Actions</h3>
+                    </div>
+                    <div style="display: flex; flex-direction: column; flex: 1;">
+                        <button onclick="generateResumePDF()"
+                            style="flex: 1; display: flex; align-items: center; gap: 10px; padding: 14px 24px; cursor: pointer; border: none; border-top: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.03); color: #fff; font-weight: 600; font-size: 0.85rem; font-family: 'Inter', sans-serif;">
+                            <i class="fas fa-file-pdf" style="color: #ef4444; font-size: 1.1rem;"></i> Download Resume PDF
+                        </button>
+                        <a href="index.html#page-contact-form-container"
+                            style="flex: 1; display: flex; align-items: center; gap: 10px; padding: 14px 24px; text-decoration: none; border-top: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.03); color: #fff; font-weight: 600; font-size: 0.85rem; font-family: 'Inter', sans-serif;">
+                            <i class="fas fa-envelope" style="color: #0ea5e9; font-size: 1.1rem;"></i> Get In Touch
+                        </a>
+                        <a href="index.html"
+                            style="flex: 1; display: flex; align-items: center; gap: 10px; padding: 14px 24px; text-decoration: none; border-top: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.03); color: #fff; font-weight: 600; font-size: 0.85rem; font-family: 'Inter', sans-serif;">
+                            <i class="fas fa-home" style="color: #a855f7; font-size: 1.1rem;"></i> Back to Portfolio
+                        </a>
+                        <a href="index.html#skills"
+                            style="flex: 1; display: flex; align-items: center; gap: 10px; padding: 14px 24px; text-decoration: none; border-top: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.03); color: #fff; font-weight: 600; font-size: 0.85rem; font-family: 'Inter', sans-serif;">
+                            <i class="fas fa-cogs" style="color: #10b981; font-size: 1.1rem;"></i> View Skills
+                        </a>
+                        <a href="index.html#projects"
+                            style="flex: 1; display: flex; align-items: center; gap: 10px; padding: 14px 24px; text-decoration: none; border-top: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.03); color: #fff; font-weight: 600; font-size: 0.85rem; font-family: 'Inter', sans-serif; border-radius: 0 0 16px 16px;">
+                            <i class="fas fa-code" style="color: #f59e0b; font-size: 1.1rem;"></i> View Projects
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Widget 4: QR Contact Card -->
+                <div class="footer-widget"
+                    style="text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                    <div class="widget-icon"><i class="fas fa-qrcode text-accent"></i></div>
+                    <h3 class="text-neon mb-2">Contact Card</h3>
+                    <p class="text-sm text-secondary" style="margin-bottom: 12px;">Scan with your phone camera to
+                        instantly save my contact info</p>
+                    <div id="qrCodeContainer"
+                        style="display: inline-block; padding: 10px; background: #fff; border-radius: 12px; box-shadow: 0 0 20px rgba(14, 165, 233, 0.15);">
+                    </div>
+                    <p class="text-sm" style="margin-top: 10px; color: rgba(255,255,255,0.35); font-size: 0.72rem;">
+                        vCard • Name, Email, Phone, Website</p>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2026 Vikash Saravanan @HearWise Technologies Pvt.Ltd & Professional Portfolio.</p>
+                <p>&copy; <span id="copyrightYear"></span> Vikash Saravanan @HearWise Technologies Pvt.Ltd & Professional Portfolio.</p>
             </div>
         </footer>
     </div>
 
     <!-- Script -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
     <script src="script.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // Search filter
             const searchInput = document.getElementById('certSearch');
             const certRows = document.querySelectorAll('.cert-row');
 
@@ -264,6 +315,10 @@
                     });
                 });
             }
+
+            // Auto copyright year
+            const yearEl = document.getElementById('copyrightYear');
+            if (yearEl) yearEl.textContent = new Date().getFullYear();
         });
     </script>
 </body>

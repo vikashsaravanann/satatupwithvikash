@@ -363,16 +363,22 @@ END:VCARD`;
         if (!gbEntries) return;
         const entries = JSON.parse(localStorage.getItem(GB_KEY) || '[]');
         if (entries.length === 0) {
-            gbEntries.innerHTML = '<p style="text-align:center; color: rgba(255,255,255,0.3); font-size: 0.85rem;">No entries yet — be the first to sign! ✍️</p>';
+            gbEntries.innerHTML = '<p style="text-align:center; color: rgba(255,255,255,0.3); font-size: 0.85rem; padding: 20px 0;">No entries yet — be the first to sign! ✍️</p>';
             return;
         }
         gbEntries.innerHTML = entries.slice(-10).reverse().map(e => `
-            <div style="padding: 12px 16px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; display: flex; justify-content: space-between; align-items: center;">
-                <div>
-                    <strong style="color: #0ea5e9; font-size: 0.85rem;">${e.name}</strong>
-                    <span style="color: rgba(255,255,255,0.6); font-size: 0.85rem; margin-left: 8px;">${e.message}</span>
+            <div style="padding: 14px 18px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; animation: fadeInUp 0.3s ease;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <div style="width: 28px; height: 28px; border-radius: 50%; background: linear-gradient(135deg, #0ea5e9, #6366f1); display: flex; align-items: center; justify-content: center; font-size: 0.7rem; color: #fff; font-weight: 700;">${e.name.charAt(0).toUpperCase()}</div>
+                        <strong style="color: #0ea5e9; font-size: 0.85rem;">${e.name}</strong>
+                    </div>
+                    <span style="color: rgba(255,255,255,0.25); font-size: 0.7rem; white-space: nowrap;">${e.date}</span>
                 </div>
-                <span style="color: rgba(255,255,255,0.25); font-size: 0.72rem; white-space: nowrap;">${e.date}</span>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    ${e.category ? `<span style="font-size: 0.72rem; padding: 2px 8px; background: rgba(14,165,233,0.1); border: 1px solid rgba(14,165,233,0.15); border-radius: 6px; color: rgba(255,255,255,0.5); white-space: nowrap;">${e.category}</span>` : ''}
+                    <span style="color: rgba(255,255,255,0.65); font-size: 0.85rem; line-height: 1.5;">${e.message}</span>
+                </div>
             </div>
         `).join('');
     }
@@ -382,12 +388,15 @@ END:VCARD`;
             e.preventDefault();
             const name = document.getElementById('gbName').value.trim();
             const message = document.getElementById('gbMessage').value.trim();
+            const categoryEl = document.getElementById('gbCategory');
+            const category = categoryEl ? categoryEl.value : '';
             if (!name || !message) return;
 
             const entries = JSON.parse(localStorage.getItem(GB_KEY) || '[]');
             entries.push({
                 name: name.substring(0, 30),
-                message: message.substring(0, 100),
+                message: message.substring(0, 150),
+                category: category,
                 date: new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })
             });
             localStorage.setItem(GB_KEY, JSON.stringify(entries));
