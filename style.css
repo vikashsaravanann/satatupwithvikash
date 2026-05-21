@@ -2512,6 +2512,213 @@ section {
     transform: scale(1.02);
 }
 
+/* ============================================================
+   PREMIUM PROFESSIONAL CONTACT FORM
+   ============================================================ */
+
+/* Channel Delivery Badges */
+.contact-channels {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+}
+.channel-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 16px;
+    background: rgba(14, 165, 233, 0.08);
+    border: 1px solid rgba(14, 165, 233, 0.15);
+    border-radius: 20px;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+}
+.channel-badge i {
+    color: #0ea5e9;
+    font-size: 0.85rem;
+}
+
+/* Form Container */
+.pro-contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 32px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 20px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+/* Form Rows (2-column grid) */
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+@media (max-width: 600px) {
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Form Groups */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+.form-group.full-width {
+    grid-column: 1 / -1;
+}
+
+/* Labels */
+.pro-contact-form label {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.7);
+    letter-spacing: 0.4px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.pro-contact-form label i {
+    font-size: 0.78rem;
+    color: #0ea5e9;
+}
+.optional-tag {
+    font-size: 0.68rem;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.3);
+    margin-left: 2px;
+}
+
+/* Input Fields */
+.pro-contact-form input,
+.pro-contact-form textarea,
+.pro-contact-form select {
+    width: 100%;
+    padding: 13px 16px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    color: #fff;
+    font-size: 0.92rem;
+    font-family: 'Inter', sans-serif;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+    box-sizing: border-box;
+}
+.pro-contact-form input::placeholder,
+.pro-contact-form textarea::placeholder {
+    color: rgba(255, 255, 255, 0.25);
+}
+.pro-contact-form input:focus,
+.pro-contact-form textarea:focus,
+.pro-contact-form select:focus {
+    border-color: rgba(14, 165, 233, 0.5);
+    box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.08);
+    background: rgba(255, 255, 255, 0.06);
+}
+.pro-contact-form select {
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='rgba(255,255,255,0.4)' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    cursor: pointer;
+}
+.pro-contact-form select option {
+    background: #111827;
+    color: #fff;
+}
+.pro-contact-form textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+/* Submit Button */
+.pro-submit-btn {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, #0ea5e9, #6366f1);
+    border: none;
+    border-radius: 14px;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
+    letter-spacing: 0.4px;
+    position: relative;
+    overflow: hidden;
+}
+.pro-submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(14, 165, 233, 0.3);
+}
+.pro-submit-btn:active {
+    transform: translateY(0);
+}
+.pro-submit-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+.pro-submit-btn .btn-content,
+.pro-submit-btn .btn-loader {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Footer Note */
+.form-footer-note {
+    text-align: center;
+    font-size: 0.74rem;
+    color: rgba(255, 255, 255, 0.3);
+    margin-top: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+.form-footer-note i {
+    color: rgba(14, 165, 233, 0.4);
+}
+
+/* Success Toast Notification */
+.contact-toast {
+    position: fixed;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    padding: 14px 28px;
+    background: linear-gradient(135deg, #059669, #10b981);
+    color: #fff;
+    border-radius: 14px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    box-shadow: 0 8px 30px rgba(5, 150, 105, 0.4);
+    z-index: 99999;
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.contact-toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+.contact-toast i {
+    font-size: 1.1rem;
+}
 
 
 /* ==============================

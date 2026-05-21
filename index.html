@@ -38,6 +38,8 @@
     <link rel="stylesheet" href="animations.css">
     <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- EmailJS SDK for Client-Side Email Delivery -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 </head>
 
 <body>
@@ -1102,24 +1104,54 @@
 
         <!-- Footer & Contact -->
         <footer id="contact" class="footer">
-            <!-- Contact Form -->
-            <div id="page-contact-form-container" class="container" style="max-width: 600px; margin-bottom: 48px;">
-                <div class="section-title fade-up" style="margin-bottom: 32px;">
+            <!-- Premium Contact Section -->
+            <div id="page-contact-form-container" class="container" style="max-width: 680px; margin-bottom: 56px;">
+                <div class="section-title fade-up" style="margin-bottom: 12px;">
                     <h2>Get In <span class="highlight">Touch</span></h2>
-                    <p>Have a project idea or want to collaborate? Drop me a message.</p>
+                    <p>Interested in collaborating or have an opportunity? Let's connect.</p>
                 </div>
-                <form class="contact-form fade-up" id="contactForm"
-                    style="display:flex; flex-direction:column; gap:16px;">
-                    <input type="text" name="name" placeholder="Your Name" required
-                        style="padding:14px 18px; background:rgba(255,255,255,.05); border:1px solid rgba(14,165,233,.2); border-radius:12px; color:#fff; font-size:.95rem; outline:none; transition:border-color .3s;">
-                    <input type="email" name="_replyto" placeholder="Your Email" required
-                        style="padding:14px 18px; background:rgba(255,255,255,.05); border:1px solid rgba(14,165,233,.2); border-radius:12px; color:#fff; font-size:.95rem; outline:none; transition:border-color .3s;">
-                    <textarea name="message" rows="5" placeholder="Your Message" required
-                        style="padding:14px 18px; background:rgba(255,255,255,.05); border:1px solid rgba(14,165,233,.2); border-radius:12px; color:#fff; font-size:.95rem; outline:none; resize:vertical; transition:border-color .3s;"></textarea>
-                    <button type="submit" class="btn-primary"
-                        style="padding:16px; font-size:1rem; border-radius:12px; cursor:pointer;">
-                        <i class="fas fa-paper-plane" style="margin-right:8px;"></i>Send Message
+                <!-- Delivery Channel Badges -->
+                <div class="contact-channels fade-up">
+                    <span class="channel-badge"><i class="fab fa-whatsapp"></i> WhatsApp</span>
+                    <span class="channel-badge"><i class="fas fa-envelope"></i> Email</span>
+                    <span class="channel-badge"><i class="fas fa-comment-sms"></i> SMS</span>
+                </div>
+                <form class="pro-contact-form fade-up" id="contactForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="cf-name"><i class="fas fa-user"></i> Full Name</label>
+                            <input type="text" id="cf-name" name="name" placeholder="e.g. Arun Kumar" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="cf-email"><i class="fas fa-at"></i> Email Address</label>
+                            <input type="email" id="cf-email" name="_replyto" placeholder="e.g. arun@company.com" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="cf-phone"><i class="fas fa-phone-alt"></i> Phone <span class="optional-tag">Optional</span></label>
+                            <input type="tel" id="cf-phone" name="phone" placeholder="e.g. +91 98765 43210">
+                        </div>
+                        <div class="form-group">
+                            <label for="cf-subject"><i class="fas fa-tag"></i> Subject</label>
+                            <select id="cf-subject" name="subject">
+                                <option value="Collaboration Inquiry">Collaboration Inquiry</option>
+                                <option value="Internship Opportunity">Internship Opportunity</option>
+                                <option value="Project Discussion">Project Discussion</option>
+                                <option value="Freelance / Contract Work">Freelance / Contract Work</option>
+                                <option value="General Inquiry">General Inquiry</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="cf-message"><i class="fas fa-pencil-alt"></i> Your Message</label>
+                        <textarea id="cf-message" name="message" rows="5" placeholder="Describe your project idea, inquiry, or opportunity..." required></textarea>
+                    </div>
+                    <button type="submit" class="pro-submit-btn" id="contactSubmitBtn">
+                        <span class="btn-content"><i class="fas fa-paper-plane"></i> Send Message</span>
+                        <span class="btn-loader" style="display:none;"><i class="fas fa-circle-notch fa-spin"></i> Sending...</span>
                     </button>
+                    <p class="form-footer-note"><i class="fas fa-shield-alt"></i> Your information is secure and will never be shared.</p>
                 </form>
             </div>
             <div class="container footer-widget-grid">

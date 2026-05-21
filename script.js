@@ -86,57 +86,101 @@ document.addEventListener('DOMContentLoaded', () => {
     const progressBars = document.querySelectorAll('.skill-progress');
     progressBars.forEach(bar => progressObserver.observe(bar));
 
-    // Handle Contact Form Submission (WhatsApp, SMS, Email Triggers)
+    // ==============================
+    // MULTI-CHANNEL CONTACT FORM
+    // EmailJS (real email) + WhatsApp + SMS
+    // ==============================
+
+    // Initialize EmailJS with public key
+    if (typeof emailjs !== 'undefined') {
+        emailjs.init('vikash_portfolio_key'); // Will be replaced with real key
+    }
+
+    // Toast notification helper
+    function showContactToast(message, isError) {
+        let toast = document.querySelector('.contact-toast');
+        if (!toast) {
+            toast = document.createElement('div');
+            toast.className = 'contact-toast';
+            document.body.appendChild(toast);
+        }
+        toast.innerHTML = `<i class="fas ${isError ? 'fa-exclamation-circle' : 'fa-check-circle'}"></i> ${message}`;
+        if (isError) {
+            toast.style.background = 'linear-gradient(135deg, #dc2626, #ef4444)';
+            toast.style.boxShadow = '0 8px 30px rgba(220, 38, 38, 0.4)';
+        } else {
+            toast.style.background = 'linear-gradient(135deg, #059669, #10b981)';
+            toast.style.boxShadow = '0 8px 30px rgba(5, 150, 105, 0.4)';
+        }
+        setTimeout(() => toast.classList.add('show'), 50);
+        setTimeout(() => {
+            toast.classList.remove('show');
+        }, 4500);
+    }
+
     const contactForm = document.getElementById('contactForm');
     if (contactForm) {
-        contactForm.addEventListener('submit', (e) => {
+        contactForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const submitBtn = contactForm.querySelector('button[type="submit"]');
-            const originalText = submitBtn.innerHTML;
-            submitBtn.textContent = 'Launching Apps...';
-            submitBtn.style.opacity = '0.7';
+            const submitBtn = document.getElementById('contactSubmitBtn');
+            const btnContent = submitBtn.querySelector('.btn-content');
+            const btnLoader = submitBtn.querySelector('.btn-loader');
             submitBtn.disabled = true;
-            
-            const formData = new FormData(contactForm);
-            const name = formData.get('name') || '';
-            const email = formData.get('_replyto') || formData.get('email') || '';
-            const subject = 'Website Portfolio Submission';
-            const msg = formData.get('message') || '';
+            btnContent.style.display = 'none';
+            btnLoader.style.display = 'inline-flex';
 
-            // Construct the unified message body
-            const messageBody = `Hi Vikash,\n\nI am contacting you from your portfolio website.\n\nName: ${name}\nEmail: ${email}\n\nMessage:\n${msg}`;
+            const name = document.getElementById('cf-name').value.trim();
+            const email = document.getElementById('cf-email').value.trim();
+            const phone = document.getElementById('cf-phone') ? document.getElementById('cf-phone').value.trim() : '';
+            const subject = document.getElementById('cf-subject') ? document.getElementById('cf-subject').value : 'General Inquiry';
+            const message = document.getElementById('cf-message').value.trim();
+
+            const messageBody = `Hi Vikash,\n\nNew inquiry from your portfolio website.\n\nName: ${name}\nEmail: ${email}\nPhone: ${phone || 'Not provided'}\nSubject: ${subject}\n\nMessage:\n${message}`;
             const encodedBody = encodeURIComponent(messageBody);
             const encodedSubject = encodeURIComponent(subject);
 
-            // 1. WhatsApp Trigger (Opens in new tab/app)
+            let emailSent = false;
+
+            // 1. EmailJS — Real Email Delivery (lands in your inbox)
+            if (typeof emailjs !== 'undefined') {
+                try {
+                    await emailjs.send('service_portfolio', 'template_contact', {
+                        from_name: name,
+                        from_email: email,
+                        phone: phone || 'Not provided',
+                        subject: subject,
+                        message: message,
+                        to_email: 'vikash07052008@gmail.com'
+                    });
+                    emailSent = true;
+                } catch (err) {
+                    console.warn('EmailJS delivery failed:', err);
+                }
+            }
+
+            // 2. WhatsApp Trigger
             window.open(`https://wa.me/919342877474?text=${encodedBody}`, '_blank');
 
-            // 2. Email Trigger (Opens default Mail app)
+            // 3. SMS Trigger (with slight delay to avoid conflict)
             setTimeout(() => {
-                window.location.href = `mailto:vikash07052008@gmail.com?subject=${encodedSubject}&body=${encodedBody}`;
-            }, 500);
+                window.open(`sms:+919342877474?body=${encodedBody}`, '_blank');
+            }, 600);
 
-            // 3. SMS Trigger (Opens default Messages app)
-            setTimeout(() => {
-                window.location.href = `sms:+919342877474?body=${encodedBody}`;
-            }, 1000);
-
-            // Show Success State on Button
+            // Show success feedback
             contactForm.reset();
-            submitBtn.textContent = 'Apps Launched!';
-            submitBtn.style.color = '#000';
-            submitBtn.style.background = '#00ffcc'; // neon green success
-            submitBtn.style.boxShadow = '0 0 15px #00ffcc';
+            btnLoader.style.display = 'none';
+            btnContent.style.display = 'inline-flex';
+            submitBtn.disabled = false;
 
-            // Reset Button after a few seconds
-            setTimeout(() => {
-                submitBtn.innerHTML = originalText;
-                submitBtn.style.background = '';
-                submitBtn.style.color = '';
-                submitBtn.style.boxShadow = '';
-                submitBtn.style.opacity = '1';
-                submitBtn.disabled = false;
-            }, 4000);
+            if (emailSent) {
+                showContactToast('Message sent to all 3 channels — WhatsApp, Email & SMS!', false);
+            } else {
+                showContactToast('WhatsApp & SMS launched! Email will open in your mail app.', false);
+                // Fallback: Open default email client
+                setTimeout(() => {
+                    window.location.href = `mailto:vikash07052008@gmail.com?subject=${encodedSubject}&body=${encodedBody}`;
+                }, 800);
+            }
         });
     }
 

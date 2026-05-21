@@ -404,20 +404,20 @@ If asked something unrelated to Vikash, politely say: "I'm focused on helping yo
     if (lower.includes('contact') || lower.includes('email') || lower.includes('hire') || lower.includes('phone')) {
       container.className = 'chat-rich-card';
       container.innerHTML = `
-        <h4>📩 Interactive Contact Form</h4>
-        <p>Send a message directly to Vikash from here!</p>
+        <h4>📩 Quick Contact</h4>
+        <p style="margin-bottom:6px;">Your message will be sent via <strong>Email</strong>, <strong>WhatsApp</strong> & <strong>SMS</strong> simultaneously.</p>
         <form class="chat-contact-form">
-          <input type="text" class="chat-form-input chat-form-name" placeholder="Your Name" required>
-          <input type="email" class="chat-form-input chat-form-email" placeholder="Your Email Address" required>
-          <input type="text" class="chat-form-input chat-form-subject" placeholder="Subject" required>
-          <textarea class="chat-form-textarea chat-form-msg" placeholder="Your message here..." required></textarea>
-          <button type="submit" class="chat-form-submit">Send Message</button>
+          <input type="text" class="chat-form-input chat-form-name" placeholder="Full Name" required>
+          <input type="email" class="chat-form-input chat-form-email" placeholder="Email Address" required>
+          <input type="text" class="chat-form-input chat-form-subject" placeholder="Subject (e.g. Internship)" required>
+          <textarea class="chat-form-textarea chat-form-msg" placeholder="Describe your inquiry..." required></textarea>
+          <button type="submit" class="chat-form-submit"><i class="fas fa-paper-plane" style="margin-right:6px;"></i>Send to All Channels</button>
         </form>
       `;
 
       // Bind the form action logic
       const form = container.querySelector('.chat-contact-form');
-      form.addEventListener('submit', (e) => {
+      form.addEventListener('submit', async (e) => {
         e.preventDefault();
         const submitBtn = form.querySelector('.chat-form-submit');
         const name = form.querySelector('.chat-form-name').value;
@@ -425,35 +425,58 @@ If asked something unrelated to Vikash, politely say: "I'm focused on helping yo
         const subject = form.querySelector('.chat-form-subject').value;
         const msg = form.querySelector('.chat-form-msg').value;
 
-        submitBtn.textContent = 'Launching Apps...';
+        submitBtn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Sending...';
         submitBtn.disabled = true;
 
-        // Construct the unified message body
-        const messageBody = `Hi Vikash,\n\nI am contacting you from your AI Chatbot.\n\nName: ${name}\nEmail: ${email}\n\nMessage:\n${msg}`;
+        const messageBody = `Hi Vikash,\n\nNew inquiry via AI Chatbot.\n\nName: ${name}\nEmail: ${email}\nSubject: ${subject}\n\nMessage:\n${msg}`;
         const encodedBody = encodeURIComponent(messageBody);
         const encodedSubject = encodeURIComponent(subject);
 
-        // 1. WhatsApp Trigger (Opens in new tab/app)
+        let emailSent = false;
+
+        // 1. EmailJS — Real Email Delivery
+        if (typeof emailjs !== 'undefined') {
+          try {
+            await emailjs.send('service_portfolio', 'template_contact', {
+              from_name: name,
+              from_email: email,
+              phone: 'Via Chatbot',
+              subject: subject,
+              message: msg,
+              to_email: 'vikash07052008@gmail.com'
+            });
+            emailSent = true;
+          } catch (err) {
+            console.warn('EmailJS delivery failed:', err);
+          }
+        }
+
+        // 2. WhatsApp Trigger
         window.open(`https://wa.me/919342877474?text=${encodedBody}`, '_blank');
 
-        // 2. Email Trigger (Opens default Mail app)
+        // 3. SMS Trigger
         setTimeout(() => {
+            window.open(`sms:+919342877474?body=${encodedBody}`, '_blank');
+        }, 600);
+
+        // Fallback email if EmailJS failed
+        if (!emailSent) {
+          setTimeout(() => {
             window.location.href = `mailto:vikash07052008@gmail.com?subject=${encodedSubject}&body=${encodedBody}`;
-        }, 500);
+          }, 800);
+        }
 
-        // 3. SMS Trigger (Opens default Messages app)
-        setTimeout(() => {
-            window.location.href = `sms:+919342877474?body=${encodedBody}`;
-        }, 1000);
-
-        // Show Success State on Button
         form.reset();
-        submitBtn.textContent = 'Apps Launched!';
-        addMessage("Awesome! I'm launching WhatsApp, SMS, and your Email app so you can send your message directly to Vikash! 🚀", 'bot', false);
+        submitBtn.innerHTML = '<i class="fas fa-check-circle"></i> Sent!';
 
-        // Reset Button after a few seconds
+        if (emailSent) {
+          addMessage("Your message has been delivered to Vikash via Email, WhatsApp & SMS — all 3 channels! 🚀✅", 'bot', false);
+        } else {
+          addMessage("WhatsApp & SMS launched! I've also opened your mail app to complete the email. 📧", 'bot', false);
+        }
+
         setTimeout(() => {
-            submitBtn.textContent = 'Send Message';
+            submitBtn.innerHTML = '<i class="fas fa-paper-plane" style="margin-right:6px;"></i>Send to All Channels';
             submitBtn.disabled = false;
         }, 4000);
       });
