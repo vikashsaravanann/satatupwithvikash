@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificate Viewer | Vikash Saravanan</title>
+    <meta name="description" content="High-definition certificate viewer for Vikash Saravanan's professional portfolio.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-color: #0a0a0f;
+            --accent-glow: rgba(14, 165, 233, 0.15);
+            --neon-blue: #0ea5e9;
+            --neon-purple: #6366f1;
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.6);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(99, 102, 241, 0.05), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(14, 165, 233, 0.05), transparent 25%);
+        }
+
+        .top-bar {
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(10, 10, 15, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 10;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .back-btn:hover {
+            color: var(--neon-blue);
+        }
+
+        .viewer-container {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            position: relative;
+        }
+
+        .cert-info {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: fadeInDown 0.8s ease forwards;
+        }
+
+        .cert-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #fff, #a5b4fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .cert-issuer {
+            font-size: 1.1rem;
+            color: var(--neon-blue);
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .image-wrapper {
+            position: relative;
+            max-width: 1200px;
+            width: 100%;
+            border-radius: 12px;
+            padding: 10px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01));
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.6), 0 0 40px var(--accent-glow);
+            animation: fadeInUp 1s ease forwards;
+            perspective: 1000px;
+        }
+
+        #certImage {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            display: block;
+            image-rendering: -webkit-optimize-contrast; /* Optimizes scaling for HD crispness */
+            image-rendering: high-quality;
+            transition: transform 0.1s ease-out;
+        }
+
+        .actions {
+            margin-top: 40px;
+            display: flex;
+            gap: 20px;
+            animation: fadeInUp 1.2s ease forwards;
+        }
+
+        .action-btn {
+            padding: 14px 28px;
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+            color: #fff;
+            border: none;
+            box-shadow: 0 4px 15px rgba(14, 165, 233, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(14, 165, 233, 0.5);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Ambient Glow */
+        .ambient-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            height: 80%;
+            background: radial-gradient(circle, rgba(14,165,233,0.15) 0%, rgba(0,0,0,0) 70%);
+            z-index: -1;
+            filter: blur(40px);
+            pointer-events: none;
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .cert-title { font-size: 1.8rem; }
+            .top-bar { padding: 15px 20px; }
+            .viewer-container { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">
+        <a href="javascript:history.back()" class="back-btn">
+            <i class="fas fa-arrow-left"></i> Back to Gallery
+        </a>
+        <div style="font-family: 'Outfit'; font-weight: 700; letter-spacing: 2px; color: rgba(255,255,255,0.2);">
+            VERIFIED CREDENTIAL
+        </div>
+    </div>
+
+    <div class="viewer-container">
+        <div class="ambient-glow"></div>
+        
+        <div class="cert-info">
+            <h1 class="cert-title" id="displayTitle">Loading...</h1>
+            <div class="cert-issuer" id="displayIssuer">Please wait</div>
+        </div>
+
+        <div class="image-wrapper" id="imageWrapper">
+            <img id="certImage" src="" alt="Certificate Loading" />
+        </div>
+
+        <div class="actions">
+            <a href="#" id="downloadBtn" class="action-btn btn-primary" download>
+                <i class="fas fa-download"></i> Download HD
+            </a>
+            <button onclick="toggleFullscreen()" class="action-btn btn-secondary">
+                <i class="fas fa-expand"></i> Fullscreen
+            </button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const imgSrc = urlParams.get('img');
+            const title = urlParams.get('title') || 'Professional Certificate';
+            const issuer = urlParams.get('issuer') || 'Verified Issuer';
+
+            if (imgSrc) {
+                document.getElementById('certImage').src = imgSrc;
+                document.getElementById('downloadBtn').href = imgSrc;
+            } else {
+                document.getElementById('certImage').alt = 'No image provided';
+            }
+
+            document.getElementById('displayTitle').textContent = title;
+            document.getElementById('displayIssuer').textContent = issuer;
+            document.title = `${title} | Certificate Viewer`;
+
+            // 3D Tilt Effect on mousemove
+            const wrapper = document.getElementById('imageWrapper');
+            const img = document.getElementById('certImage');
+
+            wrapper.addEventListener('mousemove', (e) => {
+                const rect = wrapper.getBoundingClientRect();
+                const x = e.clientX - rect.left; // x position within the element
+                const y = e.clientY - rect.top;  // y position within the element
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateX = ((y - centerY) / centerY) * -5; // max 5 deg rotation
+                const rotateY = ((x - centerX) / centerX) * 5;
+
+                img.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+            });
+
+            wrapper.addEventListener('mouseleave', () => {
+                img.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+            });
+        });
+
+        function toggleFullscreen() {
+            const img = document.getElementById('certImage');
+            if (!document.fullscreenElement) {
+                if (img.requestFullscreen) {
+                    img.requestFullscreen();
+                } else if (img.webkitRequestFullscreen) { /* Safari */
+                    img.webkitRequestFullscreen();
+                } else if (img.msRequestFullscreen) { /* IE11 */
+                    img.msRequestFullscreen();
+                }
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+            }
+        }
+    </script>
+</body>
+</html>

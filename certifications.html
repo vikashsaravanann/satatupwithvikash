@@ -301,6 +301,20 @@
             const searchInput = document.getElementById('certSearch');
             const certRows = document.querySelectorAll('.cert-row');
 
+            // Dynamic Viewer Routing for Professional HD Experience
+            certRows.forEach(row => {
+                const img = row.querySelector('img').src;
+                // Parse relative path correctly for GitHub Pages and Local
+                const url = new URL(img);
+                const relativePath = url.pathname.substring(url.pathname.indexOf('assets/certs/'));
+                const title = row.querySelector('h4').textContent;
+                const issuer = row.querySelector('.cert-issuer').textContent;
+                
+                // Update href to point to the highly-professional viewer
+                row.href = `certificate-viewer.html?img=${encodeURIComponent(relativePath)}&title=${encodeURIComponent(title)}&issuer=${encodeURIComponent(issuer)}`;
+                row.target = "_self"; // Open in same window so they can use "Back" button seamlessly
+            });
+
             if (searchInput) {
                 searchInput.addEventListener('input', (e) => {
                     const term = e.target.value.toLowerCase();

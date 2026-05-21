@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Development Portfolio | Vikash Saravanan</title>
+    <meta name="description" content="Development Portfolio of Vikash Saravanan, showcasing technical skills, GitHub repositories, and AI/Data Science projects.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 24px;
+            margin-top: 40px;
+        }
+
+        .project-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #0ea5e9, #6366f1);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(14, 165, 233, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .project-card:hover::before {
+            opacity: 1;
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+
+        .project-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(14, 165, 233, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: #0ea5e9;
+        }
+
+        .project-links a {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 1.2rem;
+            transition: color 0.2s ease;
+            margin-left: 10px;
+        }
+
+        .project-links a:hover {
+            color: #0ea5e9;
+        }
+
+        .project-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+
+        .project-desc {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.6;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        .project-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+            padding-top: 16px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .tech-stack {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .tech-badge {
+            font-size: 0.75rem;
+            padding: 4px 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 6px;
+            color: #0ea5e9;
+            font-weight: 600;
+        }
+
+        .project-stats {
+            display: flex;
+            gap: 12px;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .project-stats span {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .filter-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .filter-tab {
+            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            color: #fff;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .filter-tab.active, .filter-tab:hover {
+            background: #0ea5e9;
+            border-color: #0ea5e9;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app-frame" class="page-border-light">
+
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="nav-content container">
+                <a href="index.html" class="logo">VIKASH <span>SARAVANAN</span></a>
+                <ul class="nav-links">
+                    <li><a href="index.html#summary">About</a></li>
+                    <li><a href="index.html#competencies">Skills</a></li>
+                    <li><a href="index.html#projects" class="active">Projects</a></li>
+                    <li><a href="certifications.html">Certifications</a></li>
+                    <li><a href="index.html#contact" class="btn-primary-sm">Contact</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Development Portfolio Section -->
+        <section class="certifications-gallery" style="padding: 150px 0 50px; min-height: 80vh;">
+            <div class="container">
+                <div class="certs-bordered-card fade-up">
+                    <div class="section-title text-center" style="text-align: center; margin-bottom: 20px;">
+                        <h2 class="mb-4">Development <span class="highlight">Portfolio</span></h2>
+                        <p style="color: var(--text-secondary); max-width: 600px; margin: 0 auto;">A comprehensive catalog of my open-source projects, technical implementations, and GitHub repositories demonstrating my journey in AI, Data Science, and Full-Stack Development.</p>
+                    </div>
+
+                    <!-- Filters -->
+                    <div class="filter-tabs fade-up">
+                        <button class="filter-tab active" data-filter="all">All Projects</button>
+                        <button class="filter-tab" data-filter="python">Python / Data</button>
+                        <button class="filter-tab" data-filter="web">Web Development</button>
+                        <button class="filter-tab" data-filter="ai">AI / ML</button>
+                    </div>
+
+                    <!-- Search -->
+                    <div class="cert-search-wrap fade-up" style="max-width: 400px; margin: 30px auto 0;">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="repoSearch" class="cert-search-input" placeholder="Search repositories by name or tech...">
+                    </div>
+
+                    <!-- Dynamic Grid -->
+                    <div class="projects-grid" id="projectsGrid">
+                        <!-- Populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dynamic Footer Container -->
+        <div id="footer-placeholder"></div>
+    </div>
+
+    <!-- Script -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Fetch footer from index.html
+            fetch('index.html')
+                .then(response => response.text())
+                .then(html => {
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, 'text/html');
+                    const footer = doc.querySelector('footer');
+                    if (footer) {
+                        document.getElementById('footer-placeholder').appendChild(footer);
+                        // Re-init QR Code for footer
+                        setTimeout(() => {
+                            const qrContainer = document.getElementById('qrCodeContainer');
+                            if (qrContainer && typeof QRCode !== 'undefined') {
+                                qrContainer.innerHTML = '';
+                                const vcard = 'BEGIN:VCARD\\nVERSION:3.0\\nFN:Vikash Saravanan\\nEMAIL:vikash07052008@gmail.com\\nTEL:+919342877474\\nURL:https://vikashsaravanann.github.io/Portfolio_Information/\\nEND:VCARD';
+                                new QRCode(qrContainer, {
+                                    text: vcard,
+                                    width: 180,
+                                    height: 180,
+                                    colorDark: "#0a0a0f",
+                                    colorLight: "#ffffff",
+                                    correctLevel: QRCode.CorrectLevel.M
+                                });
+                            }
+                        }, 500);
+                    }
+                });
+
+            // Repositories Data
+            const repos = [
+                {
+                    name: "Portfolio_Information",
+                    desc: "Professional portfolio and developer dossier showcasing skills, projects, and certifications. Built with modern UI/UX principles.",
+                    tech: ["HTML", "CSS", "JS"],
+                    url: "https://github.com/vikashsaravanann/Portfolio_Information",
+                    category: "web",
+                    icon: "fa-laptop-code"
+                },
+                {
+                    name: "hearwise-child-health",
+                    desc: "An innovative child health application focused on hearing screening and gamified engagement modules.",
+                    tech: ["TypeScript", "React", "Next.js"],
+                    url: "https://github.com/vikashsaravanann/hearwise-child-health",
+                    category: "web",
+                    icon: "fa-child"
+                },
+                {
+                    name: "Logic-Intelligence",
+                    desc: "Corporate platform for a tech agency featuring a dark-tech aesthetic, trust badges, and lead generation.",
+                    tech: ["HTML", "CSS", "JS"],
+                    url: "https://github.com/vikashsaravanann/Logic-Intelligence",
+                    category: "web",
+                    icon: "fa-building"
+                },
+                {
+                    name: "OpenEnv-Debugger",
+                    desc: "Support Ticket Triage environment built for the Meta x Scaler Hackathon to streamline debugging processes.",
+                    tech: ["Python", "AI"],
+                    url: "https://github.com/vikashsaravanann/OpenEnv-Debugger",
+                    category: "ai",
+                    icon: "fa-bug"
+                },
+                {
+                    name: "AI-Traffic-Management-system",
+                    desc: "Intelligent traffic management system leveraging AI algorithms to optimize flow and reduce congestion.",
+                    tech: ["JavaScript", "AI", "Node.js"],
+                    url: "https://github.com/vikashsaravanann/AI-Traffic-Management-system",
+                    category: "ai",
+                    icon: "fa-car"
+                },
+                {
+                    name: "BroadcastAI-Portfolio",
+                    desc: "Portfolio implementation for an AI broadcasting platform, highlighting generative content pipelines.",
+                    tech: ["HTML", "CSS"],
+                    url: "https://github.com/vikashsaravanann/BroadcastAI-Portfolio",
+                    category: "web",
+                    icon: "fa-broadcast-tower"
+                },
+                {
+                    name: "dropout-alert-system",
+                    desc: "Predictive alert system analyzing student metrics to flag potential dropouts for early intervention.",
+                    tech: ["Python", "Machine Learning"],
+                    url: "https://github.com/vikashsaravanann/dropout-alert-system",
+                    category: "ai",
+                    icon: "fa-graduation-cap"
+                },
+                {
+                    name: "Web-Development",
+                    desc: "A responsive single-page portfolio for an AI & Data Science student, built with HTML and modern CSS animations.",
+                    tech: ["HTML", "CSS"],
+                    url: "https://github.com/vikashsaravanann/Web-Development",
+                    category: "web",
+                    icon: "fa-code"
+                },
+                {
+                    name: "fcc-sea-level-predictor",
+                    desc: "Data visualization project predicting future sea levels using linear regression and pandas.",
+                    tech: ["Python", "Pandas", "Matplotlib"],
+                    url: "https://github.com/vikashsaravanann/fcc-sea-level-predictor",
+                    category: "python",
+                    icon: "fa-water"
+                },
+                {
+                    name: "fcc-page-view-time-series",
+                    desc: "Time series data visualization of forum page views using Python, Pandas, and Seaborn.",
+                    tech: ["Python", "Seaborn"],
+                    url: "https://github.com/vikashsaravanann/fcc-page-view-time-series-visualizer",
+                    category: "python",
+                    icon: "fa-chart-line"
+                },
+                {
+                    name: "fcc-medical-data-visualizer",
+                    desc: "Analysis and visualization of a medical examination dataset using Python and Seaborn.",
+                    tech: ["Python", "Pandas"],
+                    url: "https://github.com/vikashsaravanann/fcc-medical-data-visualizer",
+                    category: "python",
+                    icon: "fa-file-medical-alt"
+                },
+                {
+                    name: "fcc-demographic-data-analyzer",
+                    desc: "Comprehensive analysis of a 1994 US census dataset using Python and Pandas dataframes.",
+                    tech: ["Python", "Pandas"],
+                    url: "https://github.com/vikashsaravanann/fcc-demographic-data-analyzer",
+                    category: "python",
+                    icon: "fa-users"
+                },
+                {
+                    name: "fcc-mean-variance-calculator",
+                    desc: "A mathematical Python function that calculates statistical metrics (mean, variance, std dev) for matrices.",
+                    tech: ["Python", "NumPy"],
+                    url: "https://github.com/vikashsaravanann/fcc-mean-variance-calculator",
+                    category: "python",
+                    icon: "fa-calculator"
+                },
+                {
+                    name: "IPL-Data-Analysis-Project",
+                    desc: "Extensive analysis of IPL cricket data from 2008-2020 using Jupyter Notebooks and Python data tools.",
+                    tech: ["Jupyter", "Python", "Data Science"],
+                    url: "https://github.com/vikashsaravanann/IPL-Data-Analysis-Project",
+                    category: "python",
+                    icon: "fa-cricket-bat-ball"
+                },
+                {
+                    name: "gamehub",
+                    desc: "A Python terminal-based arcade with classic mini-games like Snake, Tic-Tac-Toe, and Rock-Paper-Scissors.",
+                    tech: ["Python", "Terminal"],
+                    url: "https://github.com/vikashsaravanann/gamehub",
+                    category: "python",
+                    icon: "fa-gamepad"
+                }
+            ];
+
+            const grid = document.getElementById('projectsGrid');
+            const searchInput = document.getElementById('repoSearch');
+            const filterTabs = document.querySelectorAll('.filter-tab');
+
+            function renderRepos(data) {
+                grid.innerHTML = data.map((repo, i) => \`
+                    <div class="project-card fade-up" style="animation-delay: \${i * 0.05}s">
+                        <div class="project-header">
+                            <div class="project-icon">
+                                <i class="fas \${repo.icon}"></i>
+                            </div>
+                            <div class="project-links">
+                                <a href="\${repo.url}" target="_blank" title="View Source"><i class="fab fa-github"></i></a>
+                            </div>
+                        </div>
+                        <h3 class="project-title">\${repo.name}</h3>
+                        <p class="project-desc">\${repo.desc}</p>
+                        <div class="project-footer">
+                            <div class="tech-stack">
+                                \${repo.tech.map(t => \`<span class="tech-badge">\${t}</span>\`).join('')}
+                            </div>
+                        </div>
+                    </div>
+                \`).join('');
+            }
+
+            // Initial render
+            renderRepos(repos);
+
+            // Filtering
+            filterTabs.forEach(tab => {
+                tab.addEventListener('click', (e) => {
+                    filterTabs.forEach(t => t.classList.remove('active'));
+                    e.target.classList.add('active');
+                    const filter = e.target.getAttribute('data-filter');
+                    
+                    if (filter === 'all') {
+                        renderRepos(repos);
+                    } else {
+                        renderRepos(repos.filter(r => r.category === filter));
+                    }
+                });
+            });
+
+            // Searching
+            searchInput.addEventListener('input', (e) => {
+                const term = e.target.value.toLowerCase();
+                const filtered = repos.filter(r => 
+                    r.name.toLowerCase().includes(term) || 
+                    r.tech.some(t => t.toLowerCase().includes(term))
+                );
+                renderRepos(filtered);
+            });
+        });
+    </script>
+</body>
+</html>
