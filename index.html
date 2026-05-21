@@ -1280,22 +1280,21 @@
                 <form class="pro-contact-form fade-up" id="contactForm">
                     <div class="form-row">
                         <div class="form-group">
-
+                            <label for="cf-name"><i class="fas fa-user"></i> Full Name</label>
                             <input type="text" id="cf-name" name="name" required>
                         </div>
                         <div class="form-group">
-
-                            <input type="email" id="cf-email" name="_replyto"
-                                required>
+                            <label for="cf-email"><i class="fas fa-at"></i> Email Address</label>
+                            <input type="email" id="cf-email" name="_replyto" required>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group">
-
+                            <label for="cf-phone"><i class="fas fa-phone-alt"></i> Phone <span class="optional-tag">Optional</span></label>
                             <input type="tel" id="cf-phone" name="phone">
                         </div>
                         <div class="form-group">
-
+                            <label for="cf-subject"><i class="fas fa-tag"></i> Subject</label>
                             <select id="cf-subject" name="subject">
                                 <option value="Collaboration Inquiry">Collaboration Inquiry</option>
                                 <option value="Internship Opportunity">Internship Opportunity</option>
@@ -1306,9 +1305,8 @@
                         </div>
                     </div>
                     <div class="form-group full-width">
-
-                        <textarea id="cf-message" name="message" rows="5"
-                            required></textarea>
+                        <label for="cf-message"><i class="fas fa-pencil-alt"></i> Your Message</label>
+                        <textarea id="cf-message" name="message" rows="5" required></textarea>
                     </div>
                     <button type="submit" class="pro-submit-btn" id="contactSubmitBtn">
                         <span class="btn-content"><i class="fas fa-paper-plane"></i> Send Message</span>
