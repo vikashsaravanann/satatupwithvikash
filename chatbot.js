@@ -405,27 +405,68 @@ If asked something unrelated to Vikash, politely say: "I'm focused on helping yo
       container.className = 'chat-rich-card';
       container.innerHTML = `
         <h4>📩 Interactive Contact Form</h4>
-        <p>Fill out the fields to instantly launch a draft email to Vikash.</p>
+        <p>Send a message directly to Vikash from here!</p>
         <form class="chat-contact-form">
           <input type="text" class="chat-form-input chat-form-name" placeholder="Your Name" required>
+          <input type="email" class="chat-form-input chat-form-email" placeholder="Your Email Address" required>
           <input type="text" class="chat-form-input chat-form-subject" placeholder="Subject" required>
           <textarea class="chat-form-textarea chat-form-msg" placeholder="Your message here..." required></textarea>
-          <button type="submit" class="chat-form-submit">Send Email</button>
+          <button type="submit" class="chat-form-submit">Send Message</button>
         </form>
       `;
 
       // Bind the form action logic
       const form = container.querySelector('.chat-contact-form');
-      form.addEventListener('submit', (e) => {
+      form.addEventListener('submit', async (e) => {
         e.preventDefault();
+        const submitBtn = form.querySelector('.chat-form-submit');
         const name = form.querySelector('.chat-form-name').value;
+        const email = form.querySelector('.chat-form-email').value;
         const subject = form.querySelector('.chat-form-subject').value;
         const msg = form.querySelector('.chat-form-msg').value;
 
-        const mailtoUrl = `mailto:vikash07052008@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent("Hi Vikash,\n\n" + msg + "\n\nBest regards,\n" + name)}`;
-        window.open(mailtoUrl, '_blank');
+        submitBtn.textContent = 'Sending...';
+        submitBtn.disabled = true;
 
-        addMessage("Awesome! I've opened a pre-filled draft in your default mail app. Let me know if you need anything else! 📧", 'bot', false);
+        // Dynamically set API URL based on host environment
+        let apiUrl = '/api/contact';
+        if (window.location.protocol === 'file:' || 
+            window.location.hostname === 'localhost' || 
+            window.location.hostname === '127.0.0.1') {
+            apiUrl = 'http://localhost:3000/api/contact';
+        } else if (window.location.hostname.includes('github.io')) {
+            apiUrl = 'https://portfolio-information.vercel.app/api/contact';
+        }
+
+        try {
+          const response = await fetch(apiUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              name: name,
+              email: email,
+              subject: subject,
+              message: msg
+            })
+          });
+
+          if (response.ok) {
+            form.reset();
+            submitBtn.textContent = 'Sent!';
+            addMessage("Awesome! Your message has been sent directly to Vikash's backend! 🚀", 'bot', false);
+          } else {
+            throw new Error('Failed to send');
+          }
+        } catch (err) {
+          console.error(err);
+          submitBtn.textContent = 'Failed to Send';
+          addMessage("Oops! I couldn't deliver that to the backend. Try emailing Vikash directly at vikash07052008@gmail.com 📧", 'bot', false);
+        } finally {
+          setTimeout(() => {
+            submitBtn.textContent = 'Send Message';
+            submitBtn.disabled = false;
+          }, 4000);
+        }
       });
 
       return container;

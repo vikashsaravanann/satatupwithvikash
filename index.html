@@ -1103,12 +1103,12 @@
         <!-- Footer & Contact -->
         <footer id="contact" class="footer">
             <!-- Contact Form -->
-            <div class="container" style="max-width: 600px; margin-bottom: 48px;">
+            <div id="page-contact-form-container" class="container" style="max-width: 600px; margin-bottom: 48px;">
                 <div class="section-title fade-up" style="margin-bottom: 32px;">
                     <h2>Get In <span class="highlight">Touch</span></h2>
                     <p>Have a project idea or want to collaborate? Drop me a message.</p>
                 </div>
-                <form class="contact-form fade-up" action="https://formspree.io/f/YOUR_FORMSPREE_ID" method="POST"
+                <form class="contact-form fade-up" id="contactForm"
                     style="display:flex; flex-direction:column; gap:16px;">
                     <input type="text" name="name" placeholder="Your Name" required
                         style="padding:14px 18px; background:rgba(255,255,255,.05); border:1px solid rgba(14,165,233,.2); border-radius:12px; color:#fff; font-size:.95rem; outline:none; transition:border-color .3s;">
@@ -1116,9 +1116,6 @@
                         style="padding:14px 18px; background:rgba(255,255,255,.05); border:1px solid rgba(14,165,233,.2); border-radius:12px; color:#fff; font-size:.95rem; outline:none; transition:border-color .3s;">
                     <textarea name="message" rows="5" placeholder="Your Message" required
                         style="padding:14px 18px; background:rgba(255,255,255,.05); border:1px solid rgba(14,165,233,.2); border-radius:12px; color:#fff; font-size:.95rem; outline:none; resize:vertical; transition:border-color .3s;"></textarea>
-                    <!-- Success Redirect -->
-                    <input type="hidden" name="_next"
-                        value="https://vikashsaravanann.github.io/Portfolio_Information/index.html">
                     <button type="submit" class="btn-primary"
                         style="padding:16px; font-size:1rem; border-radius:12px; cursor:pointer;">
                         <i class="fas fa-paper-plane" style="margin-right:8px;"></i>Send Message
@@ -1160,7 +1157,7 @@
                     <p class="text-sm text-secondary">Thank you for visiting my professional portfolio! I am constantly
                         iterating on my codebase and expanding my technical stack. Feel free to reach out to collaborate
                         on innovative AI projects.</p>
-                    <a href="mailto:vikash07052008@gmail.com" class="btn-primary-sm mt-3 w-100"
+                    <a href="#page-contact-form-container" class="btn-primary-sm mt-3 w-100"
                         style="text-align: center; display: block;">Get In Touch</a>
                 </div>
             </div>

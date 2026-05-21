@@ -89,29 +89,65 @@ document.addEventListener('DOMContentLoaded', () => {
     // Handle Contact Form Submission
     const contactForm = document.getElementById('contactForm');
     if (contactForm) {
-        contactForm.addEventListener('submit', (e) => {
+        contactForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const submitBtn = contactForm.querySelector('button[type="submit"]');
-            const originalText = submitBtn.textContent;
+            const originalText = submitBtn.innerHTML;
             submitBtn.textContent = 'Sending...';
             submitBtn.style.opacity = '0.7';
+            submitBtn.disabled = true;
             
-            // Simulate sending delay
-            setTimeout(() => {
-                contactForm.reset();
-                submitBtn.textContent = 'Sent Successfully!';
-                submitBtn.style.color = '#000';
-                submitBtn.style.background = '#00ffcc'; // neon green success
-                submitBtn.style.boxShadow = '0 0 15px #00ffcc';
-                
+            const formData = new FormData(contactForm);
+            const payload = {
+                name: formData.get('name'),
+                email: formData.get('_replyto') || formData.get('email'),
+                message: formData.get('message'),
+                subject: 'Website Portfolio Submission'
+            };
+
+            // Dynamically set API URL based on host environment
+            let apiUrl = '/api/contact';
+            if (window.location.protocol === 'file:' || 
+                window.location.hostname === 'localhost' || 
+                window.location.hostname === '127.0.0.1') {
+                apiUrl = 'http://localhost:3000/api/contact';
+            } else if (window.location.hostname.includes('github.io')) {
+                apiUrl = 'https://portfolio-information.vercel.app/api/contact';
+            }
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    contactForm.reset();
+                    submitBtn.textContent = 'Sent Successfully!';
+                    submitBtn.style.color = '#000';
+                    submitBtn.style.background = '#00ffcc'; // neon green success
+                    submitBtn.style.boxShadow = '0 0 15px #00ffcc';
+                } else {
+                    throw new Error(data.error || 'Failed to send message.');
+                }
+            } catch (err) {
+                console.error(err);
+                submitBtn.textContent = 'Failed to Send';
+                submitBtn.style.background = '#ff3b30'; // neon red error
+                submitBtn.style.boxShadow = '0 0 15px #ff3b30';
+            } finally {
                 setTimeout(() => {
-                    submitBtn.textContent = originalText;
+                    submitBtn.innerHTML = originalText;
                     submitBtn.style.background = '';
                     submitBtn.style.color = '';
                     submitBtn.style.boxShadow = '';
                     submitBtn.style.opacity = '1';
-                }, 3000);
-            }, 1500);
+                    submitBtn.disabled = false;
+                }, 4000);
+            }
         });
     }
 
