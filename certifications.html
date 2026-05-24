@@ -26,12 +26,12 @@
         <nav class="navbar">
             <div class="nav-content container">
                 <a href="#" class="logo">VIKASH <span>SARAVANAN</span></a>
-                <ul class="nav-links">
-                    <li><a href="index.html#summary">About</a></li>
-                    <li><a href="index.html#competencies">Skills</a></li>
-                    <li><a href="projects.html">Dev Portfolio</a></li>
-                    <li><a href="index.html#academics">Education</a></li>
-                    <li><a href="#contact" class="btn-primary-sm">Contact</a></li>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="#summary">ABOUT</a></li>
+                    <li><a href="#competencies">SKILLS</a></li>
+                    <li><a href="projects.html">DEVELOPED PROJECTS</a></li>
+                    <li><a href="certifications.html">CERTIFICATES</a></li>
+                    <li><a href="#contact" class="btn-primary-sm">CONTACT</a></li>
                 </ul>
             </div>
         </nav>
@@ -162,7 +162,8 @@
                         </a>
                         <a href="assets/certs/cert13.png" target="_blank" class="cert-row">
                             <div class="cert-thumb">
-                                <img src="assets/certs/cert13.png" alt="Hands-On Data Annotation: Applied Machine Learning">
+                                <img src="assets/certs/cert13.png"
+                                    alt="Hands-On Data Annotation: Applied Machine Learning">
                             </div>
                             <div class="cert-details">
                                 <h4>Hands-On Data Annotation: Applied Machine Learning</h4>
@@ -251,7 +252,8 @@
                     <div style="display: flex; flex-direction: column; flex: 1;">
                         <button onclick="generateResumePDF()"
                             style="flex: 1; display: flex; align-items: center; gap: 10px; padding: 14px 24px; cursor: pointer; border: none; border-top: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.03); color: #fff; font-weight: 600; font-size: 0.85rem; font-family: 'Inter', sans-serif;">
-                            <i class="fas fa-file-pdf" style="color: #ef4444; font-size: 1.1rem;"></i> Download Resume PDF
+                            <i class="fas fa-file-pdf" style="color: #ef4444; font-size: 1.1rem;"></i> Download Resume
+                            PDF
                         </button>
                         <a href="index.html#page-contact-form-container"
                             style="flex: 1; display: flex; align-items: center; gap: 10px; padding: 14px 24px; text-decoration: none; border-top: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.03); color: #fff; font-weight: 600; font-size: 0.85rem; font-family: 'Inter', sans-serif;">
@@ -287,7 +289,8 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; <span id="copyrightYear"></span> Vikash Saravanan @HearWise Technologies Pvt.Ltd & Professional Portfolio.</p>
+                <p>&copy; <span id="copyrightYear"></span> Vikash Saravanan @HearWise Technologies Pvt.Ltd &
+                    Professional Portfolio.</p>
             </div>
         </footer>
     </div>
@@ -309,7 +312,7 @@
                 const relativePath = url.pathname.substring(url.pathname.indexOf('assets/certs/'));
                 const title = row.querySelector('h4').textContent;
                 const issuer = row.querySelector('.cert-issuer').textContent;
-                
+
                 // Update href to point to the highly-professional viewer
                 row.href = `certificate-viewer.html?img=${encodeURIComponent(relativePath)}&title=${encodeURIComponent(title)}&issuer=${encodeURIComponent(issuer)}`;
                 row.target = "_self"; // Open in same window so they can use "Back" button seamlessly
