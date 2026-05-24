@@ -186,7 +186,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Typewriter effect for Hero section
     const typewriterElement = document.querySelector('.typewriter');
-    const words = ["Data Analyst", "Data Scientist", "AI Engineer"];
+    const words = ["Prompt Engineer", "Web Developer", "AI Engineer"];
     let wordIndex = 0;
     let charIndex = 0;
     let isDeleting = false;
@@ -453,7 +453,7 @@ function generateResumePDF() {
     doc.setFontSize(11);
     doc.setFont('helvetica', 'normal');
     doc.setTextColor(14, 165, 233);
-    doc.text('AI Engineer | Data Scientist | Full-Stack Developer', margin, 30);
+    doc.text('AI Engineer | Prompt Engineer | Web Developer', margin, 30);
 
     // Contact line
     doc.setFontSize(8.5);
@@ -490,7 +490,7 @@ function generateResumePDF() {
     doc.setFont('helvetica', 'normal');
     doc.setFontSize(9.5);
     doc.setTextColor(...textSecondary);
-    const summary = 'Ambitious B.Tech AI & Data Science student at Rathinam Technical Campus, Coimbatore, with hands-on expertise in machine learning, full-stack web development, and enterprise-grade automation systems. Meta PyTorch Hackathon Finalist. 16+ professional certifications across AI, Cybersecurity, and Data Analytics. Experienced in building production-ready platforms deployed to live environments, autonomous AI agents, and scalable data pipelines.';
+    const summary = 'Ambitious B.Tech AI & Data Science student and dedicated AI Engineer, Prompt Engineer, and Web Developer with hands-on expertise in machine learning, full-stack architectures, and enterprise-grade autonomous agents. Meta PyTorch Hackathon Finalist with 15+ professional certifications. Experienced in crafting precise LLM prompts, building production-ready scalable web platforms, and engineering complex intelligent systems.';
     const summaryLines = doc.splitTextToSize(summary, contentWidth);
     doc.text(summaryLines, margin, y);
     y += summaryLines.length * 5 + 4;
@@ -541,7 +541,7 @@ function generateResumePDF() {
     addSection('Achievements');
     const achievements = [
         'Meta PyTorch Hackathon Finalist (OpenEnv) — Selected from thousands of participants globally',
-        '16+ Professional Certifications spanning AI, ML, Data Science, Cybersecurity, and Ethical Hacking',
+        '15+ Professional Certifications spanning AI, Prompt Engineering, Web Development, and Ethical Hacking',
         '3+ Live Production Architectures deployed and maintained on cloud platforms',
         '5,000+ Lines of production-quality code written across multiple technology stacks'
     ];
