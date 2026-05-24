@@ -160,14 +160,17 @@ If asked something unrelated to Vikash, politely say: "I'm focused on helping yo
       inputEl.placeholder = 'Ask me anything about Vikash...';
     };
 
-    micBtn.addEventListener('click', () => {
+    micBtn.addEventListener('click', (e) => {
+      e.preventDefault();
       if (micBtn.classList.contains('listening')) {
-        recognition.stop();
+        try { recognition.stop(); } catch(err) {}
       } else {
         // Stop any text-to-speech playing
-        if (window.speechSynthesis) window.speechSynthesis.cancel();
+        if (window.speechSynthesis) {
+            try { window.speechSynthesis.cancel(); } catch(err) {}
+        }
         if (waveformEl) waveformEl.classList.remove('active');
-        recognition.start();
+        try { recognition.start(); } catch(err) {}
       }
     });
   } else {
@@ -209,15 +212,25 @@ If asked something unrelated to Vikash, politely say: "I'm focused on helping yo
      CLEAR CHAT (RESET SYSTEM)
      ═══════════════════════════════════════════ */
   if (resetBtn) {
-    resetBtn.addEventListener('click', () => {
+    resetBtn.addEventListener('click', (e) => {
+      e.preventDefault();
       if (confirm('Clear entire conversation history?')) {
         // Cancel voice
-        if (window.speechSynthesis) window.speechSynthesis.cancel();
+        if (window.speechSynthesis) {
+            try { window.speechSynthesis.cancel(); } catch(err) {}
+        }
         if (waveformEl) waveformEl.classList.remove('active');
-        if (recognition) recognition.stop();
+        
+        if (recognition) {
+            try { recognition.stop(); } catch(err) {}
+        }
 
         // Clear local storage and state
-        localStorage.removeItem('vikash_chat_history');
+        try {
+            localStorage.removeItem('vikash_chat_history');
+        } catch(err) {
+            console.warn('LocalStorage error', err);
+        }
         conversationHistory = [];
         initChat();
       }
@@ -241,20 +254,29 @@ If asked something unrelated to Vikash, politely say: "I'm focused on helping yo
   /* ═══════════════════════════════════════════
      TOGGLE PANEL
      ═══════════════════════════════════════════ */
-  toggle.addEventListener('click', () => {
+  toggle.addEventListener('click', (e) => {
+    e.preventDefault();
     panel.classList.toggle('open');
     if (panel.classList.contains('open')) {
       setTimeout(() => inputEl.focus(), 300);
     } else {
-      if (window.speechSynthesis) window.speechSynthesis.cancel();
+      if (window.speechSynthesis) {
+          try { window.speechSynthesis.cancel(); } catch(err) {}
+      }
       if (waveformEl) waveformEl.classList.remove('active');
     }
   });
 
-  closeBtn.addEventListener('click', () => {
+  closeBtn.addEventListener('click', (e) => {
+    e.preventDefault();
     panel.classList.remove('open');
-    if (window.speechSynthesis) window.speechSynthesis.cancel();
+    if (window.speechSynthesis) {
+        try { window.speechSynthesis.cancel(); } catch(err) {}
+    }
     if (waveformEl) waveformEl.classList.remove('active');
+    if (recognition) {
+        try { recognition.stop(); } catch(err) {}
+    }
   });
 
   /* ═══════════════════════════════════════════
@@ -262,7 +284,8 @@ If asked something unrelated to Vikash, politely say: "I'm focused on helping yo
      ═══════════════════════════════════════════ */
   if (chipsEl) {
     chipsEl.querySelectorAll('.chat-chip').forEach(chip => {
-      chip.addEventListener('click', () => {
+      chip.addEventListener('click', (e) => {
+        e.preventDefault();
         const msg = chip.getAttribute('data-msg');
         if (msg) triggerSend(msg);
       });
@@ -272,7 +295,10 @@ If asked something unrelated to Vikash, politely say: "I'm focused on helping yo
   /* ═══════════════════════════════════════════
      SEND MESSAGE LOGIC
      ═══════════════════════════════════════════ */
-  sendBtn.addEventListener('click', () => triggerSend(inputEl.value));
+  sendBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    triggerSend(inputEl.value);
+  });
   inputEl.addEventListener('keydown', e => { if (e.key === 'Enter') triggerSend(inputEl.value); });
 
   function triggerSend(text) {

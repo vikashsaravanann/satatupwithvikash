@@ -275,9 +275,9 @@
                                 <div class="box-text">
                                     <span class="box-title">Specialization</span>
                                     <div class="stat-box fade-up delay-2">
-                                    <span class="box-icon"><i class="fas fa-magic"></i></span>
-                                    <span class="box-value">Prompt Eng</span>
-                                </div>
+                                        <span class="box-icon"><i class="fas fa-magic"></i></span>
+                                        <span class="box-value">Prompt Eng</span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="floating-box-static"
@@ -325,16 +325,44 @@
                     <div class="responsive-intro-card widget-card-left">
                         <img loading="lazy" src="assets/profile/profile10.webp" alt="Vikash Profile Image 1">
                     </div>
-                    <!-- Image 2 Widget (Taller, higher, highlighted) -->
+                    <!-- Image 2 Widget (Center, higher) -->
                     <div class="responsive-intro-card widget-card-center">
-                        <div
-                            style="position: absolute; inset: 0; border-radius: 24px; border: 2px solid rgba(14,165,233,0.6); pointer-events: none; z-index: 3;">
-                        </div>
                         <img loading="lazy" src="assets/profile/profile11.webp" alt="Vikash Profile Image 2">
                     </div>
                     <!-- Image 3 Widget (Shorter, lower) -->
                     <div class="responsive-intro-card widget-card-right">
                         <img loading="lazy" src="assets/profile/profile12.webp" alt="Vikash Profile Image 3">
+                    </div>
+                </div>
+
+                <!-- LinkedIn Banner -->
+                <div class="linkedin-banner fade-up"
+                    style="margin-top: 30px; display: flex; align-items: center; justify-content: space-between; border: 1px solid rgba(10, 102, 194, 0.2); background: linear-gradient(90deg, rgba(10, 102, 194, 0.05) 0%, rgba(10, 102, 194, 0.1) 100%); border-radius: 16px; padding: 30px 40px; text-align: left; flex-wrap: wrap; gap: 20px;">
+                    <div style="display: flex; align-items: center; gap: 20px; flex: 1; min-width: 300px;">
+                        <div
+                            style="width: 56px; height: 56px; min-width: 56px; background: #0a66c2; border-radius: 12px; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 20px rgba(10, 102, 194, 0.3);">
+                            <i class="fab fa-linkedin-in" style="color: #ffffff; font-size: 1.8rem;"></i>
+                        </div>
+                        <div>
+                            <h3
+                                style="font-size: 1.25rem; margin-bottom: 4px; font-weight: 700; color: #ffffff; font-family: var(--font-heading);">
+                                Available for Hire & Collaboration</h3>
+                            <p class="text-sm text-secondary"
+                                style="margin: 0; line-height: 1.4; font-family: var(--font-body);">
+                                As a dedicated AI and Full-Stack Engineer, I am committed to delivering exceptional,
+                                high-impact results. Whether you need scalable architectures, innovative AI solutions,
+                                or a driven team member ready to tackle complex challenges—I am here to turn your vision
+                                into reality.
+                            </p>
+                        </div>
+                    </div>
+                    <div style="flex-shrink: 0;">
+                        <a href="https://www.linkedin.com/in/vikash-saravanan-j7528/" target="_blank"
+                            style="display: inline-block; padding: 12px 30px; background: #ffffff; color: #0a66c2; font-weight: 700; font-size: 1rem; border-radius: 8px; text-decoration: none; transition: all 0.3s ease; border: 1px solid transparent; font-family: var(--font-heading); white-space: nowrap;"
+                            onmouseover="this.style.background='#0a66c2'; this.style.color='#ffffff';"
+                            onmouseout="this.style.background='#ffffff'; this.style.color='#0a66c2';">
+                            Connect on LinkedIn
+                        </a>
                     </div>
                 </div>
             </div>
@@ -572,8 +600,12 @@
                 <div class="goals-container fade-up" style="grid-template-columns: 1fr;">
                     <div class="goals-text text-center">
                         <h2>About <span class="highlight">Me</span></h2>
-                        <p class="summary-text fade-up" style="font-size: 1.15rem; line-height: 1.8; color: var(--text-secondary); margin-bottom: 30px;">
-                            I am an ambitious B.Tech AI & Data Science undergraduate at Rathinam Technical Campus, Coimbatore (Class of 2029), and a dedicated AI Engineer, Prompt Engineer, and Web Developer. My core mission is to engineer high-performance machine learning models, craft precise generative AI prompts, and build dynamic, robust web applications.
+                        <p class="summary-text fade-up"
+                            style="font-size: 1.25rem; line-height: 1.8; color: var(--text-primary); margin-bottom: 30px; font-family: var(--font-heading); font-weight: 700; letter-spacing: 0.02em;">
+                            I am an ambitious B.Tech AI & Data Science undergraduate at Rathinam Technical Campus,
+                            Coimbatore (Class of 2029), and a dedicated AI Engineer, Prompt Engineer, and Web Developer.
+                            My core mission is to engineer high-performance machine learning models, craft precise
+                            generative AI prompts, and build dynamic, robust web applications.
                         </p>
                     </div>
 
@@ -673,12 +705,13 @@
                         <div class="timeline-date">2026 (Ongoing)</div>
                         <div class="timeline-content">
                             <div class="competency-card fade-up delay-2">
-                            <h3>Prompt Engineering</h3>
-                            <p>Crafting sophisticated LLM prompts and building intelligent, autonomous generative AI workflows.</p>      Engineering internships.</p>
+                                <h3>Prompt Engineering</h3>
+                                <p>Crafting sophisticated LLM prompts and building intelligent, autonomous generative AI
+                                    workflows.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
         </section>
 
         <!-- Large Group Photo Separator -->
@@ -804,18 +837,12 @@
             <div class="container">
                 <div class="section-title fade-up">
                     <h2 class="mb-4">Development <span class="highlight">Portfolio</span></h2>
-                    <p>Strategic architectures built at the intersection of AI, Full-Stack engineering, and Web Development.
+                    <p>Strategic architectures built at the intersection of AI, Full-Stack engineering, and Web
+                        Development.
                     </p>
                 </div>
 
-                <!-- GitHub Stats Card -->
-                <div class="github-stats-card fade-up mb-5"
-                    style="display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; margin-bottom: 60px;">
-                    <img src="https://github-readme-stats-sigma-five.vercel.app/api?username=vikashsaravanann&show_icons=true&theme=tokyonight&hide_border=true&bg_color=0D1117"
-                        alt="GitHub Stats" style="height: 170px; border-radius: 12px;">
-                    <img src="https://github-readme-stats-sigma-five.vercel.app/api/top-langs/?username=vikashsaravanann&layout=compact&theme=tokyonight&hide_border=true&bg_color=0D1117"
-                        alt="Top Langs" style="height: 170px; border-radius: 12px;">
-                </div>
+
 
                 <!-- Project Filter Tabs -->
                 <div class="project-filters fade-up"
@@ -1277,7 +1304,8 @@
                         Get In <span class="highlight">Touch</span></h2>
                     <p
                         style="font-family: 'Inter', sans-serif; font-weight: 600; font-size: 1.05rem; color: rgba(255, 255, 255, 0.9); margin-top: 14px; line-height: 1.6;">
-                        Hi, I am Vikash! I am a B.Tech AI & Data Science student, currently working as an AI Engineer, Prompt Engineer, and Web Developer. I am passionate about building scalable
+                        Hi, I am Vikash! I am a B.Tech AI & Data Science student, currently working as an AI Engineer,
+                        Prompt Engineer, and Web Developer. I am passionate about building scalable
                         applications and autonomous AI agents. If you have a project idea,
                         internship opportunity, or just want to collaborate, feel free to contact me using the form
                         below!
@@ -1336,7 +1364,10 @@
                     <div class="widget-icon"><i class="fas fa-user-tie text-accent"></i></div>
                     <h3 class="text-neon mb-2">About the Engineer</h3>
                     <p class="text-sm text-secondary" style="line-height: 1.7; margin-bottom: 16px;">
-                        I am a B.Tech AI & Data Science student and a dedicated AI Engineer, Prompt Engineer, and Web Developer. I specialize in bridging the gap between advanced artificial intelligence and dynamic, user-centric web applications. My goal is to build intelligent, scalable systems that solve complex, real-world problems.
+                        I am a B.Tech AI & Data Science student and a dedicated AI Engineer, Prompt Engineer, and Web
+                        Developer. I specialize in bridging the gap between advanced artificial intelligence and
+                        dynamic, user-centric web applications. My goal is to build intelligent, scalable systems that
+                        solve complex, real-world problems.
                     </p>
                     <div class="contact-details mt-auto"
                         style="border-top: 1px solid rgba(255,255,255,0.05); padding-top: 16px;">
@@ -1346,34 +1377,7 @@
                     </div>
                 </div>
 
-                <!-- Widget 2: Professional Network -->
-                <div class="footer-widget"
-                    style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; border: 1px solid rgba(10, 102, 194, 0.2); background: linear-gradient(180deg, rgba(10, 102, 194, 0.05) 0%, transparent 100%); position: relative; overflow: hidden; padding: 30px 20px;">
-                    <!-- Subtle glow effect -->
-                    <div
-                        style="position: absolute; top: -30px; left: 50%; transform: translateX(-50%); width: 100px; height: 100px; background: #0a66c2; filter: blur(40px); opacity: 0.3; z-index: 0;">
-                    </div>
 
-                    <div style="z-index: 1; display: flex; flex-direction: column; align-items: center; height: 100%;">
-                        <div
-                            style="width: 56px; height: 56px; background: #0a66c2; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; box-shadow: 0 8px 20px rgba(10, 102, 194, 0.3); transform: rotate(-5deg); transition: transform 0.3s ease;">
-                            <i class="fab fa-linkedin-in"
-                                style="color: #ffffff; font-size: 1.8rem; transform: rotate(5deg);"></i>
-                        </div>
-                        <h3 style="font-size: 1.15rem; margin-bottom: 12px; font-weight: 700; color: #ffffff;">Hire the
-                            Engineer</h3>
-                        <p class="text-sm text-secondary" style="margin-bottom: 24px; line-height: 1.6;">
-                            Seeking a driven engineer for your next ambitious project? Let's connect and build the
-                            future together.
-                        </p>
-                        <a href="https://www.linkedin.com/in/vikash-saravanan-j7528/" target="_blank"
-                            style="margin-top: auto; width: 100%; display: inline-block; padding: 12px 0; background: #ffffff; color: #0a66c2; font-weight: 700; font-size: 0.95rem; border-radius: 8px; text-decoration: none; transition: all 0.3s ease; border: 1px solid transparent;"
-                            onmouseover="this.style.background='#0a66c2'; this.style.color='#ffffff';"
-                            onmouseout="this.style.background='#ffffff'; this.style.color='#0a66c2';">
-                            Connect on LinkedIn
-                        </a>
-                    </div>
-                </div>
 
                 <!-- Widget 2: Digital Presence -->
                 <div class="footer-widget" style="padding: 0; overflow: hidden; display: flex; flex-direction: column;">
