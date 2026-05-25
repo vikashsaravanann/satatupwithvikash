@@ -2421,9 +2421,14 @@ section {
     justify-content: center;
     transition: all 0.25s ease;
 }
-#chatMic:hover {
+#chatMic:hover:not(:disabled) {
     color: #0ea5e9;
     background: rgba(255, 255, 255, 0.05);
+}
+#chatMic:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    color: rgba(255, 255, 255, 0.3);
 }
 #chatMic.listening {
     color: #ef4444;
@@ -2434,6 +2439,18 @@ section {
 @keyframes micPulse {
     0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
     50% { box-shadow: 0 0 0 8px rgba(239, 68, 68, 0); }
+}
+
+/* Chatbot Markdown Link Styles */
+.chat-link {
+    color: #38bdf8;
+    text-decoration: none;
+    border-bottom: 1px dotted #38bdf8;
+    transition: all 0.2s ease;
+}
+.chat-link:hover {
+    color: #0ea5e9;
+    border-bottom-style: solid;
 }
 
 /* Siri-style Voice Waveform styles */

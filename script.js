@@ -133,11 +133,13 @@ document.addEventListener('DOMContentLoaded', () => {
             const messageBody = `Hi Vikash,\n\nNew inquiry from your portfolio website.\n\nName: ${name}\nEmail: ${email}\nPhone: ${phone || 'Not provided'}\nSubject: ${subject}\n\nMessage:\n${message}`;
 
             try {
+                const PRODUCTION_API_URL = 'https://portfolio-information.vercel.app';
                 let url = '/api/contact';
                 if (window.location.protocol === 'file:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
                     url = 'http://localhost:3000/api/contact';
-                } else if (window.location.hostname.includes('github.io')) {
-                    url = 'https://portfolio-information.vercel.app/api/contact';
+                } else if (window.location.hostname.includes('github.io') || 
+                           (window.location.hostname && window.location.hostname !== new URL(PRODUCTION_API_URL).hostname)) {
+                    url = PRODUCTION_API_URL + '/api/contact';
                 }
 
                 const response = await fetch(url, {
@@ -502,7 +504,7 @@ function generateResumePDF() {
         'Frameworks: React, Next.js, Node.js, Express.js, Flask',
         'Automation: n8n Workflow Automation, Web Scraping, Autonomous AI Agents',
         'Data: Pandas, NumPy, Matplotlib, Power BI, Data Annotation, ETL Pipelines',
-        'DevOps & Tools: Git, Docker, GitHub Pages, Vercel, Firebase, VS Code, Jupyter',
+        'DevOps & Tools: Git, Docker, GitHub Pages, Firebase, VS Code, Jupyter',
         'Databases: MongoDB, PostgreSQL, MySQL, Firebase Realtime DB'
     ];
     skills.forEach(s => addBullet(s));
@@ -511,7 +513,7 @@ function generateResumePDF() {
     // Projects
     addSection('Key Projects');
     const projects = [
-        'HearWise — AI-powered hearing screening & gamified ocean platform for children with 12+ interactive modules (React, Vercel, GitHub Pages)',
+        'HearWise — AI-powered hearing screening & gamified ocean platform for children with 12+ interactive modules (React, GitHub Pages)',
         'Portfolio AI Chatbot — Intelligent assistant with Text-to-Speech, Speech-to-Text, persistent memory, and Siri-style voice (JavaScript, Groq API)',
         'Logic Intelligence Technologies — Full agency website with multi-step quote system & CRM integration (Next.js)',
         'IPL Data Analysis — Comprehensive cricket analytics project with data visualization (Python, Pandas, Jupyter)',

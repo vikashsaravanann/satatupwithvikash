@@ -16,7 +16,7 @@ We recently undertook a comprehensive redesign to ensure the portfolio reflects 
 
 Both contact forms (the main footer contact form and the interactive form inside the AI Chatbot bubble) submit messages directly to the unified backend route `/api/contact`.
 
-To receive incoming contact messages, configure **any** of the following notification channels in your local `.env` file or Vercel Environment Variables dashboard. The backend will automatically detect and route messages to all configured systems:
+To receive incoming contact messages, configure **any** of the following notification channels in your local `.env` file or hosting environment variables dashboard. The backend will automatically detect and route messages to all configured systems:
 
 ### 1. Discord Webhooks (Recommended & Free)
 Deliver form submissions directly as rich cards to a Discord server channel:

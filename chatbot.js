@@ -16,7 +16,7 @@
      ═══════════════════════════════════════════ */
   const XAI_MODEL = 'grok-4.20-reasoning';
   const API_URL = '/api/chat';
-  const VERCEL_URL = 'https://portfolio-information.vercel.app';
+  const PRODUCTION_API_URL = 'https://portfolio-information.vercel.app';
   const LOCAL_API_URL = 'http://localhost:3000/api/chat';
 
   const SYSTEM_PROMPT = `You are Vikash's intelligent AI portfolio assistant. Be friendly, concise, and professional. Keep replies under 4 sentences unless listing items. Use emojis sparingly but effectively.
@@ -35,13 +35,13 @@ TECHNICAL SKILLS:
 • Frameworks: React, Next.js, Node.js, Flask
 • AI/ML: PyTorch, TensorFlow, Computer Vision, NLP, LLMs, Generative AI
 • Automation: n8n (workflow automation), web scraping, autonomous agents
-• DevOps: Docker, Git, GitHub Pages, Vercel
+• DevOps: Docker, Git, GitHub Pages
 • Data: Pandas, NumPy, Matplotlib, Power BI, Data Annotation
 
 PROJECTS & GITHUB REPOSITORIES (16 total):
 Always provide the relevant GitHub or Live URL when mentioning these projects.
 1. Portfolio_Information: Personal portfolio website with an AI assistant. GitHub: github.com/vikashsaravanann/Portfolio_Information | Live: vikashsaravanann.github.io/Portfolio_Information/
-2. HearWise Child Health: Mobile-first clinical hearing screening platform. GitHub: github.com/vikashsaravanann/hearwise-child-health | Live: hearwise-child-health.vercel.app
+2. HearWise Child Health: Mobile-first clinical hearing screening platform. GitHub: github.com/vikashsaravanann/hearwise-child-health | Live: vikashsaravanann.github.io/hearwise-child-health/
 3. OpenEnv-Debugger: Simulation environment for training AI agents (Meta Hackathon). GitHub: github.com/vikashsaravanann/OpenEnv-Debugger | Live API: huggingface.co/spaces/vikashsaravanan/openenv-support-triage
 4. AI Traffic Management System: Adaptive Arduino LED control via React dashboard and YOLOv8. GitHub: github.com/vikashsaravanann/AI-Traffic-Management-system
 5. Dropout Alert System: Edge AI predictive system using TFLite/ONNX on Android. GitHub: github.com/vikashsaravanann/dropout-alert-system
@@ -307,6 +307,7 @@ If asked something unrelated to Vikash, politely say: "I'm focused on helping yo
     inputEl.value = '';
     inputEl.disabled = true;
     sendBtn.disabled = true;
+    if (micBtn) micBtn.disabled = true; // Disable mic while bot is responding
 
     // Add user message to UI and history
     addMessage(text, 'user', false);
@@ -331,6 +332,7 @@ If asked something unrelated to Vikash, politely say: "I'm focused on helping yo
     }).finally(() => {
       inputEl.disabled = false;
       sendBtn.disabled = false;
+      if (micBtn) micBtn.disabled = false; // Re-enable mic when bot is done
       inputEl.focus();
     });
   }
@@ -517,8 +519,9 @@ If asked something unrelated to Vikash, politely say: "I'm focused on helping yo
             let url = '/api/contact';
             if (window.location.protocol === 'file:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
                 url = 'http://localhost:3000/api/contact';
-            } else if (window.location.hostname.includes('github.io')) {
-                url = 'https://portfolio-information.vercel.app/api/contact';
+            } else if (window.location.hostname.includes('github.io') || 
+                       (window.location.hostname && window.location.hostname !== new URL(PRODUCTION_API_URL).hostname)) {
+                url = PRODUCTION_API_URL + '/api/contact';
             }
 
             const response = await fetch(url, {
@@ -559,9 +562,27 @@ If asked something unrelated to Vikash, politely say: "I'm focused on helping yo
   /* ═══════════════════════════════════════════
      DOM CREATION HELPERS
      ═══════════════════════════════════════════ */
+  /* ═══════════════════════════════════════════
+     MARKDOWN TO HTML PARSER
+     Converts **bold**, [link](url), and \n to styled HTML
+     ═══════════════════════════════════════════ */
+  function parseMarkdown(text) {
+    return text
+      // Bold: **text**
+      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+      // Italic: *text*
+      .replace(/\*(.+?)\*/g, '<em>$1</em>')
+      // Links: [label](url)
+      .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="chat-link">$1 <i class="fas fa-external-link-alt" style="font-size:0.65rem;"></i></a>')
+      // Newlines
+      .replace(/\n/g, '<br>');
+  }
+
   function addMessage(content, role, animate = false) {
+    // Map OpenAI/Groq 'assistant' role to 'bot' styling class and TTS features
+    const uiRole = role === 'assistant' ? 'bot' : role;
     const wrap = document.createElement('div');
-    wrap.className = `chat-msg ${role}`;
+    wrap.className = `chat-msg ${uiRole}`;
 
     const wrapper = document.createElement('div');
     wrapper.className = 'msg-wrapper';
@@ -573,11 +594,12 @@ If asked something unrelated to Vikash, politely say: "I'm focused on helping yo
     wrap.appendChild(wrapper);
     messagesEl.appendChild(wrap);
 
-    if (role === 'bot') {
+    if (uiRole === 'bot') {
       // Add sound text-to-speech button under bubble
       const soundBtn = document.createElement('button');
       soundBtn.className = 'chat-sound-btn';
-      soundBtn.innerHTML = '<i class="fas fa-volume-up"></i> Speak';
+      soundBtn.setAttribute('title', 'Read aloud');
+      soundBtn.innerHTML = '<i class="fas fa-volume-up"></i><span>Speak</span>';
       soundBtn.addEventListener('click', () => speakMessage(content, soundBtn));
       wrapper.appendChild(soundBtn);
     }
@@ -585,11 +607,14 @@ If asked something unrelated to Vikash, politely say: "I'm focused on helping yo
     if (animate) {
       let i = 0;
       const interval = setInterval(() => {
-        bubble.textContent += content[i];
         i++;
+        // Stream raw text first, then parse markdown at the end to avoid broken mid-tag renders
+        bubble.textContent = content.slice(0, i);
         messagesEl.scrollTop = messagesEl.scrollHeight;
         if (i >= content.length) {
           clearInterval(interval);
+          // Now render with Markdown once streaming is complete
+          bubble.innerHTML = parseMarkdown(content);
           // Check and append rich interactive cards / form if applicable
           const card = getRichCardElement(content);
           if (card) {
@@ -599,7 +624,7 @@ If asked something unrelated to Vikash, politely say: "I'm focused on helping yo
         }
       }, 15);
     } else {
-      bubble.textContent = content;
+      bubble.innerHTML = parseMarkdown(content);
       // Append rich cards immediately for loaded history
       const card = getRichCardElement(content);
       if (card) {
@@ -634,22 +659,64 @@ If asked something unrelated to Vikash, politely say: "I'm focused on helping yo
     const body = { model: XAI_MODEL, input: messages };
 
     let url = API_URL;
+    let isLocal = false;
+
+    // Check protocol and hostname to choose the appropriate API endpoint
     if (window.location.protocol === 'file:' ||
         window.location.hostname === 'localhost' ||
         window.location.hostname === '127.0.0.1') {
       url = LOCAL_API_URL;
-    } else if (window.location.hostname.includes('github.io')) {
-      url = VERCEL_URL + API_URL;
+      isLocal = true;
+    } else if (window.location.hostname.includes('github.io') ||
+               (window.location.hostname && window.location.hostname !== new URL(PRODUCTION_API_URL).hostname)) {
+      // Route to production API bridge for GitHub Pages and custom domains
+      url = PRODUCTION_API_URL + API_URL;
     }
 
-    const res = await fetch(url, {
+    try {
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      });
+
+      if (!res.ok) {
+        // If local API call fails, fall back to the production API bridge
+        if (isLocal) {
+          console.warn('Local API unavailable, falling back to production API bridge...');
+          return await callProductionBridge(body);
+        }
+        throw new Error('Bridge error');
+      }
+
+      const data = await res.json();
+      return extractContent(data);
+    } catch (err) {
+      // Catch network/connection errors (e.g. local server not running)
+      if (isLocal) {
+        console.warn('Local API connection failed, falling back to production API bridge...', err);
+        try {
+          return await callProductionBridge(body);
+        } catch (fallbackErr) {
+          throw fallbackErr;
+        }
+      }
+      throw err;
+    }
+  }
+
+  async function callProductionBridge(body) {
+    const res = await fetch(PRODUCTION_API_URL + API_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body),
     });
-
-    if (!res.ok) throw new Error('Bridge error');
+    if (!res.ok) throw new Error('Production API bridge error');
     const data = await res.json();
+    return extractContent(data);
+  }
+
+  function extractContent(data) {
     return data.message?.content ||
            data.choices?.[0]?.message?.content ||
            data.response ||
