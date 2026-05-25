@@ -91,11 +91,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // EmailJS (real email) + WhatsApp + SMS
     // ==============================
 
-    // Initialize EmailJS with public key
-    if (typeof emailjs !== 'undefined') {
-        emailjs.init('Mlfg-rt0zHLrAPz62'); 
-    }
-
     // Toast notification helper
     function showContactToast(message, isError) {
         let toast = document.querySelector('.contact-toast');
@@ -136,51 +131,40 @@ document.addEventListener('DOMContentLoaded', () => {
             const message = document.getElementById('cf-message').value.trim();
 
             const messageBody = `Hi Vikash,\n\nNew inquiry from your portfolio website.\n\nName: ${name}\nEmail: ${email}\nPhone: ${phone || 'Not provided'}\nSubject: ${subject}\n\nMessage:\n${message}`;
-            const encodedBody = encodeURIComponent(messageBody);
-            const encodedSubject = encodeURIComponent(subject);
 
-            let emailSent = false;
-
-            // 1. EmailJS — Real Email Delivery (lands in your inbox)
-            if (typeof emailjs !== 'undefined') {
-                try {
-                    await emailjs.send('service_portfolio', 'template_contact', {
-                        from_name: name,
-                        from_email: email,
-                        phone: phone || 'Not provided',
-                        subject: subject,
-                        message: message,
-                        to_email: 'vikash07052008@gmail.com'
-                    });
-                    emailSent = true;
-                } catch (err) {
-                    console.warn('EmailJS delivery failed:', err);
+            try {
+                let url = '/api/contact';
+                if (window.location.protocol === 'file:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+                    url = 'http://localhost:3000/api/contact';
+                } else if (window.location.hostname.includes('github.io')) {
+                    url = 'https://portfolio-information.vercel.app/api/contact';
                 }
+
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, email, subject, message: messageBody })
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    showContactToast('Message successfully sent to Vikash!', false);
+                    contactForm.reset();
+                } else {
+                    throw new Error(data.error || 'Failed to send message');
+                }
+            } catch (err) {
+                console.warn('API delivery failed:', err);
+                showContactToast('Delivery failed. Opening your mail app...', true);
+                setTimeout(() => {
+                    window.location.href = `mailto:vikash07052008@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(messageBody)}`;
+                }, 800);
             }
 
-            // 2. WhatsApp Trigger
-            window.open(`https://wa.me/919342877474?text=${encodedBody}`, '_blank');
-
-            // 3. SMS Trigger (with slight delay to avoid conflict)
-            setTimeout(() => {
-                window.open(`sms:+919342877474?body=${encodedBody}`, '_blank');
-            }, 600);
-
-            // Show success feedback
-            contactForm.reset();
             btnLoader.style.display = 'none';
             btnContent.style.display = 'inline-flex';
             submitBtn.disabled = false;
-
-            if (emailSent) {
-                showContactToast('Message sent to all 3 channels — WhatsApp, Email & SMS!', false);
-            } else {
-                showContactToast('WhatsApp & SMS launched! Email will open in your mail app.', false);
-                // Fallback: Open default email client
-                setTimeout(() => {
-                    window.location.href = `mailto:vikash07052008@gmail.com?subject=${encodedSubject}&body=${encodedBody}`;
-                }, 800);
-            }
         });
     }
 

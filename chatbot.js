@@ -494,7 +494,7 @@ If asked something unrelated to Vikash, politely say: "I'm focused on helping yo
           <input type="email" class="chat-form-input chat-form-email" placeholder="Email Address" required>
           <input type="text" class="chat-form-input chat-form-subject" placeholder="Subject (e.g. Internship)" required>
           <textarea class="chat-form-textarea chat-form-msg" placeholder="Describe your inquiry..." required></textarea>
-          <button type="submit" class="chat-form-submit"><i class="fas fa-paper-plane" style="margin-right:6px;"></i>Send to All Channels</button>
+          <button type="submit" class="chat-form-submit"><i class="fas fa-paper-plane" style="margin-right:6px;"></i>Send Message</button>
         </form>
       `;
 
@@ -512,54 +512,41 @@ If asked something unrelated to Vikash, politely say: "I'm focused on helping yo
         submitBtn.disabled = true;
 
         const messageBody = `Hi Vikash,\n\nNew inquiry via AI Chatbot.\n\nName: ${name}\nEmail: ${email}\nSubject: ${subject}\n\nMessage:\n${msg}`;
-        const encodedBody = encodeURIComponent(messageBody);
-        const encodedSubject = encodeURIComponent(subject);
 
-        let emailSent = false;
+        try {
+            let url = '/api/contact';
+            if (window.location.protocol === 'file:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+                url = 'http://localhost:3000/api/contact';
+            } else if (window.location.hostname.includes('github.io')) {
+                url = 'https://portfolio-information.vercel.app/api/contact';
+            }
 
-        // 1. EmailJS — Real Email Delivery
-        if (typeof emailjs !== 'undefined') {
-          try {
-            await emailjs.send('service_portfolio', 'template_contact', {
-              from_name: name,
-              from_email: email,
-              phone: 'Via Chatbot',
-              subject: subject,
-              message: msg,
-              to_email: 'vikash07052008@gmail.com'
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, email, subject, message: messageBody })
             });
-            emailSent = true;
-          } catch (err) {
-            console.warn('EmailJS delivery failed:', err);
-          }
-        }
 
-        // 2. WhatsApp Trigger
-        window.open(`https://wa.me/919342877474?text=${encodedBody}`, '_blank');
+            const data = await response.json();
 
-        // 3. SMS Trigger
-        setTimeout(() => {
-            window.open(`sms:+919342877474?body=${encodedBody}`, '_blank');
-        }, 600);
-
-        // Fallback email if EmailJS failed
-        if (!emailSent) {
-          setTimeout(() => {
-            window.location.href = `mailto:vikash07052008@gmail.com?subject=${encodedSubject}&body=${encodedBody}`;
-          }, 800);
-        }
-
-        form.reset();
-        submitBtn.innerHTML = '<i class="fas fa-check-circle"></i> Sent!';
-
-        if (emailSent) {
-          addMessage("Your message has been delivered to Vikash via Email, WhatsApp & SMS — all 3 channels! 🚀✅", 'bot', false);
-        } else {
-          addMessage("WhatsApp & SMS launched! I've also opened your mail app to complete the email. 📧", 'bot', false);
+            if (response.ok && data.success) {
+                form.reset();
+                submitBtn.innerHTML = '<i class="fas fa-check-circle"></i> Sent!';
+                addMessage("Your message has been successfully delivered to Vikash! 🚀✅", 'bot', false);
+            } else {
+                throw new Error(data.error || 'Failed to send message');
+            }
+        } catch (err) {
+            console.warn('API delivery failed:', err);
+            submitBtn.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Failed';
+            addMessage("Delivery failed. I've opened your mail app to complete the email manually. 📧", 'bot', false);
+            setTimeout(() => {
+                window.location.href = `mailto:vikash07052008@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(messageBody)}`;
+            }, 800);
         }
 
         setTimeout(() => {
-            submitBtn.innerHTML = '<i class="fas fa-paper-plane" style="margin-right:6px;"></i>Send to All Channels';
+            submitBtn.innerHTML = '<i class="fas fa-paper-plane" style="margin-right:6px;"></i>Send Message';
             submitBtn.disabled = false;
         }, 4000);
       });
