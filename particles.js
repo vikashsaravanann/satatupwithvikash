@@ -5,12 +5,12 @@ class ParticleNetwork {
         
         this.ctx = this.canvas.getContext('2d');
         this.particles = [];
-        this.numberOfParticles = window.innerWidth < 768 ? 50 : 100;
+        this.numberOfParticles = window.innerWidth < 768 ? 80 : 150;
         
         this.mouse = {
             x: null,
             y: null,
-            radius: 150
+            radius: 200
         };
 
         this.init();
@@ -39,7 +39,7 @@ class ParticleNetwork {
         this.particles = [];
         
         for (let i = 0; i < this.numberOfParticles; i++) {
-            let size = (Math.random() * 2) + 1;
+            let size = (Math.random() * 2.5) + 0.8;
             let x = (Math.random() * ((innerWidth - size * 2) - (size * 2)) + size * 2);
             let y = (Math.random() * ((innerHeight - size * 2) - (size * 2)) + size * 2);
             let directionX = (Math.random() * 2) - 1;
@@ -67,10 +67,20 @@ class ParticleNetwork {
                 let distance = ((this.particles[a].x - this.particles[b].x) * (this.particles[a].x - this.particles[b].x))
                              + ((this.particles[a].y - this.particles[b].y) * (this.particles[a].y - this.particles[b].y));
                 
-                if (distance < (this.canvas.width / 7) * (this.canvas.height / 7)) {
+                if (distance < (this.canvas.width / 6) * (this.canvas.height / 6)) {
                     opacityValue = 1 - (distance / 20000);
-                    this.ctx.strokeStyle = `rgba(14, 165, 233, ${opacityValue * 0.2})`;
-                    this.ctx.lineWidth = 1;
+                    
+                    // Draw main connection line
+                    this.ctx.strokeStyle = `rgba(14, 165, 233, ${opacityValue * 0.4})`;
+                    this.ctx.lineWidth = 1.5;
+                    this.ctx.beginPath();
+                    this.ctx.moveTo(this.particles[a].x, this.particles[a].y);
+                    this.ctx.lineTo(this.particles[b].x, this.particles[b].y);
+                    this.ctx.stroke();
+                    
+                    // Draw glow effect
+                    this.ctx.strokeStyle = `rgba(14, 165, 233, ${opacityValue * 0.15})`;
+                    this.ctx.lineWidth = 3;
                     this.ctx.beginPath();
                     this.ctx.moveTo(this.particles[a].x, this.particles[a].y);
                     this.ctx.lineTo(this.particles[b].x, this.particles[b].y);
@@ -95,9 +105,27 @@ class Particle {
     }
 
     draw() {
+        // Draw glow effect
+        const glowGradient = this.ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.size * 3);
+        glowGradient.addColorStop(0, 'rgba(14, 165, 233, 0.4)');
+        glowGradient.addColorStop(0.5, 'rgba(14, 165, 233, 0.1)');
+        glowGradient.addColorStop(1, 'rgba(14, 165, 233, 0)');
+        
+        this.ctx.fillStyle = glowGradient;
+        this.ctx.beginPath();
+        this.ctx.arc(this.x, this.y, this.size * 3, 0, Math.PI * 2, false);
+        this.ctx.fill();
+        
+        // Draw particle core
         this.ctx.beginPath();
         this.ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
         this.ctx.fillStyle = this.color;
+        this.ctx.fill();
+        
+        // Draw bright center
+        this.ctx.beginPath();
+        this.ctx.arc(this.x, this.y, this.size * 0.4, 0, Math.PI * 2, false);
+        this.ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
         this.ctx.fill();
     }
 

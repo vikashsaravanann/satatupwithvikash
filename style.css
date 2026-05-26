@@ -48,19 +48,52 @@ html {
 }
 
 body {
-    background-color: var(--bg-light);
+    background: linear-gradient(135deg, #000000 0%, #0a0e27 25%, #1a1a2e 50%, #0f3460 75%, #000000 100%);
+    background-attachment: fixed;
     color: var(--text-primary);
     font-family: var(--font-body);
     line-height: 1.6;
     overflow-x: hidden;
     padding: 1vw;
+    position: relative;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 20% 50%, rgba(14, 165, 233, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(14, 165, 233, 0.03) 0%, transparent 50%),
+        radial-gradient(circle at 50% 20%, rgba(30, 41, 82, 0.1) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+body > * {
+    position: relative;
+    z-index: 1;
 }
 
 #app-frame {
-    background-color: transparent;
+    background: transparent;
     min-height: calc(100vh - 2vw);
     overflow: hidden;
     position: relative;
+    z-index: 1;
+}
+
+/* Canvas for particles background */
+#global-particles {
+    filter: brightness(1.1) contrast(1.1);
+}
+
+/* Light mode canvas */
+body.light-mode #global-particles {
+    filter: brightness(0.8) contrast(0.9);
 }
 
 .page-border-light {
