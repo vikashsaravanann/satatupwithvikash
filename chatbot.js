@@ -334,8 +334,9 @@ If asked something unrelated to Vikash, politely say: "I'm focused on helping yo
     }).catch((err) => {
       console.error('Chat error:', err);
       typingEl.remove();
-      addMessage("Sorry, I'm having trouble connecting to the AI. 📧 vikash07052008@gmail.com", 'bot', false);
+      addMessage("Sorry, I'm having trouble connecting to Groq AI. 📧 vikash07052008@gmail.com", 'bot', false);
     }).finally(() => {
+
       inputEl.disabled = false;
       sendBtn.disabled = false;
       if (micBtn) micBtn.disabled = false; // Re-enable mic when bot is done
@@ -733,4 +734,5 @@ If asked something unrelated to Vikash, politely say: "I'm focused on helping yo
            "I'm not sure how to answer that.";
   }
 
+})();
 })();
