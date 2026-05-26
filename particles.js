@@ -136,5 +136,5 @@ class Particle {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    new ParticleNetwork('hero-particles');
+    new ParticleNetwork('global-particles');
 });

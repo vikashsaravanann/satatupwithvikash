@@ -20,6 +20,7 @@
 </head>
 
 <body>
+    <canvas id="global-particles" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: -1;"></canvas>
     <div id="app-frame" class="page-border-light">
 
         <!-- Navigation -->
@@ -338,6 +339,7 @@
             if (yearEl) yearEl.textContent = new Date().getFullYear();
         });
     </script>
+    <script src="particles.js"></script>
 </body>
 
 </html>

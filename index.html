@@ -7,6 +7,8 @@
     <title>Vikash Saravanan | AI & Prompt Engineer & Web Developer Portfolio</title>
     <meta name="description"
         content="Professional portfolio of Vikash Saravanan — AI Engineer, Prompt Engineer, and Web Developer, building enterprise-grade AI automation systems.">
+    <link rel="preconnect" href="https://portfolio-information.vercel.app">
+    <link rel="preconnect" href="https://api.groq.com">
     <!-- Canonical URL -->
     <link rel="canonical" href="https://vikashsaravanann.github.io/Portfolio_Information/">
     <!-- SEO Open Graph Tags -->
@@ -104,6 +106,7 @@
 </head>
 
 <body>
+    <canvas id="global-particles" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: -1;"></canvas>
     <div id="app-frame">
 
         <!-- Navigation -->
@@ -125,7 +128,6 @@
 
         <!-- Hero Section -->
         <header id="hero" class="hero-section">
-            <canvas id="hero-particles" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0;"></canvas>
             <div class="container hero-content-stacked" style="position: relative; z-index: 1;">
                 <!-- Top Identity -->
                 <div class="hero-top-intro fade-up" style="display: flex; flex-direction: column; align-items: center;">
@@ -1536,10 +1538,13 @@
                             <option value="gemma2-27b-it">Gemma 2 27B</option>
                             <option value="deepseek-r1-distill-llama-70b">DeepSeek R1</option>
                         </select>
+                        <span id="modelFallbackBadge" class="chat-fallback-badge" hidden>Fallback active</span>
                         </div>
                     </div>
                 </div>
                 <div class="chat-header-actions">
+                    <button class="chat-memory" id="ai-chat-memory" title="Memory on"><i class="fas fa-save"></i></button>
+                    <button class="chat-export" id="ai-chat-export" title="Export Chat"><i class="fas fa-download"></i></button>
                     <button class="chat-reset" id="ai-chat-reset" title="Clear Chat History"><i
                             class="fas fa-trash-alt"></i></button>
                     <button class="chat-close" id="ai-chat-close" title="Close"><i class="fas fa-times"></i></button>

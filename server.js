@@ -64,6 +64,7 @@ const corsOptions = {
     },
     methods: ['GET', 'POST', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
+    exposedHeaders: ['x-model-used', 'x-fallback-used'],
     credentials: true
 };
 
@@ -94,6 +95,32 @@ function rateLimitMiddleware(limiter, namespace) {
     };
 }
 
+function validateMessages(messages) {
+    if (!Array.isArray(messages) || messages.length === 0) {
+        return { ok: false, error: 'Messages array is required and cannot be empty.' };
+    }
+
+    for (const message of messages) {
+        if (!message || typeof message !== 'object') {
+            return { ok: false, error: 'Each message must be an object.' };
+        }
+        if (!ALLOWED_ROLES.has(message.role)) {
+            return { ok: false, error: `Invalid message role: ${message.role}` };
+        }
+        if (typeof message.content !== 'string' || message.content.trim().length === 0) {
+            return { ok: false, error: 'Each message must include non-empty content.' };
+        }
+        if (message.content.length > MAX_MESSAGE_CHARS) {
+            return { ok: false, error: `Message content exceeds ${MAX_MESSAGE_CHARS} characters.` };
+        }
+        if (/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/.test(message.content)) {
+            return { ok: false, error: 'Message content contains unsupported control characters.' };
+        }
+    }
+
+    return { ok: true };
+}
+
 app.use((req, res, next) => {
     applySecurityHeaders(res);
     next();
@@ -118,6 +145,27 @@ app.get('/api/chat', (req, res) => {
     });
 });
 
+app.get('/api/analytics', (req, res) => {
+    res.status(200).json(getStats());
+});
+
+app.post('/api/analytics', (req, res) => {
+    if (isBodyTooLarge(req.body, ANALYTICS_BODY_MAX_BYTES)) {
+        res.status(413).json({
+            error: 'Analytics payload is too large.'
+        });
+        return;
+    }
+
+    const result = recordEvent(req.body);
+    if (!result.ok) {
+        res.status(400).json({ error: result.error });
+        return;
+    }
+
+    res.status(202).json({ success: true });
+});
+
 app.post('/api/contact', rateLimitMiddleware(contactLimiter, 'contact'), async (req, res) => {
     if (isBodyTooLarge(req.body, CONTACT_BODY_MAX_BYTES)) {
         res.status(413).json({
@@ -129,6 +177,9 @@ app.post('/api/contact', rateLimitMiddleware(contactLimiter, 'contact'), async (
 
     try {
         const result = await processContactSubmission(req.body);
+        if (result && result.status >= 200 && result.status < 300 && result.response?.success) {
+            recordEvent({ type: 'contact_conversion' });
+        }
         res.status(result.status).json(result.response);
     } catch (error) {
         console.error('Contact route error:', error);
@@ -159,37 +210,75 @@ app.post('/api/chat', rateLimitMiddleware(chatLimiter, 'chat'), async (req, res)
             : [{ role: 'user', content: req.body.input }];
     }
 
-    if (!Array.isArray(messages) || messages.length === 0) {
-        res.status(400).json({ error: 'Messages array is required and cannot be empty.' });
+    const validation = validateMessages(messages);
+    if (!validation.ok) {
+        res.status(400).json({ error: validation.error });
         return;
     }
 
     const model = req.body.model;
-    const groqModel = typeof model === 'string' && ALLOWED_MODELS.has(model)
+    let groqModel = typeof model === 'string' && ALLOWED_MODELS.has(model)
         ? model
         : DEFAULT_MODEL;
+    const wantsStream = req.body.stream === true;
+    let fallbackUsed = false;
 
     try {
-        const response = await fetch(API_URL, {
+        const requestGroq = (modelToUse) => fetch(API_URL, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${API_KEY}`
             },
             body: JSON.stringify({
-                model: groqModel,
+                model: modelToUse,
                 messages,
-                stream: false
+                stream: wantsStream
             })
         });
 
-        const data = await response.json();
+        let response = await requestGroq(groqModel);
+        if (!response.ok && groqModel !== DEFAULT_MODEL) {
+            fallbackUsed = true;
+            groqModel = DEFAULT_MODEL;
+            response = await requestGroq(groqModel);
+        }
+
+        res.setHeader('x-model-used', groqModel);
+        res.setHeader('x-fallback-used', fallbackUsed ? 'true' : 'false');
+
         if (!response.ok) {
+            const data = await response.json().catch(() => ({ error: 'Upstream error' }));
             console.error('Groq API Error:', data);
             res.status(response.status).json(data);
             return;
         }
 
+        if (wantsStream) {
+            res.setHeader('Content-Type', 'text/event-stream; charset=utf-8');
+            res.setHeader('Cache-Control', 'no-cache, no-transform');
+            res.setHeader('Connection', 'keep-alive');
+            if (typeof res.flushHeaders === 'function') {
+                res.flushHeaders();
+            }
+            if (!response.body) {
+                res.status(502).json({ error: 'Upstream stream unavailable.' });
+                return;
+            }
+            response.body.on('error', (error) => {
+                console.error('Groq stream error:', error);
+                res.end();
+            });
+            res.on('close', () => {
+                response.body.destroy();
+            });
+            response.body.pipe(res);
+            return;
+        }
+
+        const data = await response.json();
+        data.model_used = groqModel;
+        data.fallbackUsed = fallbackUsed;
         res.json(data);
     } catch (error) {
         console.error('Chat route error:', error);

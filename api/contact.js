@@ -1,4 +1,5 @@
 const { processContactSubmission } = require('../lib/contact-delivery');
+const { recordEvent } = require('../lib/analytics-store');
 const { applyCors, applySecurityHeaders, getAllowedOrigins, getClientIp, isBodyTooLarge, parsePositiveInt } = require('../lib/http-utils');
 const { createRateLimiter, setRateLimitHeaders } = require('../lib/rate-limit');
 
@@ -61,6 +62,9 @@ module.exports = async function handler(req, res) {
 
     try {
         const result = await processContactSubmission(req.body);
+        if (result && result.status >= 200 && result.status < 300 && result.response?.success) {
+            recordEvent({ type: 'contact_conversion' });
+        }
         res.status(result.status).json(result.response);
     } catch (error) {
         console.error('Vercel contact route error:', error);

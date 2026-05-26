@@ -10,6 +10,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Lazy-load images to improve performance (keep first 2 eager for LCP)
+    const images = document.querySelectorAll('img:not([loading])');
+    images.forEach((img, index) => {
+        img.loading = index < 2 ? 'eager' : 'lazy';
+    });
+
     // Hamburger Menu Toggle
     const navToggle = document.getElementById('navToggle');
     const navLinks = document.getElementById('navLinks');

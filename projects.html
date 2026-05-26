@@ -278,10 +278,81 @@
                 margin-top: -50px;
             }
         }
+        
+        /* Modal Styles */
+        .project-modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(15px);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+
+        .project-modal-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .project-modal-content {
+            background: #111827;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            transform: translateY(30px) scale(0.95);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            padding: 40px;
+        }
+
+        .project-modal-overlay.active .project-modal-content {
+            transform: translateY(0) scale(1);
+        }
+
+        .modal-close-btn {
+            position: absolute;
+            top: 20px; right: 20px;
+            background: rgba(255,255,255,0.1);
+            border: none;
+            color: #fff;
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.2s ease;
+            font-size: 1.2rem;
+        }
+
+        .modal-close-btn:hover {
+            background: #ef4444;
+            transform: rotate(90deg);
+        }
+
+        .gh-stats-bar {
+            display: flex; gap: 20px; margin-top: 20px;
+            padding: 15px; background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+        }
+        
+        .gh-stat {
+            display: flex; align-items: center; gap: 8px;
+            font-family: 'Fira Code', monospace;
+            color: #38bdf8;
+        }
     </style>
 </head>
 
 <body>
+    <canvas id="global-particles" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: -1;"></canvas>
     <div id="app-frame">
 
         <!-- Navigation -->
@@ -338,6 +409,25 @@
 
         <!-- Dynamic Footer Container -->
         <div id="footer-placeholder"></div>
+    </div>
+
+    <!-- Project Modal -->
+    <div id="projectModal" class="project-modal-overlay">
+        <div class="project-modal-content">
+            <button class="modal-close-btn" id="closeModal"><i class="fas fa-times"></i></button>
+            <h2 id="modalTitle" style="font-family: 'Outfit', sans-serif; font-size: 2.2rem; margin-bottom: 10px; background: linear-gradient(90deg, #0ea5e9, #a5b4fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></h2>
+            <div id="modalTags" class="tech-stack-row" style="margin-bottom: 20px;"></div>
+            
+            <div class="gh-stats-bar" id="modalStats">
+                <div class="gh-stat"><i class="fas fa-circle-notch fa-spin"></i> Fetching live GitHub stats...</div>
+            </div>
+
+            <h3 style="margin-top: 30px; margin-bottom: 15px; color: #fff;">Overview</h3>
+            <p id="modalDesc" style="color: rgba(255,255,255,0.7); line-height: 1.8; font-size: 1.1rem;"></p>
+            
+            <div style="margin-top: 40px; display: flex; gap: 15px; flex-wrap: wrap;" id="modalLinks">
+            </div>
+        </div>
     </div>
 
     <!-- Script -->
@@ -513,6 +603,51 @@
             const grid = document.getElementById('projectsGrid');
             const searchInput = document.getElementById('repoSearch');
             const filterTabs = document.querySelectorAll('.filter-tab');
+            
+            const modal = document.getElementById('projectModal');
+            const closeBtn = document.getElementById('closeModal');
+
+            closeBtn.addEventListener('click', () => modal.classList.remove('active'));
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) modal.classList.remove('active');
+            });
+
+            async function openModal(repoIndex) {
+                const repo = repos[repoIndex];
+                document.getElementById('modalTitle').innerHTML = `<i class="fas ${repo.icon}"></i> ${repo.name}`;
+                document.getElementById('modalDesc').textContent = repo.desc;
+                document.getElementById('modalTags').innerHTML = repo.tech.map(t => `<span class="tech-pill">${t}</span>`).join('');
+                
+                let linksHTML = `<a href="${repo.url}" target="_blank" class="btn-secondary" style="padding: 12px 24px; border-radius: 12px;"><i class="fab fa-github" style="margin-right: 8px;"></i>View Source</a>`;
+                if (repo.liveUrl) {
+                    linksHTML += `<a href="${repo.liveUrl}" target="_blank" class="btn-primary" style="padding: 12px 24px; border-radius: 12px;"><i class="fas fa-external-link-alt" style="margin-right: 8px;"></i>Live Demo</a>`;
+                }
+                document.getElementById('modalLinks').innerHTML = linksHTML;
+
+                modal.classList.add('active');
+
+                // Fetch GitHub Stats dynamically
+                try {
+                    const repoName = repo.url.split('/').pop();
+                    const ghRes = await fetch(`https://api.github.com/repos/vikashsaravanann/${repoName}`);
+                    if (ghRes.ok) {
+                        const ghData = await ghRes.json();
+                        document.getElementById('modalStats').innerHTML = `
+                            <div class="gh-stat" title="Stars"><i class="fas fa-star" style="color: #fbbf24;"></i> ${ghData.stargazers_count}</div>
+                            <div class="gh-stat" title="Forks"><i class="fas fa-code-branch"></i> ${ghData.forks_count}</div>
+                            <div class="gh-stat" title="Watchers"><i class="fas fa-eye"></i> ${ghData.watchers_count}</div>
+                            <div class="gh-stat" title="Last Updated"><i class="fas fa-clock"></i> ${new Date(ghData.pushed_at).toLocaleDateString()}</div>
+                        `;
+                    } else {
+                        document.getElementById('modalStats').innerHTML = `<div class="gh-stat">GitHub stats unavailable</div>`;
+                    }
+                } catch (e) {
+                    document.getElementById('modalStats').innerHTML = `<div class="gh-stat">GitHub stats unavailable</div>`;
+                }
+            }
+
+            // Expose for onClick
+            window.openProjectModal = openModal;
 
             function renderRepos(data) {
                 if (data.length === 0) {
@@ -525,8 +660,10 @@
                     return;
                 }
 
-                grid.innerHTML = data.map((repo, i) => `
-                    <div class="deep-dive-card stagger-in" data-category="${repo.category}" style="animation-delay: ${(i * 0.05) % 1}s; margin-top: 20px; margin-bottom: 20px;">
+                grid.innerHTML = data.map((repo, i) => {
+                    const originalIndex = repos.findIndex(r => r.name === repo.name);
+                    return `
+                    <div class="deep-dive-card stagger-in" data-category="${repo.category}" style="animation-delay: ${(i * 0.05) % 1}s; margin-top: 20px; margin-bottom: 20px; cursor: pointer; transition: transform 0.3s; border: 1px solid rgba(14,165,233,0.1);" onclick="window.openProjectModal(${originalIndex})" onmouseover="this.style.transform='translateY(-5px)'; this.style.borderColor='rgba(14,165,233,0.5)'" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='rgba(14,165,233,0.1)'">
                         <div class="deep-dive-header">
                             <h3><i class="fas ${repo.icon} text-accent"></i> ${repo.name}</h3>
                             <div class="tags">
@@ -538,15 +675,11 @@
                                 <h4><span class="text-accent">Overview:</span> ${repo.desc}</h4>
                             </div>
                             <div class="tech-highlights mt-4">
-                                <h4>Repository Access</h4>
-                                <ul class="highlight-list">
-                                    <li><strong>GitHub Source:</strong> <a href="${repo.url}" target="_blank" style="color: #0ea5e9; text-decoration: none; font-weight: 600;"><i class="fab fa-github"></i> View Repository</a></li>
-                                    ${repo.liveUrl ? `<li><strong>Live Deployment:</strong> <a href="${repo.liveUrl}" target="_blank" style="color: #10b981; text-decoration: none; font-weight: 600;"><i class="fas fa-external-link-alt"></i> View Live Site / API</a></li>` : ''}
-                                </ul>
+                                <span style="color: #0ea5e9; font-size: 0.9rem; font-weight: 600;"><i class="fas fa-search-plus"></i> Click to view details and live stats</span>
                             </div>
                         </div>
                     </div>
-                `).join('');
+                `}).join('');
             }
 
             // Initial render
@@ -579,6 +712,7 @@
             });
         });
     </script>
+    <script src="particles.js"></script>
 </body>
 
 </html>
