@@ -69,18 +69,8 @@ class ParticleNetwork {
                 
                 if (distance < (this.canvas.width / 6) * (this.canvas.height / 6)) {
                     opacityValue = 1 - (distance / 20000);
-                    
-                    // Draw main connection line
-                    this.ctx.strokeStyle = `rgba(14, 165, 233, ${opacityValue * 0.4})`;
-                    this.ctx.lineWidth = 1.5;
-                    this.ctx.beginPath();
-                    this.ctx.moveTo(this.particles[a].x, this.particles[a].y);
-                    this.ctx.lineTo(this.particles[b].x, this.particles[b].y);
-                    this.ctx.stroke();
-                    
-                    // Draw glow effect
-                    this.ctx.strokeStyle = `rgba(14, 165, 233, ${opacityValue * 0.15})`;
-                    this.ctx.lineWidth = 3;
+                    this.ctx.strokeStyle = `rgba(14, 165, 233, ${opacityValue * 0.2})`;
+                    this.ctx.lineWidth = 1;
                     this.ctx.beginPath();
                     this.ctx.moveTo(this.particles[a].x, this.particles[a].y);
                     this.ctx.lineTo(this.particles[b].x, this.particles[b].y);
