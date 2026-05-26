@@ -34,17 +34,6 @@
     --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Light Mode Variables */
-body.light-mode {
-    --bg-light: #f8fafc;
-    --bg-card: rgba(0, 0, 0, 0.03);
-    --bg-card-hover: rgba(0, 0, 0, 0.05);
-    --text-primary: #0f172a;
-    --text-secondary: #475569;
-    --glass-border: 1px solid rgba(0, 0, 0, 0.08);
-    --glass-shadow: 0 16px 40px 0 rgba(0, 0, 0, 0.04);
-}
-
 /* ===============
    Reset & Base
    =============== */
@@ -205,10 +194,6 @@ ul {
     -webkit-backdrop-filter: blur(5px);
     border-bottom: var(--glass-border);
     transition: var(--transition);
-}
-
-body.light-mode .navbar {
-    background: rgba(255, 255, 255, 0.85);
 }
 
 .navbar.scrolled {
