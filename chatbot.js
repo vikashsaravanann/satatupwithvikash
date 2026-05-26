@@ -14,7 +14,7 @@
   /* ═══════════════════════════════════════════
      CONFIGURATION
      ═══════════════════════════════════════════ */
-  const XAI_MODEL = 'grok-2-1212';
+  const GROQ_MODEL = 'llama3-70b-8192';
   const API_URL = '/api/chat';
   const PRODUCTION_API_URL = 'https://portfolio-information.vercel.app';
   const LOCAL_API_URL = 'http://localhost:3000/api/chat';
@@ -329,7 +329,7 @@ If asked something unrelated to Vikash, politely say: "I'm focused on helping yo
     }).catch((err) => {
       console.error('Chat error:', err);
       typingEl.remove();
-      addMessage("Sorry, I'm having trouble connecting to Grok AI. 📧 vikash07052008@gmail.com", 'bot', false);
+      addMessage("Sorry, I'm having trouble connecting to the AI. 📧 vikash07052008@gmail.com", 'bot', false);
     }).finally(() => {
       inputEl.disabled = false;
       sendBtn.disabled = false;
@@ -657,7 +657,8 @@ If asked something unrelated to Vikash, politely say: "I'm focused on helping yo
       ...relevantHistory
     ];
 
-    const body = { model: XAI_MODEL, messages };
+    const body = { model: GROQ_MODEL, messages };
+
 
     let url = API_URL;
     let isLocal = false;
@@ -728,5 +729,8 @@ If asked something unrelated to Vikash, politely say: "I'm focused on helping yo
            data.message ||
            "I'm not sure how to answer that.";
   }
+
+})();
+
 
 })();
