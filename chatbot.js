@@ -100,7 +100,7 @@ If asked something unrelated to Vikash, politely say: "I'm focused on helping yo
      STATE MANAGEMENT & LOCAL STORAGE
      ═══════════════════════════════════════════ */
   let conversationHistory = [];
-  const CHAT_VERSION = '1.3'; 
+  const CHAT_VERSION = '1.3.1'; 
   let rememberHistory = true;
 
   try {
