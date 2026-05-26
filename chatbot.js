@@ -360,18 +360,15 @@ If asked something unrelated to Vikash, politely say: "I'm focused on helping yo
 
   // Siri-style female voice priority list (highest priority first)
   const PREFERRED_VOICES = [
-    'samantha',          // macOS/iOS Siri female
-    'siri',             // Siri variants
-    'zarvox',           // macOS
-    'victoria',         // macOS
-    'karen',            // macOS Australian
-    'tessa',            // macOS South African
-    'fiona',            // macOS UK
-    'moira',            // macOS Irish
-    'google us english', // Chrome high-quality
+    'samantha',          // macOS Siri
+    'siri',              // Mobile Siri
+    'google us english', // Chrome High-res
     'google uk english female',
-    'microsoft zira',    // Windows
+    'microsoft zira',    // Windows 10/11
     'microsoft hazel',   // Windows UK
+    'victoria',          // macOS Natural
+    'alice',             // Italy/Intl
+    'heather',
     'female',
   ];
 
@@ -379,17 +376,18 @@ If asked something unrelated to Vikash, politely say: "I'm focused on helping yo
     const voices = window.speechSynthesis.getVoices();
     if (!voices.length) return null;
 
-    // Try each preferred voice name in priority order
     for (const preferred of PREFERRED_VOICES) {
       const match = voices.find(v => {
         const name = v.name.toLowerCase();
-        const lang = v.lang.toLowerCase();
-        return lang.startsWith('en') && name.includes(preferred);
+        return name.includes(preferred);
       });
       if (match) return match;
     }
 
-    // Fallback: any English voice
+    // Best effort: look for any voice with "female" in the name
+    const anyFemale = voices.find(v => v.name.toLowerCase().includes('female'));
+    if (anyFemale) return anyFemale;
+
     return voices.find(v => v.lang.startsWith('en')) || voices[0];
   }
 
