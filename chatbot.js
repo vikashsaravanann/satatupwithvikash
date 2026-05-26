@@ -202,7 +202,12 @@ If asked something unrelated to Vikash, politely say: "I'm focused on helping yo
     } else {
       if (chipsEl) chipsEl.style.display = 'flex';
       const greeting = getDynamicGreeting();
-      addMessage(greeting, 'bot', false);
+      const msgWrap = addMessage(greeting, 'bot', false);
+      const soundBtn = msgWrap.querySelector('.chat-sound-btn');
+      if (soundBtn) {
+        // We wait for a small delay to ensure voices are loaded
+        setTimeout(() => speakMessage(greeting, soundBtn), 1000);
+      }
     }
   }
 
@@ -729,8 +734,5 @@ If asked something unrelated to Vikash, politely say: "I'm focused on helping yo
            data.message ||
            "I'm not sure how to answer that.";
   }
-
-})();
-
 
 })();
