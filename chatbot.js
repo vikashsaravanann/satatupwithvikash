@@ -433,26 +433,25 @@ If asked something unrelated to Vikash, politely say: "I'm focused on helping yo
       streamedText += delta;
       streamTarget.bubble.textContent = streamedText;
       messagesEl.scrollTop = messagesEl.scrollHeight;
-    }).then(({ content, meta }) => {
+    }).then(({ content }) => {
       const reply = streamedText || content;
       if (streamTarget) {
         finalizeStreamingMessage(streamTarget, reply);
       } else {
         typingEl.remove();
-        // Print message with smooth typing animation
         addMessage(reply, 'bot', true);
       }
       conversationHistory.push({ role: 'assistant', content: reply });
       saveHistory();
-      updateFallbackBadge(meta?.fallbackUsed, meta?.modelUsed);
-      trackEvent('chat_response', {
-        length: reply.length,
-        model: meta?.modelUsed || DEFAULT_MODEL,
-        fallbackUsed: !!meta?.fallbackUsed
-      });
-    }).catch(() => {
+      trackEvent('chat_response', { length: reply.length });
+    }).catch((err) => {
+      console.error('Chat error:', err);
       typingEl.remove();
-      addMessage("Sorry, I'm having trouble connecting right now. Reach Vikash directly at vikash07052008@gmail.com 📧", 'bot', false);
+      const errorMsg = err.message || "Unknown error";
+      const userFriendlyMsg = errorMsg.includes('401') 
+        ? "API Key Error: Grok AI returned 401. Please check XAI_API_KEY." 
+        : "Sorry, I'm having trouble connecting to Grok AI. 📧 vikash07052008@gmail.com";
+      addMessage(userFriendlyMsg, 'bot', false);
     }).finally(() => {
       inputEl.disabled = false;
       sendBtn.disabled = false;
@@ -976,6 +975,21 @@ If asked something unrelated to Vikash, politely say: "I'm focused on helping yo
 })();
     data.message ||
            "I'm not sure how to answer that.";
+  }
+
+})();
+
+
+})();
+";
+  }
+
+})();
+t.";
+  }
+
+})();
+ that.";
   }
 
 })();
