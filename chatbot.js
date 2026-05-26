@@ -5,8 +5,9 @@
 (function () {
   'use strict';
 
-  const DEFAULT_MODEL = 'grok-4.3';
+  const DEFAULT_MODEL = 'grok-2-1212';
   const API_URL = '/api/chat';
+
   const PRODUCTION_API_URL = 'https://portfolio-information.vercel.app';
   const LOCAL_API_BASE = 'http://localhost:3000';
   const MAX_USER_CHARS = 800;
