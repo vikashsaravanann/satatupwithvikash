@@ -25,25 +25,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Theme Toggle Logic
-    const themeToggle = document.getElementById('theme-toggle');
-    const currentTheme = localStorage.getItem('portfolio-theme');
-
-    if (currentTheme === 'light') {
-        document.body.classList.add('light-mode');
-    }
-
-    if (themeToggle) {
-        themeToggle.addEventListener('click', () => {
-            document.body.classList.toggle('light-mode');
-            let theme = 'dark';
-            if (document.body.classList.contains('light-mode')) {
-                theme = 'light';
-            }
-            localStorage.setItem('portfolio-theme', theme);
-        });
-    }
-
 
 
     // Project Filtering

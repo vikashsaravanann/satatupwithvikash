@@ -216,150 +216,6 @@ body.light-mode .navbar {
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
 }
 
-.theme-toggle {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: var(--text-primary);
-    width: 40px;
-    height: 40px;
-    border-radius: 10px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.1rem;
-    transition: var(--transition);
-}
-
-.theme-toggle:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: var(--accent);
-    color: var(--accent);
-    transform: translateY(-2px);
-}
-
-body.light-mode .theme-toggle {
-    background: rgba(0, 0, 0, 0.05);
-    border-color: rgba(0, 0, 0, 0.1);
-    color: var(--text-primary);
-}
-
-body.light-mode .theme-toggle:hover {
-    background: rgba(0, 0, 0, 0.1);
-    border-color: var(--accent);
-}
-
-body.light-mode .theme-toggle i::before {
-    content: "\f185"; /* sun icon */
-}
-
-/* Light Mode Overrides */
-body.light-mode h1,
-body.light-mode h2,
-body.light-mode h3,
-body.light-mode h4,
-body.light-mode h5,
-body.light-mode h6,
-body.light-mode p,
-body.light-mode span,
-body.light-mode .detail-line span,
-body.light-mode .stat-title,
-body.light-mode .stat-desc,
-body.light-mode .box-title,
-body.light-mode .box-value,
-body.light-mode .gh-stat-label,
-body.light-mode .gh-repo-card p,
-body.light-mode .footer-widget p,
-body.light-mode .summary-text,
-body.light-mode .availability-badge .avail-text {
-    color: var(--text-primary) !important;
-}
-
-body.light-mode .text-secondary {
-    color: var(--text-secondary) !important;
-}
-
-body.light-mode .bento-card,
-body.light-mode .hero-stat-box,
-body.light-mode .floating-box-static,
-body.light-mode .cert-badge-card,
-body.light-mode .summary-box,
-body.light-mode .widget-card,
-body.light-mode .gh-stat-card,
-body.light-mode .blog-card,
-body.light-mode .footer-widget,
-body.light-mode .msg-bubble {
-    background: var(--bg-card) !important;
-    border-color: var(--glass-border) !important;
-}
-
-body.light-mode .cert-badge-card:hover,
-body.light-mode .widget-card:hover,
-body.light-mode .gh-repo-card:hover,
-body.light-mode .blog-card:hover {
-    background: var(--bg-card-hover) !important;
-    border-color: var(--accent) !important;
-}
-
-/* Specific Component Refinements for Light Mode */
-body.light-mode .hero-bento-dashboard .bento-card,
-body.light-mode .hero-stat-box,
-body.light-mode .floating-box-static,
-body.light-mode .deep-dive-card,
-body.light-mode .skill-card,
-body.light-mode .gh-stat-card,
-body.light-mode .blog-card,
-body.light-mode .pro-contact-form,
-body.light-mode .footer-widget,
-body.light-mode .widget-card,
-body.light-mode #ai-chat-panel {
-    background: rgba(255, 255, 255, 0.7) !important;
-    border: 1px solid rgba(0, 0, 0, 0.08) !important;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05) !important;
-    backdrop-filter: blur(10px);
-}
-
-body.light-mode .deep-dive-header {
-    background: rgba(0, 0, 0, 0.02) !important;
-    border-bottom-color: rgba(0, 0, 0, 0.05) !important;
-}
-
-body.light-mode .chat-header {
-    background: linear-gradient(135deg, rgba(14, 165, 233, 0.1), rgba(99, 102, 241, 0.05)) !important;
-}
-
-body.light-mode .chat-msg.bot .msg-bubble {
-    background: rgba(0, 0, 0, 0.04) !important;
-}
-
-body.light-mode .chat-input-wrap {
-    background: rgba(0, 0, 0, 0.02) !important;
-}
-
-body.light-mode .chat-input-wrap input {
-    color: var(--text-primary) !important;
-}
-
-body.light-mode .chat-input-wrap input::placeholder {
-    color: var(--text-secondary) !important;
-}
-
-body.light-mode .availability-badge {
-    background: rgba(0, 0, 0, 0.03) !important;
-    border: 1px solid rgba(0, 0, 0, 0.08) !important;
-}
-
-body.light-mode .avail-dot {
-    box-shadow: 0 0 10px rgba(16, 185, 129, 0.4);
-}
-
-body.light-mode .highlight {
-    background: linear-gradient(90deg, #0284c7, #4f46e5, #0284c7);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
 .nav-content {
     display: flex;
     justify-content: space-between;
@@ -3266,6 +3122,115 @@ section {
 }
 
 @media (max-width: 992px) {
+    .lightbox-prev { left: 20px; }
+    .lightbox-next { right: 20px; }
+    .lightbox-close { top: 20px; right: 20px; }
+}
+
+/* ==============================
+   PROJECT FILTERS
+   ============================== */
+.filter-btn {
+    padding: 10px 20px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+.filter-btn:hover { border-color: var(--accent); color: #fff; }
+.filter-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); box-shadow: 0 4px 15px rgba(14, 165, 233, 0.3); }
+
+/* = [MODIFY] 3D FLIP ON HOVER ] = */
+.deep-dive-card {
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s;
+}
+.deep-dive-card.hidden { display: none; opacity: 0; transform: scale(0.9); }
+
+/* ==============================
+   TESTIMONIALS CAROUSEL
+   ============================== */
+.testimonial-carousel {
+    overflow: hidden;
+    position: relative;
+    max-width: 900px;
+    margin: 40px auto 0;
+}
+.testimonial-track {
+    display: flex;
+    gap: 30px;
+    animation: scrollTestimonials 40s linear infinite;
+}
+.testimonial-track:hover { animation-play-state: paused; }
+@keyframes scrollTestimonials {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+.testimonial-card {
+    min-width: 400px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    padding: 30px;
+    border-radius: 20px;
+    backdrop-filter: blur(8px);
+}
+.testimonial-header { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; }
+.testimonial-header img { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; border: 2px solid var(--accent); }
+.testimonial-header h4 { font-size: 1rem; color: #fff; margin: 0; }
+.testimonial-header span { font-size: 0.8rem; color: var(--accent); }
+.testimonial-card p { font-size: 0.92rem; font-style: italic; color: var(--text-secondary); line-height: 1.6; }
+
+/* ==============================
+   BLOG SECTION
+   ============================== */
+.blog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 30px;
+    margin-top: 50px;
+}
+.blog-card {
+    background: var(--bg-card);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 24px;
+    overflow: hidden;
+    transition: var(--transition);
+}
+.blog-card:hover { transform: translateY(-10px); border-color: var(--accent); }
+.blog-thumb { height: 220px; overflow: hidden; }
+.blog-thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+.blog-card:hover .blog-thumb img { transform: scale(1.1); }
+.blog-content { padding: 30px; }
+.blog-date { font-size: 0.8rem; color: var(--accent); font-weight: 600; }
+.blog-content h3 { font-size: 1.4rem; margin: 15px 0; color: #fff; }
+.blog-content p { color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 20px; }
+.blog-link { font-size: 0.9rem; font-weight: 700; color: var(--accent); text-decoration: none; display: flex; align-items: center; gap: 8px; }
+
+
+
+
+/* ==============================
+   PROJECT CARD 3D TILT REFINED
+   ============================== */
+.deep-dive-card:hover {
+    transform: perspective(1000px) rotateX(2deg) rotateY(-2deg) translateY(-10px) translateZ(10px);
+    border-color: rgba(14, 165, 233, 0.5);
+    box-shadow: 0 30px 60px rgba(0,0,0,0.6), 0 0 20px rgba(14, 165, 233, 0.1);
+}
+
+/* ==============================
+   ACTIVE NAV LINK
+   ============================== */
+.nav-links a.active {
+    color: var(--accent);
+    text-shadow: 0 0 10px rgba(14, 165, 233, 0.4);
+}
+.nav-links a.active::after {
+    width: 100%;
+}idth: 992px) {
     .lightbox-prev { left: 20px; }
     .lightbox-next { right: 20px; }
     .lightbox-close { top: 20px; right: 20px; }
