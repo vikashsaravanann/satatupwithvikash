@@ -991,6 +991,56 @@ section {
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
+.footer-link-v2 {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    font-family: var(--font-body);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.3s ease;
+}
+
+.footer-link-v2:hover {
+    color: #fff;
+    background: rgba(14, 165, 233, 0.1);
+    border-color: var(--accent);
+    transform: translateX(3px);
+}
+
+.footer-link-v2 i {
+    color: var(--accent);
+    font-size: 0.85rem;
+    width: 16px;
+    text-align: center;
+}
+
+.social-icon-box {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+}
+
+.social-icon-box:hover {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px var(--accent-glow);
+}
+
 .highlight-widget {
     background: rgba(135, 206, 235, 0.05);
     border: 1px solid rgba(135, 206, 235, 0.2);
