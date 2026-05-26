@@ -100,7 +100,7 @@ If asked something unrelated to Vikash, politely say: "I'm focused on helping yo
      STATE MANAGEMENT & LOCAL STORAGE
      ═══════════════════════════════════════════ */
   let conversationHistory = [];
-  const CHAT_VERSION = '1.2'; // Update this to clear old cached conversations
+  const CHAT_VERSION = '1.3'; 
   let rememberHistory = true;
 
   try {
@@ -132,8 +132,6 @@ If asked something unrelated to Vikash, politely say: "I'm focused on helping yo
   const memoryToggle = document.getElementById('ai-chat-memory');
   const exportBtn    = document.getElementById('ai-chat-export');
   const messagesEl  = document.getElementById('chatMessages');
-  const modelSelect = document.getElementById('modelSelect');
-  const fallbackBadge = document.getElementById('modelFallbackBadge');
   const inputEl     = document.getElementById('chatInput');
   const sendBtn     = document.getElementById('chatSend');
   const chipsEl    = document.getElementById('chatChips');
@@ -141,18 +139,6 @@ If asked something unrelated to Vikash, politely say: "I'm focused on helping yo
   const waveformEl = document.getElementById('chatWaveform');
 
   if (!toggle || !panel) return;
-
-  // Load preferred model from localStorage
-  if (modelSelect) {
-    const savedModel = localStorage.getItem(STORAGE_KEYS.model);
-    if (savedModel) {
-      modelSelect.value = savedModel;
-    }
-    modelSelect.addEventListener('change', () => {
-      localStorage.setItem(STORAGE_KEYS.model, modelSelect.value);
-      trackEvent('model_change', { model: modelSelect.value });
-    });
-  }
 
   function updateMemoryToggle() {
     if (!memoryToggle) return;
@@ -164,7 +150,6 @@ If asked something unrelated to Vikash, politely say: "I'm focused on helping yo
   }
 
   updateMemoryToggle();
-  updateFallbackBadge(false);
 
   if (memoryToggle) {
     memoryToggle.addEventListener('click', () => {
@@ -191,7 +176,6 @@ If asked something unrelated to Vikash, politely say: "I'm focused on helping yo
       }
       const payload = {
         exportedAt: new Date().toISOString(),
-        model: modelSelect?.value || DEFAULT_MODEL,
         history: conversationHistory
       };
       const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
@@ -247,7 +231,6 @@ If asked something unrelated to Vikash, politely say: "I'm focused on helping yo
       if (micBtn.classList.contains('listening')) {
         try { recognition.stop(); } catch(err) {}
       } else {
-        // Stop any text-to-speech playing
         if (window.speechSynthesis) {
             try { window.speechSynthesis.cancel(); } catch(err) {}
         }
@@ -256,7 +239,6 @@ If asked something unrelated to Vikash, politely say: "I'm focused on helping yo
       }
     });
   } else {
-    // Hide mic button if SpeechRecognition is not supported in browser
     if (micBtn) micBtn.style.display = 'none';
   }
 
@@ -297,7 +279,6 @@ If asked something unrelated to Vikash, politely say: "I'm focused on helping yo
     resetBtn.addEventListener('click', (e) => {
       e.preventDefault();
       if (confirm('Clear entire conversation history?')) {
-        // Cancel voice
         if (window.speechSynthesis) {
             try { window.speechSynthesis.cancel(); } catch(err) {}
         }
@@ -307,7 +288,6 @@ If asked something unrelated to Vikash, politely say: "I'm focused on helping yo
             try { recognition.stop(); } catch(err) {}
         }
 
-        // Clear local storage and state
         try {
             localStorage.removeItem(STORAGE_KEYS.history);
         } catch(err) {
@@ -378,7 +358,6 @@ If asked something unrelated to Vikash, politely say: "I'm focused on helping yo
         e.preventDefault();
         const msg = chip.getAttribute('data-msg');
         if (msg) {
-          trackEvent('quick_chip', { label: msg });
           triggerSend(msg);
         }
       });
@@ -405,45 +384,24 @@ If asked something unrelated to Vikash, politely say: "I'm focused on helping yo
       addMessage('Please remove unsupported control characters and try again.', 'bot', false);
       return;
     }
-    updateFallbackBadge(false);
     inputEl.value = '';
     inputEl.disabled = true;
     sendBtn.disabled = true;
-    if (micBtn) micBtn.disabled = true; // Disable mic while bot is responding
+    if (micBtn) micBtn.disabled = true;
 
-    // Add user message to UI and history
     addMessage(text, 'user', false);
     conversationHistory.push({ role: 'user', content: text });
     saveHistory();
-    trackEvent('chat_message', { length: text.length, model: modelSelect?.value || DEFAULT_MODEL });
 
-    // Hide chips container once chat starts
     if (chipsEl) chipsEl.style.display = 'none';
 
-    // Show typing dots
     const typingEl = addTyping();
-    let streamTarget = null;
-    let streamedText = '';
 
-    callBridge((delta) => {
-      if (!streamTarget) {
-        typingEl.remove();
-        streamTarget = createMessageShell('assistant');
-      }
-      streamedText += delta;
-      streamTarget.bubble.textContent = streamedText;
-      messagesEl.scrollTop = messagesEl.scrollHeight;
-    }).then(({ content }) => {
-      const reply = streamedText || content;
-      if (streamTarget) {
-        finalizeStreamingMessage(streamTarget, reply);
-      } else {
-        typingEl.remove();
-        addMessage(reply, 'bot', true);
-      }
-      conversationHistory.push({ role: 'assistant', content: reply });
+    callBridge().then(({ content }) => {
+      typingEl.remove();
+      addMessage(content, 'bot', true);
+      conversationHistory.push({ role: 'assistant', content });
       saveHistory();
-      trackEvent('chat_response', { length: reply.length });
     }).catch((err) => {
       console.error('Chat error:', err);
       typingEl.remove();
@@ -455,7 +413,7 @@ If asked something unrelated to Vikash, politely say: "I'm focused on helping yo
     }).finally(() => {
       inputEl.disabled = false;
       sendBtn.disabled = false;
-      if (micBtn) micBtn.disabled = false; // Re-enable mic when bot is done
+      if (micBtn) micBtn.disabled = false;
       inputEl.focus();
     });
   }
@@ -472,32 +430,12 @@ If asked something unrelated to Vikash, politely say: "I'm focused on helping yo
   /* ═══════════════════════════════════════════
      TEXT TO SPEECH (VOICE RESPONSES & SIRI SYNC)
      ═══════════════════════════════════════════ */
-
-  // Pre-load and cache the best available female voice
   let cachedFemaleVoice = null;
-
-  // Siri-style female voice priority list (highest priority first)
-  const PREFERRED_VOICES = [
-    'samantha',          // macOS/iOS Siri female
-    'siri',             // Siri variants
-    'zarvox',           // macOS
-    'victoria',         // macOS
-    'karen',            // macOS Australian
-    'tessa',            // macOS South African
-    'fiona',            // macOS UK
-    'moira',            // macOS Irish
-    'google us english', // Chrome high-quality
-    'google uk english female',
-    'microsoft zira',    // Windows
-    'microsoft hazel',   // Windows UK
-    'female',
-  ];
+  const PREFERRED_VOICES = ['samantha', 'siri', 'zarvox', 'victoria', 'google us english', 'microsoft zira'];
 
   function selectBestFemaleVoice() {
     const voices = window.speechSynthesis.getVoices();
     if (!voices.length) return null;
-
-    // Try each preferred voice name in priority order
     for (const preferred of PREFERRED_VOICES) {
       const match = voices.find(v => {
         const name = v.name.toLowerCase();
@@ -506,20 +444,13 @@ If asked something unrelated to Vikash, politely say: "I'm focused on helping yo
       });
       if (match) return match;
     }
-
-    // Fallback: any English voice
     return voices.find(v => v.lang.startsWith('en')) || voices[0];
   }
 
-  // Load voices as soon as they become available
   function loadVoices() {
     cachedFemaleVoice = selectBestFemaleVoice();
-    if (cachedFemaleVoice) {
-      console.log('🎙️ AI Voice selected:', cachedFemaleVoice.name, `(${cachedFemaleVoice.lang})`);
-    }
   }
 
-  // Voices load asynchronously — listen for the event
   if (window.speechSynthesis) {
     loadVoices();
     window.speechSynthesis.onvoiceschanged = loadVoices;
@@ -527,8 +458,6 @@ If asked something unrelated to Vikash, politely say: "I'm focused on helping yo
 
   function speakMessage(text, buttonElement) {
     if (!window.speechSynthesis) return;
-
-    // If currently speaking the SAME text, stop it
     if (window.speechSynthesis.speaking && currentUtterance && currentUtterance.text === text) {
       window.speechSynthesis.cancel();
       buttonElement.innerHTML = '<i class="fas fa-volume-up"></i> Speak';
@@ -536,50 +465,27 @@ If asked something unrelated to Vikash, politely say: "I'm focused on helping yo
       if (waveformEl) waveformEl.classList.remove('active');
       return;
     }
-
-    // Cancel any current speech
     window.speechSynthesis.cancel();
-    document.querySelectorAll('.chat-sound-btn').forEach(btn => {
-      btn.innerHTML = '<i class="fas fa-volume-up"></i> Speak';
-      btn.classList.remove('speaking');
-    });
-
-    // Clean emojis & formatting links out of speech text for better pronunciation
     const cleanText = text.replace(/[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2011-\u26FF]|\uD83E[\uDD10-\uDDFF]/g, '')
                           .replace(/\[([^\]]+)\]\([^\)]+\)/g, '$1');
 
     const utterance = new SpeechSynthesisUtterance(cleanText);
     currentUtterance = utterance;
-
-    // Set the cached Siri-style female voice
-    if (!cachedFemaleVoice) loadVoices(); // retry if not loaded yet
-    if (cachedFemaleVoice) {
-      utterance.voice = cachedFemaleVoice;
-    }
-
-    // Tune for clear, natural female Siri-style delivery
-    utterance.pitch = 1.15;   // Slightly higher pitch for feminine clarity
-    utterance.rate = 0.95;    // Slightly slower for professional clarity
-    utterance.volume = 1.0;
+    if (!cachedFemaleVoice) loadVoices();
+    if (cachedFemaleVoice) utterance.voice = cachedFemaleVoice;
+    utterance.pitch = 1.15;
+    utterance.rate = 0.95;
 
     utterance.onstart = () => {
       buttonElement.innerHTML = '<i class="fas fa-volume-mute"></i> Mute';
       buttonElement.classList.add('speaking');
-      if (waveformEl) waveformEl.classList.add('active'); // Activate glowing audio waveform
+      if (waveformEl) waveformEl.classList.add('active');
     };
-
     utterance.onend = () => {
-      buttonElement.innerHTML = '<i class="fas fa-volume-up"></i> Speak';
-      buttonElement.classList.remove('speaking');
-      if (waveformEl) waveformEl.classList.remove('active'); // Disable waveform
-    };
-
-    utterance.onerror = () => {
       buttonElement.innerHTML = '<i class="fas fa-volume-up"></i> Speak';
       buttonElement.classList.remove('speaking');
       if (waveformEl) waveformEl.classList.remove('active');
     };
-
     window.speechSynthesis.speak(utterance);
   }
 
@@ -589,220 +495,69 @@ If asked something unrelated to Vikash, politely say: "I'm focused on helping yo
   function getRichCardElement(text) {
     const lower = text.toLowerCase();
     const container = document.createElement('div');
-
     if (lower.includes('hearwise')) {
       container.className = 'chat-rich-card';
-      container.innerHTML = `
-        <h4>🚀 HearWise Platform</h4>
-        <p>AI-powered hearing screening & interactive gamified ocean platform designed for children.</p>
-        <a href="index.html#hearwise" class="chat-rich-btn"><i class="fas fa-external-link-alt"></i> View Project details</a>
-      `;
+      container.innerHTML = `<h4>🚀 HearWise</h4><p>AI-powered hearing screening.</p><a href="index.html#hearwise" class="chat-rich-btn">Details</a>`;
       return container;
     }
-    if (lower.includes('certifications') || lower.includes('certification') || lower.includes('certs')) {
+    if (lower.includes('contact')) {
       container.className = 'chat-rich-card';
-      container.innerHTML = `
-        <h4>🏆 Certificates Gallery</h4>
-        <p>Explore Vikash's 15+ verified certifications in AI, Data Science & Networks.</p>
-        <a href="certifications.html" class="chat-rich-btn"><i class="fas fa-award"></i> Open Gallery</a>
-      `;
-      return container;
-    }
-    if (lower.includes('contact') || lower.includes('email') || lower.includes('hire') || lower.includes('phone')) {
-      container.className = 'chat-rich-card';
-      container.innerHTML = `
-        <h4 style="font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 1.25rem;">📩 Quick Contact</h4>
-        <p style="font-family: 'Inter', sans-serif; font-weight: 600; font-size: 0.95rem; color: rgba(255, 255, 255, 0.9); line-height: 1.5; margin-bottom: 16px;">
-          Hi, I am Vikash! If you have an opportunity or want to collaborate, fill out this form to contact me directly via WhatsApp, SMS, and Email.
-        </p>
-        <form class="chat-contact-form">
-          <input type="text" class="chat-form-input chat-form-name" placeholder="Full Name" required>
-          <input type="email" class="chat-form-input chat-form-email" placeholder="Email Address" required>
-          <input type="text" class="chat-form-input chat-form-subject" placeholder="Subject (e.g. Internship)" required>
-          <textarea class="chat-form-textarea chat-form-msg" placeholder="Describe your inquiry..." required></textarea>
-          <button type="submit" class="chat-form-submit"><i class="fas fa-paper-plane" style="margin-right:6px;"></i>Send Message</button>
-        </form>
-      `;
-
-      // Bind the form action logic
-      const form = container.querySelector('.chat-contact-form');
-      form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const submitBtn = form.querySelector('.chat-form-submit');
-        const name = form.querySelector('.chat-form-name').value;
-        const email = form.querySelector('.chat-form-email').value;
-        const subject = form.querySelector('.chat-form-subject').value;
-        const msg = form.querySelector('.chat-form-msg').value;
-
-        submitBtn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Sending...';
-        submitBtn.disabled = true;
-
-        const messageBody = `Hi Vikash,\n\nNew inquiry via AI Chatbot.\n\nName: ${name}\nEmail: ${email}\nSubject: ${subject}\n\nMessage:\n${msg}`;
-
-        try {
-            const url = resolveApiUrl(CONTACT_URL);
-            const response = await fetch(url, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name, email, subject, message: messageBody })
-            });
-
-            const data = await response.json();
-
-            if (response.ok && data.success) {
-                form.reset();
-                submitBtn.innerHTML = '<i class="fas fa-check-circle"></i> Sent!';
-                addMessage("Your message has been successfully delivered to Vikash! 🚀✅", 'bot', false);
-            } else {
-                throw new Error(data.error || 'Failed to send message');
-            }
-        } catch (err) {
-            console.warn('API delivery failed:', err);
-            submitBtn.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Failed';
-            addMessage("Delivery failed. I've opened your mail app to complete the email manually. 📧", 'bot', false);
-            setTimeout(() => {
-                window.location.href = `mailto:vikash07052008@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(messageBody)}`;
-            }, 800);
-        }
-
-        setTimeout(() => {
-            submitBtn.innerHTML = '<i class="fas fa-paper-plane" style="margin-right:6px;"></i>Send Message';
-            submitBtn.disabled = false;
-        }, 4000);
-      });
-
+      container.innerHTML = `<h4>📩 Contact</h4><form class="chat-contact-form"><input type="text" class="chat-form-input chat-form-name" placeholder="Name" required><input type="email" class="chat-form-input chat-form-email" placeholder="Email" required><textarea class="chat-form-textarea chat-form-msg" placeholder="Message" required></textarea><button type="submit" class="chat-form-submit">Send</button></form>`;
       return container;
     }
     return null;
   }
 
-  /* ═══════════════════════════════════════════
-     DOM CREATION HELPERS
-     ═══════════════════════════════════════════ */
-  /* ═══════════════════════════════════════════
-     MARKDOWN TO HTML PARSER
-     Converts **bold**, [link](url), and \n to styled HTML
-     ═══════════════════════════════════════════ */
   function parseMarkdown(text) {
-    // First, extract code blocks to avoid them being messed up by other formatting
-    const codeBlocks = [];
-    text = text.replace(/```([\s\S]*?)```/g, (match, code) => {
-        const id = `__CODE_BLOCK_${codeBlocks.length}__`;
-        // Escape HTML tags in code
-        const safeCode = code.replace(/</g, '&lt;').replace(/>/g, '&gt;').trim();
-        codeBlocks.push(`<pre style="background: #1f2937; color: #e5e7eb; padding: 12px; border-radius: 8px; overflow-x: auto; font-family: 'Fira Code', monospace; margin: 10px 0; border: 1px solid #374151;"><code>${safeCode}</code></pre>`);
-        return id;
-    });
-
-    // Extract inline code
-    const inlineCodes = [];
-    text = text.replace(/`([^`]+)`/g, (match, code) => {
-        const id = `__INLINE_CODE_${inlineCodes.length}__`;
-        const safeCode = code.replace(/</g, '&lt;').replace(/>/g, '&gt;');
-        inlineCodes.push(`<code style="background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 4px; font-family: 'Fira Code', monospace; color: #60a5fa;">${safeCode}</code>`);
-        return id;
-    });
-
-    text = text
-      // Bold: **text**
+    return text
       .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-      // Italic: *text*
-      .replace(/\*(.+?)\*/g, '<em>$1</em>')
-      // Links: [label](url)
-      .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="chat-link">$1 <i class="fas fa-external-link-alt" style="font-size:0.65rem;"></i></a>')
-      // Newlines
+      .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" class="chat-link">$1</a>')
       .replace(/\n/g, '<br>');
-
-    // Re-insert inline code
-    inlineCodes.forEach((html, index) => {
-        text = text.replace(`__INLINE_CODE_${index}__`, html);
-    });
-
-    // Re-insert code blocks
-    codeBlocks.forEach((html, index) => {
-        text = text.replace(`__CODE_BLOCK_${index}__`, html);
-    });
-
-    return text;
   }
 
   function createMessageShell(role) {
     const uiRole = role === 'assistant' ? 'bot' : role;
     const wrap = document.createElement('div');
     wrap.className = `chat-msg ${uiRole}`;
-
     const wrapper = document.createElement('div');
     wrapper.className = 'msg-wrapper';
-
     const bubble = document.createElement('div');
     bubble.className = 'msg-bubble';
-
     wrapper.appendChild(bubble);
     wrap.appendChild(wrapper);
     messagesEl.appendChild(wrap);
-
-    let soundBtn = null;
     if (uiRole === 'bot') {
-      soundBtn = document.createElement('button');
+      const soundBtn = document.createElement('button');
       soundBtn.className = 'chat-sound-btn';
-      soundBtn.setAttribute('title', 'Read aloud');
       soundBtn.innerHTML = '<i class="fas fa-volume-up"></i><span>Speak</span>';
       wrapper.appendChild(soundBtn);
     }
-
     messagesEl.scrollTop = messagesEl.scrollHeight;
-
-    return { wrap, wrapper, bubble, soundBtn, uiRole };
+    return { wrap, wrapper, bubble };
   }
 
   function addMessage(content, role, animate = false) {
-    const { wrap, wrapper, bubble, soundBtn } = createMessageShell(role);
-    if (soundBtn) {
-      soundBtn.addEventListener('click', () => speakMessage(content, soundBtn));
-    }
-
+    const { wrap, wrapper, bubble } = createMessageShell(role);
+    const soundBtn = wrapper.querySelector('.chat-sound-btn');
+    if (soundBtn) soundBtn.addEventListener('click', () => speakMessage(content, soundBtn));
     if (animate) {
       let i = 0;
       const interval = setInterval(() => {
-        i++;
-        // Stream raw text first, then parse markdown at the end to avoid broken mid-tag renders
-        bubble.textContent = content.slice(0, i);
+        bubble.textContent = content.slice(0, ++i);
         messagesEl.scrollTop = messagesEl.scrollHeight;
         if (i >= content.length) {
           clearInterval(interval);
-          // Now render with Markdown once streaming is complete
           bubble.innerHTML = parseMarkdown(content);
-          // Check and append rich interactive cards / form if applicable
           const card = getRichCardElement(content);
-          if (card) {
-            wrapper.appendChild(card);
-            messagesEl.scrollTop = messagesEl.scrollHeight;
-          }
+          if (card) wrapper.appendChild(card);
         }
       }, 15);
     } else {
       bubble.innerHTML = parseMarkdown(content);
-      // Append rich cards immediately for loaded history
       const card = getRichCardElement(content);
-      if (card) {
-        wrapper.appendChild(card);
-      }
+      if (card) wrapper.appendChild(card);
     }
-
-    messagesEl.scrollTop = messagesEl.scrollHeight;
     return wrap;
-  }
-
-  function finalizeStreamingMessage(target, content) {
-    target.bubble.innerHTML = parseMarkdown(content);
-    if (target.soundBtn) {
-      target.soundBtn.onclick = () => speakMessage(content, target.soundBtn);
-    }
-    const card = getRichCardElement(content);
-    if (card) {
-      target.wrapper.appendChild(card);
-      messagesEl.scrollTop = messagesEl.scrollHeight;
-    }
   }
 
   function addTyping() {
@@ -814,193 +569,24 @@ If asked something unrelated to Vikash, politely say: "I'm focused on helping yo
     return wrap;
   }
 
-  /* ═══════════════════════════════════════════
-     API BRIDGE CALL WITH MULTI-TURN MEMORY
-     ═══════════════════════════════════════════ */
   function resolveApiUrl(path) {
-    if (window.location.protocol === 'file:' ||
-        window.location.hostname === 'localhost' ||
-        window.location.hostname === '127.0.0.1') {
+    if (window.location.protocol === 'file:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
       return `${LOCAL_API_BASE}${path}`;
     }
-    if (window.location.hostname.includes('github.io') ||
-        (window.location.hostname && window.location.hostname !== new URL(PRODUCTION_API_URL).hostname)) {
-      return PRODUCTION_API_URL + path;
-    }
-    return path;
+    return PRODUCTION_API_URL + path;
   }
 
-  function updateFallbackBadge(fallbackUsed, modelUsed) {
-    if (!fallbackBadge) return;
-    if (fallbackUsed) {
-      fallbackBadge.textContent = `Fallback: ${modelUsed || DEFAULT_MODEL}`;
-      fallbackBadge.hidden = false;
-    } else {
-      fallbackBadge.hidden = true;
+  async function callBridge() {
+    const messages = [{ role: 'system', content: SYSTEM_PROMPT }, ...conversationHistory.slice(-10)];
+    const body = { messages, stream: false };
+    const url = resolveApiUrl(API_URL);
+    const res = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+    if (!res.ok) {
+        const errData = await res.json().catch(() => ({}));
+        throw new Error(errData.error || 'Bridge error');
     }
-  }
-
-  function trackEvent(type, data = {}) {
-    const payload = { type, data, ts: new Date().toISOString() };
-    fetch(resolveApiUrl(ANALYTICS_URL), {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
-      keepalive: true
-    }).catch(() => {});
-  }
-
-  async function streamResponse(body, onDelta) {
-    const reader = body.getReader();
-    const decoder = new TextDecoder();
-    let buffer = '';
-    let fullText = '';
-
-    while (true) {
-      const { value, done } = await reader.read();
-      if (done) break;
-      buffer += decoder.decode(value, { stream: true });
-      const lines = buffer.split('\n');
-      buffer = lines.pop();
-
-      for (const line of lines) {
-        const trimmed = line.trim();
-        if (!trimmed) continue;
-        if (trimmed === 'data: [DONE]') {
-          return fullText;
-        }
-        if (!trimmed.startsWith('data:')) continue;
-        const payload = trimmed.replace(/^data:\s*/, '');
-        try {
-          const chunk = JSON.parse(payload);
-          const delta = chunk.choices?.[0]?.delta?.content ||
-                        chunk.choices?.[0]?.message?.content ||
-                        '';
-          if (delta) {
-            fullText += delta;
-            onDelta(delta);
-          }
-        } catch (err) {
-          console.warn('Stream parse error:', err);
-        }
-      }
-    }
-
-    return fullText;
-  }
-
-  async function parseBridgeResponse(res, onDelta, fallbackModel) {
-    const meta = {
-      fallbackUsed: res.headers.get('x-fallback-used') === 'true',
-      modelUsed: res.headers.get('x-model-used') || fallbackModel
-    };
-
-    const isStream = res.headers.get('content-type')?.includes('text/event-stream');
-    if (isStream && res.body && typeof onDelta === 'function') {
-      const content = await streamResponse(res.body, onDelta);
-      return { content, meta };
-    }
-
     const data = await res.json();
-    meta.fallbackUsed = typeof data.fallbackUsed === 'boolean' ? data.fallbackUsed : meta.fallbackUsed;
-    meta.modelUsed = data.model_used || meta.modelUsed;
-    return { content: extractContent(data), meta };
-  }
-
-  async function callBridge(onDelta) {
-    const relevantHistory = conversationHistory.slice(-10);
-
-    const messages = [
-      { role: 'system', content: SYSTEM_PROMPT },
-      ...relevantHistory
-    ];
-
-    const wantsStream = false;
-    const body = { messages: messages, stream: wantsStream };
-    const primaryUrl = resolveApiUrl(API_URL);
-    const isLocal = primaryUrl.startsWith(LOCAL_API_BASE);
-
-    try {
-      const res = await fetch(primaryUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body),
-      });
-
-      if (!res.ok) {
-        // If local API call fails, fall back to the production API bridge
-        if (isLocal) {
-          console.warn('Local API unavailable, falling back to production API bridge...');
-          const fallbackRes = await fetch(PRODUCTION_API_URL + API_URL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(body),
-          });
-          if (!fallbackRes.ok) throw new Error('Production API bridge error');
-          return await parseBridgeResponse(fallbackRes, onDelta);
-        }
-        throw new Error('Bridge error');
-      }
-
-      return await parseBridgeResponse(res, onDelta);
-    } catch (err) {
-      // Catch network/connection errors (e.g. local server not running)
-      if (isLocal) {
-        console.warn('Local API connection failed, falling back to production API bridge...', err);
-        try {
-          const fallbackRes = await fetch(PRODUCTION_API_URL + API_URL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(body),
-          });
-          if (!fallbackRes.ok) throw new Error('Production API bridge error');
-          return await parseBridgeResponse(fallbackRes, onDelta);
-        } catch (fallbackErr) {
-          throw fallbackErr;
-        }
-      }
-      throw err;
-    }
-  }
-
-  function extractContent(data) {
-    return data.message?.content ||
-           data.choices?.[0]?.message?.content ||
-           data.choices?.[0]?.delta?.content ||
-           data.response ||
-           data.message ||
-           "I'm not sure how to answer that.";
-  }
-
-})();
-    data.message ||
-           "I'm not sure how to answer that.";
-  }
-
-})();
-
-
-})();
-";
-  }
-
-})();
-t.";
-  }
-
-})();
- that.";
-  }
-
-})();
-
-
-})();
-";
-  }
-
-})();
-t.";
+    return { content: data.choices?.[0]?.message?.content || data.message || "I'm not sure." };
   }
 
 })();
