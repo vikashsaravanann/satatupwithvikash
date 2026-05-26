@@ -2155,6 +2155,22 @@ section {
 }
 .chat-title { font-weight: 700; font-size: .92rem; color: #fff; }
 .chat-subtitle { font-size: .7rem; color: rgba(255,255,255,.5); display: flex; align-items: center; }
+.chat-model-select {
+    background: transparent;
+    border: none;
+    color: #0ea5e9;
+    font-size: 0.7rem;
+    font-weight: 700;
+    cursor: pointer;
+    outline: none;
+    padding: 0 4px;
+    margin-left: 2px;
+    font-family: inherit;
+}
+.chat-model-select option {
+    background: #080810;
+    color: #fff;
+}
 .chat-status-dot {
     width: 6px;
     height: 6px;

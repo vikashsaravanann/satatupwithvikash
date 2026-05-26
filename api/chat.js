@@ -81,7 +81,16 @@ module.exports = async function handler(req, res) {
     }
 
     const model = req.body.model;
-    const groqModel = typeof model === 'string' && model.includes('llama')
+    const SUPPORTED_MODELS = [
+        'llama-3.3-70b-versatile',
+        'llama-3.1-70b-versatile',
+        'llama-3.1-8b-instant',
+        'mixtral-8x7b-32768',
+        'gemma2-9b-it',
+        'deepseek-r1-distill-llama-70b'
+    ];
+
+    const groqModel = SUPPORTED_MODELS.includes(model)
         ? model
         : 'llama-3.3-70b-versatile';
 

@@ -121,8 +121,20 @@ If asked something unrelated to Vikash, politely say: "I'm focused on helping yo
   const chipsEl    = document.getElementById('chatChips');
   const micBtn     = document.getElementById('chatMic');
   const waveformEl = document.getElementById('chatWaveform');
+  const modelSelect = document.getElementById('modelSelect');
 
   if (!toggle || !panel) return;
+
+  // Load preferred model from localStorage
+  if (modelSelect) {
+    const savedModel = localStorage.getItem('vikash_chat_model');
+    if (savedModel) {
+      modelSelect.value = savedModel;
+    }
+    modelSelect.addEventListener('change', () => {
+      localStorage.setItem('vikash_chat_model', modelSelect.value);
+    });
+  }
 
   // Speech recognition global variable
   let recognition = null;
