@@ -19,23 +19,10 @@ require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-const API_KEY = process.env.GROQ_API_KEY;
-const API_URL = 'https://api.groq.com/openai/v1/chat/completions';
-const DEFAULT_MODEL = 'llama-3.3-70b-versatile';
+const XAI_API_KEY = process.env.XAI_API_KEY;
+const API_URL = 'https://api.x.ai/v1/chat/completions';
+const DEFAULT_MODEL = 'grok-beta';
 const ALLOWED_ROLES = new Set(['system', 'user', 'assistant']);
-const ALLOWED_MODELS = new Set([
-    'llama-3.3-70b-versatile',
-    'llama-3.1-70b-versatile',
-    'llama-3.1-8b-instant',
-    'llama-3.2-90b-vision-preview',
-    'llama-3.2-11b-vision-preview',
-    'llama-3.2-3b-preview',
-    'llama-3.2-1b-preview',
-    'mixtral-8x7b-32768',
-    'gemma2-9b-it',
-    'gemma2-27b-it',
-    'deepseek-r1-distill-llama-70b'
-]);
 
 const JSON_BODY_LIMIT = parsePositiveInt(process.env.JSON_BODY_LIMIT_BYTES, 64 * 1024);
 const CONTACT_BODY_MAX_BYTES = parsePositiveInt(process.env.CONTACT_BODY_MAX_BYTES, 24 * 1024);
@@ -64,7 +51,7 @@ const corsOptions = {
     },
     methods: ['GET', 'POST', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
-    exposedHeaders: ['x-model-used', 'x-fallback-used'],
+    exposedHeaders: ['x-model-used'],
     credentials: true
 };
 
@@ -133,15 +120,15 @@ app.use(cors(corsOptions));
 app.use(express.json({ limit: JSON_BODY_LIMIT }));
 app.use(express.urlencoded({ extended: true, limit: JSON_BODY_LIMIT }));
 
-if (!API_KEY) {
-    console.warn('⚠️ WARNING: GROQ_API_KEY is not set in .env file!');
+if (!XAI_API_KEY) {
+    console.warn('⚠️ WARNING: XAI_API_KEY is not set in .env file!');
 }
 
 app.get('/api/chat', (req, res) => {
     res.json({
-        status: 'Bridge server (Groq) is running',
-        apiKeySet: !!API_KEY,
-        usage: 'Send a POST request with { messages, model }'
+        status: 'Bridge server (xAI) is running',
+        apiKeySet: !!XAI_API_KEY,
+        usage: 'Send a POST request with { input }'
     });
 });
 
@@ -191,8 +178,8 @@ app.post('/api/contact', rateLimitMiddleware(contactLimiter, 'contact'), async (
 });
 
 app.post('/api/chat', rateLimitMiddleware(chatLimiter, 'chat'), async (req, res) => {
-    if (!API_KEY) {
-        res.status(500).json({ error: 'GROQ_API_KEY is missing on server' });
+    if (!XAI_API_KEY) {
+        res.status(500).json({ error: 'XAI_API_KEY is missing on server' });
         return;
     }
 
@@ -216,40 +203,27 @@ app.post('/api/chat', rateLimitMiddleware(chatLimiter, 'chat'), async (req, res)
         return;
     }
 
-    const model = req.body.model;
-    let groqModel = typeof model === 'string' && ALLOWED_MODELS.has(model)
-        ? model
-        : DEFAULT_MODEL;
     const wantsStream = req.body.stream === true;
-    let fallbackUsed = false;
 
     try {
-        const requestGroq = (modelToUse) => fetch(API_URL, {
+        const response = await fetch(API_URL, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Bearer ${API_KEY}`
+                Authorization: `Bearer ${XAI_API_KEY}`
             },
             body: JSON.stringify({
-                model: modelToUse,
+                model: DEFAULT_MODEL,
                 messages,
                 stream: wantsStream
             })
         });
 
-        let response = await requestGroq(groqModel);
-        if (!response.ok && groqModel !== DEFAULT_MODEL) {
-            fallbackUsed = true;
-            groqModel = DEFAULT_MODEL;
-            response = await requestGroq(groqModel);
-        }
-
-        res.setHeader('x-model-used', groqModel);
-        res.setHeader('x-fallback-used', fallbackUsed ? 'true' : 'false');
+        res.setHeader('x-model-used', DEFAULT_MODEL);
 
         if (!response.ok) {
             const data = await response.json().catch(() => ({ error: 'Upstream error' }));
-            console.error('Groq API Error:', data);
+            console.error('xAI API Error:', data);
             res.status(response.status).json(data);
             return;
         }
@@ -266,7 +240,7 @@ app.post('/api/chat', rateLimitMiddleware(chatLimiter, 'chat'), async (req, res)
                 return;
             }
             response.body.on('error', (error) => {
-                console.error('Groq stream error:', error);
+                console.error('xAI stream error:', error);
                 res.end();
             });
             res.on('close', () => {
@@ -277,8 +251,7 @@ app.post('/api/chat', rateLimitMiddleware(chatLimiter, 'chat'), async (req, res)
         }
 
         const data = await response.json();
-        data.model_used = groqModel;
-        data.fallbackUsed = fallbackUsed;
+        data.model_used = DEFAULT_MODEL;
         res.json(data);
     } catch (error) {
         console.error('Chat route error:', error);

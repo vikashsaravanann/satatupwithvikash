@@ -14,7 +14,7 @@
   /* ═══════════════════════════════════════════
      CONFIGURATION
      ═══════════════════════════════════════════ */
-  const DEFAULT_MODEL = 'llama-3.3-70b-versatile';
+  const DEFAULT_MODEL = 'grok-beta';
   const API_URL = '/api/chat';
   const ANALYTICS_URL = '/api/analytics';
   const CONTACT_URL = '/api/contact';
@@ -25,7 +25,6 @@
   const STORAGE_KEYS = {
     version: 'vikash_chat_version',
     history: 'vikash_chat_history',
-    model: 'vikash_chat_model',
     remember: 'vikash_chat_remember'
   };
 
@@ -917,9 +916,8 @@ If asked something unrelated to Vikash, politely say: "I'm focused on helping yo
       ...relevantHistory
     ];
 
-    const selectedModel = modelSelect?.value || DEFAULT_MODEL;
     const wantsStream = typeof ReadableStream !== 'undefined';
-    const body = { model: selectedModel, input: messages, stream: wantsStream };
+    const body = { input: messages, stream: wantsStream };
     const primaryUrl = resolveApiUrl(API_URL);
     const isLocal = primaryUrl.startsWith(LOCAL_API_BASE);
 
@@ -940,12 +938,12 @@ If asked something unrelated to Vikash, politely say: "I'm focused on helping yo
             body: JSON.stringify(body),
           });
           if (!fallbackRes.ok) throw new Error('Production API bridge error');
-          return await parseBridgeResponse(fallbackRes, onDelta, selectedModel);
+          return await parseBridgeResponse(fallbackRes, onDelta);
         }
         throw new Error('Bridge error');
       }
 
-      return await parseBridgeResponse(res, onDelta, selectedModel);
+      return await parseBridgeResponse(res, onDelta);
     } catch (err) {
       // Catch network/connection errors (e.g. local server not running)
       if (isLocal) {
@@ -957,7 +955,7 @@ If asked something unrelated to Vikash, politely say: "I'm focused on helping yo
             body: JSON.stringify(body),
           });
           if (!fallbackRes.ok) throw new Error('Production API bridge error');
-          return await parseBridgeResponse(fallbackRes, onDelta, selectedModel);
+          return await parseBridgeResponse(fallbackRes, onDelta);
         } catch (fallbackErr) {
           throw fallbackErr;
         }
@@ -973,6 +971,22 @@ If asked something unrelated to Vikash, politely say: "I'm focused on helping yo
            data.response ||
            data.message ||
            "I'm not sure how to answer that.";
+  }
+
+})();
+    data.message ||
+           "I'm not sure how to answer that.";
+  }
+
+})();
+
+
+})();
+";
+  }
+
+})();
+t.";
   }
 
 })();

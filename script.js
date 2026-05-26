@@ -520,7 +520,7 @@ function generateResumePDF() {
     addSection('Key Projects');
     const projects = [
         'HearWise — AI-powered hearing screening & gamified ocean platform for children with 12+ interactive modules (React, GitHub Pages)',
-        'Portfolio AI Chatbot — Intelligent assistant with Text-to-Speech, Speech-to-Text, persistent memory, and Siri-style voice (JavaScript, Groq API)',
+        'Portfolio AI Chatbot — Intelligent assistant with Text-to-Speech, Speech-to-Text, persistent memory, and Siri-style voice (JavaScript, Grok AI)',
         'Logic Intelligence Technologies — Full agency website with multi-step quote system & CRM integration (Next.js)',
         'IPL Data Analysis — Comprehensive cricket analytics project with data visualization (Python, Pandas, Jupyter)',
         'GameHub — Terminal-based arcade with classic games: Snake, Tic-Tac-Toe, Rock-Paper-Scissors (Python)',

@@ -7,21 +7,10 @@ const CHAT_RATE_LIMIT_WINDOW_MS = parsePositiveInt(process.env.CHAT_RATE_LIMIT_W
 const CHAT_RATE_LIMIT_MAX = parsePositiveInt(process.env.CHAT_RATE_LIMIT_MAX, 20);
 const CHAT_BODY_MAX_BYTES = parsePositiveInt(process.env.CHAT_BODY_MAX_BYTES, 32 * 1024);
 const MAX_MESSAGE_CHARS = parsePositiveInt(process.env.CHAT_MESSAGE_MAX_CHARS, 4000);
-const DEFAULT_MODEL = 'llama-3.3-70b-versatile';
+
+const XAI_API_KEY = process.env.XAI_API_KEY;
+const DEFAULT_MODEL = 'grok-beta';
 const ALLOWED_ROLES = new Set(['system', 'user', 'assistant']);
-const SUPPORTED_MODELS = new Set([
-    'llama-3.3-70b-versatile',
-    'llama-3.1-70b-versatile',
-    'llama-3.1-8b-instant',
-    'llama-3.2-90b-vision-preview',
-    'llama-3.2-11b-vision-preview',
-    'llama-3.2-3b-preview',
-    'llama-3.2-1b-preview',
-    'mixtral-8x7b-32768',
-    'gemma2-9b-it',
-    'gemma2-27b-it',
-    'deepseek-r1-distill-llama-70b'
-]);
 
 const chatLimiter = createRateLimiter({
     windowMs: CHAT_RATE_LIMIT_WINDOW_MS,
@@ -76,7 +65,7 @@ module.exports = async function handler(req, res) {
     if (req.method === 'GET') {
         res.status(200).json({
             status: 'Vercel AI Bridge is running',
-            apiKeySet: !!process.env.GROQ_API_KEY
+            apiKeySet: !!XAI_API_KEY
         });
         return;
     }
@@ -104,9 +93,8 @@ module.exports = async function handler(req, res) {
         return;
     }
 
-    const API_KEY = process.env.GROQ_API_KEY;
-    if (!API_KEY) {
-        res.status(500).json({ error: 'GROQ_API_KEY is missing on server' });
+    if (!XAI_API_KEY) {
+        res.status(500).json({ error: 'XAI_API_KEY is missing on server' });
         return;
     }
 
@@ -123,40 +111,27 @@ module.exports = async function handler(req, res) {
         return;
     }
 
-    const model = req.body.model;
-    let groqModel = typeof model === 'string' && SUPPORTED_MODELS.has(model)
-        ? model
-        : DEFAULT_MODEL;
     const wantsStream = req.body.stream === true;
-    let fallbackUsed = false;
 
     try {
-        const requestGroq = (modelToUse) => fetch('https://api.groq.com/openai/v1/chat/completions', {
+        const response = await fetch('https://api.x.ai/v1/chat/completions', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Bearer ${API_KEY}`
+                Authorization: `Bearer ${XAI_API_KEY}`
             },
             body: JSON.stringify({
-                model: modelToUse,
+                model: DEFAULT_MODEL,
                 messages,
                 stream: wantsStream
             })
         });
 
-        let response = await requestGroq(groqModel);
-        if (!response.ok && groqModel !== DEFAULT_MODEL) {
-            fallbackUsed = true;
-            groqModel = DEFAULT_MODEL;
-            response = await requestGroq(groqModel);
-        }
-
-        res.setHeader('x-model-used', groqModel);
-        res.setHeader('x-fallback-used', fallbackUsed ? 'true' : 'false');
+        res.setHeader('x-model-used', DEFAULT_MODEL);
 
         if (!response.ok) {
             const data = await response.json().catch(() => ({ error: 'Upstream error' }));
-            console.error('Groq API Error:', data);
+            console.error('xAI API Error:', data);
             res.status(response.status).json(data);
             return;
         }
@@ -173,7 +148,7 @@ module.exports = async function handler(req, res) {
                 return;
             }
             response.body.on('error', (error) => {
-                console.error('Groq stream error:', error);
+                console.error('xAI stream error:', error);
                 res.end();
             });
             res.on('close', () => {
@@ -184,8 +159,7 @@ module.exports = async function handler(req, res) {
         }
 
         const data = await response.json();
-        data.model_used = groqModel;
-        data.fallbackUsed = fallbackUsed;
+        data.model_used = DEFAULT_MODEL;
         res.status(200).json(data);
     } catch (error) {
         console.error('Vercel chat route error:', error);
