@@ -21,7 +21,7 @@ const PORT = process.env.PORT || 3000;
 
 const XAI_API_KEY = process.env.XAI_API_KEY;
 const API_URL = 'https://api.x.ai/v1/chat/completions';
-const DEFAULT_MODEL = 'grok-2-1212';
+const DEFAULT_MODEL = 'grok-4.3';
 const ALLOWED_ROLES = new Set(['system', 'user', 'assistant']);
 
 

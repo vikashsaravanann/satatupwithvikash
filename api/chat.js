@@ -9,7 +9,7 @@ const CHAT_BODY_MAX_BYTES = parsePositiveInt(process.env.CHAT_BODY_MAX_BYTES, 32
 const MAX_MESSAGE_CHARS = parsePositiveInt(process.env.CHAT_MESSAGE_MAX_CHARS, 4000);
 
 const XAI_API_KEY = process.env.XAI_API_KEY;
-const DEFAULT_MODEL = 'grok-2-1212';
+const DEFAULT_MODEL = 'grok-4.3';
 const ALLOWED_ROLES = new Set(['system', 'user', 'assistant']);
 
 
