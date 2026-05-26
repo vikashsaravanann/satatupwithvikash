@@ -668,7 +668,8 @@ If asked something unrelated to Vikash, politely say: "I'm focused on helping yo
       ...relevantHistory
     ];
 
-    const body = { model: XAI_MODEL, input: messages };
+    const selectedModel = modelSelect ? modelSelect.value : XAI_MODEL;
+    const body = { model: selectedModel, input: messages };
 
     let url = API_URL;
     let isLocal = false;
