@@ -20,6 +20,20 @@ const PORT = process.env.PORT || 3000;
 
 const API_KEY = process.env.GROQ_API_KEY;
 const API_URL = 'https://api.groq.com/openai/v1/chat/completions';
+const DEFAULT_MODEL = 'llama-3.3-70b-versatile';
+const ALLOWED_MODELS = new Set([
+    'llama-3.3-70b-versatile',
+    'llama-3.1-70b-versatile',
+    'llama-3.1-8b-instant',
+    'llama-3.2-90b-vision-preview',
+    'llama-3.2-11b-vision-preview',
+    'llama-3.2-3b-preview',
+    'llama-3.2-1b-preview',
+    'mixtral-8x7b-32768',
+    'gemma2-9b-it',
+    'gemma2-27b-it',
+    'deepseek-r1-distill-llama-70b'
+]);
 
 const JSON_BODY_LIMIT = parsePositiveInt(process.env.JSON_BODY_LIMIT_BYTES, 64 * 1024);
 const CONTACT_BODY_MAX_BYTES = parsePositiveInt(process.env.CONTACT_BODY_MAX_BYTES, 24 * 1024);
@@ -147,9 +161,9 @@ app.post('/api/chat', rateLimitMiddleware(chatLimiter, 'chat'), async (req, res)
     }
 
     const model = req.body.model;
-    const groqModel = typeof model === 'string' && model.includes('llama')
+    const groqModel = typeof model === 'string' && ALLOWED_MODELS.has(model)
         ? model
-        : 'llama-3.3-70b-versatile';
+        : DEFAULT_MODEL;
 
     try {
         const response = await fetch(API_URL, {

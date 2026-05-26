@@ -34,6 +34,17 @@
     --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+/* Light Mode Variables */
+body.light-mode {
+    --bg-light: #f8fafc;
+    --bg-card: rgba(0, 0, 0, 0.03);
+    --bg-card-hover: rgba(0, 0, 0, 0.05);
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
+    --glass-border: 1px solid rgba(0, 0, 0, 0.08);
+    --glass-shadow: 0 16px 40px 0 rgba(0, 0, 0, 0.04);
+}
+
 /* ===============
    Reset & Base
    =============== */
@@ -196,9 +207,157 @@ ul {
     transition: var(--transition);
 }
 
+body.light-mode .navbar {
+    background: rgba(255, 255, 255, 0.85);
+}
+
 .navbar.scrolled {
     padding: 10px 0;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.theme-toggle {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    transition: var(--transition);
+}
+
+.theme-toggle:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: translateY(-2px);
+}
+
+body.light-mode .theme-toggle {
+    background: rgba(0, 0, 0, 0.05);
+    border-color: rgba(0, 0, 0, 0.1);
+    color: var(--text-primary);
+}
+
+body.light-mode .theme-toggle:hover {
+    background: rgba(0, 0, 0, 0.1);
+    border-color: var(--accent);
+}
+
+body.light-mode .theme-toggle i::before {
+    content: "\f185"; /* sun icon */
+}
+
+/* Light Mode Overrides */
+body.light-mode h1,
+body.light-mode h2,
+body.light-mode h3,
+body.light-mode h4,
+body.light-mode h5,
+body.light-mode h6,
+body.light-mode p,
+body.light-mode span,
+body.light-mode .detail-line span,
+body.light-mode .stat-title,
+body.light-mode .stat-desc,
+body.light-mode .box-title,
+body.light-mode .box-value,
+body.light-mode .gh-stat-label,
+body.light-mode .gh-repo-card p,
+body.light-mode .footer-widget p,
+body.light-mode .summary-text,
+body.light-mode .availability-badge .avail-text {
+    color: var(--text-primary) !important;
+}
+
+body.light-mode .text-secondary {
+    color: var(--text-secondary) !important;
+}
+
+body.light-mode .bento-card,
+body.light-mode .hero-stat-box,
+body.light-mode .floating-box-static,
+body.light-mode .cert-badge-card,
+body.light-mode .summary-box,
+body.light-mode .widget-card,
+body.light-mode .gh-stat-card,
+body.light-mode .blog-card,
+body.light-mode .footer-widget,
+body.light-mode .msg-bubble {
+    background: var(--bg-card) !important;
+    border-color: var(--glass-border) !important;
+}
+
+body.light-mode .cert-badge-card:hover,
+body.light-mode .widget-card:hover,
+body.light-mode .gh-repo-card:hover,
+body.light-mode .blog-card:hover {
+    background: var(--bg-card-hover) !important;
+    border-color: var(--accent) !important;
+}
+
+/* Specific Component Refinements for Light Mode */
+body.light-mode .hero-bento-dashboard .bento-card,
+body.light-mode .hero-stat-box,
+body.light-mode .floating-box-static,
+body.light-mode .deep-dive-card,
+body.light-mode .skill-card,
+body.light-mode .gh-stat-card,
+body.light-mode .blog-card,
+body.light-mode .pro-contact-form,
+body.light-mode .footer-widget,
+body.light-mode .widget-card,
+body.light-mode #ai-chat-panel {
+    background: rgba(255, 255, 255, 0.7) !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05) !important;
+    backdrop-filter: blur(10px);
+}
+
+body.light-mode .deep-dive-header {
+    background: rgba(0, 0, 0, 0.02) !important;
+    border-bottom-color: rgba(0, 0, 0, 0.05) !important;
+}
+
+body.light-mode .chat-header {
+    background: linear-gradient(135deg, rgba(14, 165, 233, 0.1), rgba(99, 102, 241, 0.05)) !important;
+}
+
+body.light-mode .chat-msg.bot .msg-bubble {
+    background: rgba(0, 0, 0, 0.04) !important;
+}
+
+body.light-mode .chat-input-wrap {
+    background: rgba(0, 0, 0, 0.02) !important;
+}
+
+body.light-mode .chat-input-wrap input {
+    color: var(--text-primary) !important;
+}
+
+body.light-mode .chat-input-wrap input::placeholder {
+    color: var(--text-secondary) !important;
+}
+
+body.light-mode .availability-badge {
+    background: rgba(0, 0, 0, 0.03) !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+}
+
+body.light-mode .avail-dot {
+    box-shadow: 0 0 10px rgba(16, 185, 129, 0.4);
+}
+
+body.light-mode .highlight {
+    background: linear-gradient(90deg, #0284c7, #4f46e5, #0284c7);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .nav-content {

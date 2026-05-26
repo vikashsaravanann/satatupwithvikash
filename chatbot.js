@@ -14,7 +14,7 @@
   /* ═══════════════════════════════════════════
      CONFIGURATION
      ═══════════════════════════════════════════ */
-  const XAI_MODEL = 'grok-4.20-reasoning';
+  const DEFAULT_MODEL = 'llama-3.3-70b-versatile';
   const API_URL = '/api/chat';
   const PRODUCTION_API_URL = 'https://portfolio-information.vercel.app';
   const LOCAL_API_URL = 'http://localhost:3000/api/chat';
@@ -111,13 +111,14 @@ If asked something unrelated to Vikash, politely say: "I'm focused on helping yo
   /* ═══════════════════════════════════════════
      DOM ELEMENTS
      ═══════════════════════════════════════════ */
-  const toggle     = document.getElementById('ai-chat-toggle');
-  const panel      = document.getElementById('ai-chat-panel');
-  const closeBtn   = document.getElementById('ai-chat-close');
-  const resetBtn   = document.getElementById('ai-chat-reset');
-  const messagesEl = document.getElementById('chatMessages');
-  const inputEl    = document.getElementById('chatInput');
-  const sendBtn    = document.getElementById('chatSend');
+  const toggle      = document.getElementById('ai-chat-toggle');
+  const panel       = document.getElementById('ai-chat-panel');
+  const closeBtn    = document.getElementById('ai-chat-close');
+  const resetBtn    = document.getElementById('ai-chat-reset');
+  const messagesEl  = document.getElementById('chatMessages');
+  const modelSelect = document.getElementById('modelSelect');
+  const inputEl     = document.getElementById('chatInput');
+  const sendBtn     = document.getElementById('chatSend');
   const chipsEl    = document.getElementById('chatChips');
   const micBtn     = document.getElementById('chatMic');
   const waveformEl = document.getElementById('chatWaveform');
@@ -668,7 +669,7 @@ If asked something unrelated to Vikash, politely say: "I'm focused on helping yo
       ...relevantHistory
     ];
 
-    const selectedModel = modelSelect ? modelSelect.value : XAI_MODEL;
+    const selectedModel = modelSelect?.value || DEFAULT_MODEL;
     const body = { model: selectedModel, input: messages };
 
     let url = API_URL;

@@ -6,6 +6,20 @@ const { createRateLimiter, setRateLimitHeaders } = require('../lib/rate-limit');
 const CHAT_RATE_LIMIT_WINDOW_MS = parsePositiveInt(process.env.CHAT_RATE_LIMIT_WINDOW_MS, 60 * 1000);
 const CHAT_RATE_LIMIT_MAX = parsePositiveInt(process.env.CHAT_RATE_LIMIT_MAX, 20);
 const CHAT_BODY_MAX_BYTES = parsePositiveInt(process.env.CHAT_BODY_MAX_BYTES, 32 * 1024);
+const DEFAULT_MODEL = 'llama-3.3-70b-versatile';
+const SUPPORTED_MODELS = new Set([
+    'llama-3.3-70b-versatile',
+    'llama-3.1-70b-versatile',
+    'llama-3.1-8b-instant',
+    'llama-3.2-90b-vision-preview',
+    'llama-3.2-11b-vision-preview',
+    'llama-3.2-3b-preview',
+    'llama-3.2-1b-preview',
+    'mixtral-8x7b-32768',
+    'gemma2-9b-it',
+    'gemma2-27b-it',
+    'deepseek-r1-distill-llama-70b'
+]);
 
 const chatLimiter = createRateLimiter({
     windowMs: CHAT_RATE_LIMIT_WINDOW_MS,
@@ -81,18 +95,9 @@ module.exports = async function handler(req, res) {
     }
 
     const model = req.body.model;
-    const SUPPORTED_MODELS = [
-        'llama-3.3-70b-versatile',
-        'llama-3.1-70b-versatile',
-        'llama-3.1-8b-instant',
-        'mixtral-8x7b-32768',
-        'gemma2-9b-it',
-        'deepseek-r1-distill-llama-70b'
-    ];
-
-    const groqModel = SUPPORTED_MODELS.includes(model)
+    const groqModel = typeof model === 'string' && SUPPORTED_MODELS.has(model)
         ? model
-        : 'llama-3.3-70b-versatile';
+        : DEFAULT_MODEL;
 
     try {
         const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
