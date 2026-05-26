@@ -915,8 +915,8 @@ If asked something unrelated to Vikash, politely say: "I'm focused on helping yo
       ...relevantHistory
     ];
 
-    const wantsStream = typeof ReadableStream !== 'undefined';
-    const body = { input: messages, stream: wantsStream };
+    const wantsStream = false;
+    const body = { messages: messages, stream: wantsStream };
     const primaryUrl = resolveApiUrl(API_URL);
     const isLocal = primaryUrl.startsWith(LOCAL_API_BASE);
 
