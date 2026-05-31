@@ -3415,3 +3415,42 @@ section {
 .nav-links a.active::after {
     width: 100%;
 }/* force update */
+
+/* ===== ALL IMAGES SITE-WIDE MOBILE FIX ===== */
+@media (max-width: 768px) {
+  /* Hero profile images — mirror laptop 'triple image' style */
+  .hero-images-wrapper {
+    flex-direction: row !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 15px !important;
+    margin: 20px 0 !important;
+    width: 100% !important;
+  }
+
+  .profile-image-container.side-profile {
+    display: block !important;
+    width: 110px !important;
+    height: 150px !important;
+    opacity: 0.9 !important;
+    overflow: hidden !important;
+    border-radius: 16px !important;
+    border: 2px solid var(--accent-cyan) !important;
+  }
+
+  .profile-image-container.floating {
+    width: 140px !important;
+    height: 190px !important;
+    z-index: 10 !important;
+    overflow: hidden !important;
+    border-radius: 20px !important;
+    border: 2px solid var(--accent-cyan) !important;
+  }
+
+  .profile-image-container img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+  }
+}
+
