@@ -70,16 +70,8 @@ document.addEventListener('DOMContentLoaded', () => {
             document.body.insertAdjacentHTML('beforeend', html);
         };
 
-        const createSwitchBtn = () => {
-            const html = `<button class="adv-switch-view-btn" id="adv-switch-view">Switch View</button>`;
-            document.body.insertAdjacentHTML('beforeend', html);
-            document.getElementById('adv-switch-view').addEventListener('click', () => {
-                document.getElementById('adv-role-modal').classList.add('active');
-            });
-        };
-
         createRoleModal();
-        createSwitchBtn();
+
 
         const modal = document.getElementById('adv-role-modal');
         const role = localStorage.getItem('visitor_role');
@@ -115,44 +107,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 modal.classList.remove('active');
                 applyHighlight(r);
             });
-        });
-    });
-
-    // ==========================================
-    // F21: Hire Me CTA Banner
-    // ==========================================
-    safeRun('HireMeBanner', () => {
-        const html = `
-            <button class="adv-hire-pill" id="adv-hire-pill">💼 Available for Hire</button>
-            <div class="adv-hire-modal" id="adv-hire-modal">
-                <div class="adv-hire-content">
-                    <button class="adv-hire-close" id="adv-hire-close">&times;</button>
-                    <h2 style="color:#0ea5e9;">Let's Work Together</h2>
-                    <p style="color:#10b981; margin:10px 0;">🟢 Currently open to Frontend / Full-Stack / AI roles</p>
-                    <a href="mailto:vikash07052008@gmail.com" class="adv-contact-btn" style="background:#ea4335;">📧 Email Me</a>
-                    <a href="https://linkedin.com/in/vikash-saravanan-j7528" target="_blank" class="adv-contact-btn" style="background:#0077b5;">💼 LinkedIn</a>
-                    <button id="adv-book-call-btn" class="adv-contact-btn" style="background:#0ea5e9;">📅 Book a Call</button>
-                </div>
-            </div>
-        `;
-        document.body.insertAdjacentHTML('beforeend', html);
-
-        const pill = document.getElementById('adv-hire-pill');
-        const modal = document.getElementById('adv-hire-modal');
-        const close = document.getElementById('adv-hire-close');
-
-        if (!sessionStorage.getItem('hide_hire_pill')) {
-            window.addEventListener('scroll', () => {
-                if (window.scrollY > 200) pill.classList.add('visible');
-                else pill.classList.remove('visible');
-            });
-        }
-
-        pill.addEventListener('click', () => modal.classList.add('active'));
-        close.addEventListener('click', () => {
-            modal.classList.remove('active');
-            pill.classList.remove('visible');
-            sessionStorage.setItem('hide_hire_pill', 'true');
         });
     });
 

@@ -2,15 +2,16 @@
 
 /* Floating Buttons */
 .ai-float-btn {
-    position: fixed; top: 120px; right: -10px; z-index: 9995;
-    background: linear-gradient(135deg, #0ea5e9, #7c3aed); color: white;
-    padding: 10px 20px; border-radius: 20px 0 0 20px; border: 1px solid #0ea5e9; border-right: none;
-    box-shadow: -4px 4px 15px rgba(0,0,0,0.3); cursor: pointer; font-weight: bold;
-    transition: transform 0.3s;
+    position: fixed; bottom: 20px; left: 20px; z-index: 9995;
+    background: rgba(255, 255, 255, 0.1); color: #ffffff;
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    padding: 10px 20px; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1); cursor: pointer; font-weight: bold;
+    transition: transform 0.3s, background 0.3s;
 }
-.ai-float-btn:hover { transform: translateX(-10px); }
+.ai-float-btn:hover { transform: translateY(-5px); background: rgba(255, 255, 255, 0.2); }
 
-.ai-float-btn.cover-letter { top: 170px; background: #1e293b; border: 1px solid #7c3aed; border-right: none; }
+.ai-float-btn.cover-letter { bottom: 70px; left: 20px; top: auto; right: auto; border: 1px solid rgba(255, 255, 255, 0.2); }
 
 /* Modals General */
 .ai-modal {

@@ -2,8 +2,8 @@
 
 #face-assistant-btn {
     position: fixed;
-    bottom: 90px; /* Above the chatbot if present */
-    right: 30px;
+    top: 30px;
+    left: 30px;
     width: 56px;
     height: 56px;
     border-radius: 50%;
@@ -28,7 +28,7 @@
 #face-assistant-btn::after {
     content: "Portfolio AI Assistant";
     position: absolute;
-    right: 70px;
+    left: 70px;
     background: rgba(15, 23, 42, 0.9);
     color: #fff;
     padding: 6px 12px;
@@ -47,8 +47,8 @@
 
 #face-assistant-panel {
     position: fixed;
-    bottom: 160px;
-    right: 30px;
+    top: 100px;
+    left: 30px;
     width: 380px;
     max-width: 95vw;
     background: #0f172a;
@@ -304,7 +304,7 @@
 
 @media (max-width: 480px) {
     #face-assistant-panel {
-        right: 2.5vw;
-        bottom: 90px;
+        left: 2.5vw;
+        top: 100px;
     }
 }

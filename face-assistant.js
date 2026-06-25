@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 1. Inject UI Elements into DOM
     const assistantHTML = `
         <button id="face-assistant-btn" aria-label="Portfolio AI Assistant">
-            🤖
+            <i class="fa-solid fa-user-shield"></i>
         </button>
         <div id="face-assistant-panel">
             <div class="fa-panel-header">

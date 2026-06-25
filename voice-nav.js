@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Inject UI Elements
     const voiceNavHTML = `
         <button id="voice-nav-btn" aria-label="Voice Commands">
-            🎤
+            <i class="fa-solid fa-microphone-lines"></i>
         </button>
         <div class="vn-listening-label" id="vn-listening-label">
             <span class="vn-pulse-dot"></span> Listening... speak now
