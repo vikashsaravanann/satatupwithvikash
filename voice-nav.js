@@ -284,13 +284,13 @@ document.addEventListener('DOMContentLoaded', () => {
             speak("Stopping voice commands.");
         } else {
             found = false;
-            showToast(\`🎤 "\${cmd}" &rarr; <span style="color: #ef4444;">Not recognised</span>\`, 3500);
+            showToast(`🎤 "${cmd}" &rarr; <span style="color: #ef4444;">Not recognised</span>`, 3500);
             speak("Sorry, I didn't catch that. Say 'help' to hear all available commands.");
             stopListening(); // Pause so they can hear the error clearly
         }
 
         if (found) {
-            showToast(\`🎤 "\${cmd}" &rarr; <span style="color: #38bdf8;">\${actionMsg}</span>\`);
+            showToast(`🎤 "${cmd}" &rarr; <span style="color: #38bdf8;">${actionMsg}</span>`);
         }
     }
 

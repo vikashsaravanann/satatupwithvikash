@@ -5,7 +5,7 @@ const safeRun = (name, fn) => {
     try {
         fn();
     } catch (e) {
-        console.error(\`Feature Error [\${name}]:\`, e);
+        console.error(`Feature Error [${name}]:`, e);
     }
 };
 
@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // ==========================================
     safeRun('LoadingScreen', () => {
         if (!sessionStorage.getItem('portfolio_loaded')) {
-            const lsHTML = \`
+            const lsHTML = `
                 <div id="adv-loading-screen">
                     <div class="adv-logo-text">VS</div>
                     <div class="adv-typing-text" id="adv-typing"></div>
@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <div class="adv-progress-bar" id="adv-bar"></div>
                     </div>
                 </div>
-            \`;
+            `;
             document.body.insertAdjacentHTML('afterbegin', lsHTML);
             
             const typing = document.getElementById('adv-typing');
@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // ==========================================
     safeRun('SmartRecommender', () => {
         const createRoleModal = () => {
-            const html = \`
+            const html = `
                 <div class="adv-role-modal" id="adv-role-modal">
                     <div class="adv-role-content">
                         <h2 style="color:#0ea5e9; margin-bottom: 20px;">Who are you?</h2>
@@ -66,12 +66,12 @@ document.addEventListener('DOMContentLoaded', () => {
                         <button class="adv-role-btn" data-role="client">🏢 Client</button>
                     </div>
                 </div>
-            \`;
+            `;
             document.body.insertAdjacentHTML('beforeend', html);
         };
 
         const createSwitchBtn = () => {
-            const html = \`<button class="adv-switch-view-btn" id="adv-switch-view">Switch View</button>\`;
+            const html = `<button class="adv-switch-view-btn" id="adv-switch-view">Switch View</button>`;
             document.body.insertAdjacentHTML('beforeend', html);
             document.getElementById('adv-switch-view').addEventListener('click', () => {
                 document.getElementById('adv-role-modal').classList.add('active');
@@ -97,7 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (roleType === 'client') targets = ['contact', 'services'];
             
             targets.forEach(id => {
-                const el = document.getElementById(id) || document.querySelector(\`[id*="\${id}"]\`);
+                const el = document.getElementById(id) || document.querySelector(`[id*="${id}"]`);
                 if (el) {
                     el.classList.add('adv-highlight-section');
                     // auto scroll to first target if triggered manually
@@ -122,7 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // F21: Hire Me CTA Banner
     // ==========================================
     safeRun('HireMeBanner', () => {
-        const html = \`
+        const html = `
             <button class="adv-hire-pill" id="adv-hire-pill">💼 Available for Hire</button>
             <div class="adv-hire-modal" id="adv-hire-modal">
                 <div class="adv-hire-content">
@@ -134,7 +134,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <button id="adv-book-call-btn" class="adv-contact-btn" style="background:#0ea5e9;">📅 Book a Call</button>
                 </div>
             </div>
-        \`;
+        `;
         document.body.insertAdjacentHTML('beforeend', html);
 
         const pill = document.getElementById('adv-hire-pill');
@@ -181,7 +181,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     badge.style.cssText = 'margin-left:8px; font-size:12px; background:rgba(0,0,0,0.3); padding:2px 6px; border-radius:10px;';
                     btn.appendChild(badge);
                 }
-                badge.innerText = \`⬇️ \${count}\`;
+                badge.innerText = `⬇️ ${count}`;
             });
         };
         updateUI();
@@ -191,7 +191,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // F31 & F32: Keyboard Shortcuts & Print
     // ==========================================
     safeRun('Shortcuts', () => {
-        const html = \`
+        const html = `
             <div id="adv-toast" class="adv-toast"></div>
             <div class="adv-hire-modal" id="adv-shortcuts-modal">
                 <div class="adv-hire-content" style="text-align:left;">
@@ -211,7 +211,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     </ul>
                 </div>
             </div>
-        \`;
+        `;
         document.body.insertAdjacentHTML('beforeend', html);
 
         const toast = document.getElementById('adv-toast');
@@ -236,8 +236,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const key = e.key.toLowerCase();
             const scrollTo = (id, name) => {
-                const el = document.getElementById(id) || document.querySelector(\`[id*="\${id}"]\`);
-                if (el) { el.scrollIntoView({behavior:'smooth'}); showToast(\`⌨️ Navigating to \${name}...\`); }
+                const el = document.getElementById(id) || document.querySelector(`[id*="${id}"]`);
+                if (el) { el.scrollIntoView({behavior:'smooth'}); showToast(`⌨️ Navigating to ${name}...`); }
             };
 
             switch(key) {
@@ -342,7 +342,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Find a place to inject. Like contact section or footer
         const target = document.getElementById('contact') || document.querySelector('footer') || document.body;
         
-        const html = \`
+        const html = `
             <div class="adv-map-container">
                 <h3 style="color:#0ea5e9; text-align:center; margin-top:0;">Global Reach</h3>
                 <p style="text-align:center; font-size:14px; margin-bottom:15px;" id="adv-map-counter">🌍 Loading visitors...</p>
@@ -358,7 +358,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="adv-ticker-content" id="adv-ticker-content">...</div>
                 </div>
             </div>
-        \`;
+        `;
         target.insertAdjacentHTML('beforebegin', html);
 
         // Fetch location
@@ -375,9 +375,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         localStorage.setItem('portfolio_visitors', JSON.stringify(visitors));
                     }
                     
-                    document.getElementById('adv-map-counter').innerText = \`🌍 Visited from \${new Set(visitors.map(v=>v.country)).size} countries\`;
+                    document.getElementById('adv-map-counter').innerText = `🌍 Visited from ${new Set(visitors.map(v=>v.country)).size} countries`;
                     
-                    const tickerText = visitors.slice(-10).reverse().map(v => \`Someone from \${v.city}, \${v.country} just visited\`).join(' • ');
+                    const tickerText = visitors.slice(-10).reverse().map(v => `Someone from ${v.city}, ${v.country} just visited`).join(' • ');
                     document.getElementById('adv-ticker-content').innerText = tickerText;
 
                     // Plot dots
@@ -389,8 +389,8 @@ document.addEventListener('DOMContentLoaded', () => {
                             const y = (90 - v.lat) * (500 / 180);
                             const dot = document.createElement('div');
                             dot.className = 'adv-map-dot';
-                            dot.style.left = \`\${(x/1000)*100}%\`;
-                            dot.style.top = \`\${(y/500)*100}%\`;
+                            dot.style.left = `${(x/1000)*100}%`;
+                            dot.style.top = `${(y/500)*100}%`;
                             wrap.appendChild(dot);
                         }
                     });
@@ -409,7 +409,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const sections = Array.from(document.querySelectorAll('section'));
             if(sections.length > 0) {
                 let dotsHtml = '<div class="adv-swipe-dots">';
-                sections.forEach((_, i) => { dotsHtml += \`<div class="adv-dot \${i===0?'active':''}" id="adv-dot-\${i}"></div>\`; });
+                sections.forEach((_, i) => { dotsHtml += `<div class="adv-dot ${i===0?'active':''}" id="adv-dot-${i}"></div>`; });
                 dotsHtml += '</div>';
                 document.body.insertAdjacentHTML('beforeend', dotsHtml);
 

@@ -162,36 +162,36 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Commands logic
     const commands = {
-        'help': () => \`Available commands:
+        'help': () => `Available commands:
   help       - Show this message
   about      - Display information about Vikash
   skills     - List technical skills
   projects   - Show developed projects
   contact    - Show contact information
   clear      - Clear the terminal screen
-  exit       - Close the terminal\`,
+  exit       - Close the terminal`,
         
-        'about': () => \`[Vikash Saravanan]
+        'about': () => `[Vikash Saravanan]
 Role: AI Engineer, Prompt Engineer & Web Developer
 Location: Coimbatore, Tamil Nadu
-Objective: Ambitious student actively building enterprise-grade AI automation systems.\`,
+Objective: Ambitious student actively building enterprise-grade AI automation systems.`,
         
-        'skills': () => \`[Core Competencies]
+        'skills': () => `[Core Competencies]
 - Python, SQL, JavaScript, React
 - Machine Learning, Computer Vision (YOLOv8)
 - Prompt Engineering, LLM Integration
-- n8n Automation, Cloud Deployments\`,
+- n8n Automation, Cloud Deployments`,
         
-        'projects': () => \`[Key Projects]
+        'projects': () => `[Key Projects]
 1. HearWise (AI Hearing Screening)
 2. OpenEnv Debugger (Meta Hackathon Finalist)
 3. Portfolio AI Chatbot
-4. Logic Intelligence Tech CRM\`,
+4. Logic Intelligence Tech CRM`,
         
-        'contact': () => \`[Contact Data]
+        'contact': () => `[Contact Data]
 Email: vikash07052008@gmail.com
 LinkedIn: linkedin.com/in/vikash-saravanan-j7528
-GitHub: github.com/vikashsaravanann\`,
+GitHub: github.com/vikashsaravanann`,
         
         'clear': () => {
             terminalOutput.innerHTML = '';
@@ -209,14 +209,14 @@ GitHub: github.com/vikashsaravanann\`,
             const val = terminalInput.value.trim().toLowerCase();
             if (val) {
                 // Echo command
-                appendOutput(\`<span class="prompt">guest@vikash:~$</span> \${val}\`);
+                appendOutput(`<span class="prompt">guest@vikash:~$</span> ${val}`);
                 
                 // Execute
                 if (commands[val]) {
                     const res = commands[val]();
                     if (res) appendOutput(res);
                 } else {
-                    appendOutput(\`<span class="terminal-err">Command not found: \${val}. Type 'help' for available commands.</span>\`);
+                    appendOutput(`<span class="terminal-err">Command not found: ${val}. Type 'help' for available commands.</span>`);
                 }
             }
             terminalInput.value = '';

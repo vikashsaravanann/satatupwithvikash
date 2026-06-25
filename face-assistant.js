@@ -250,7 +250,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (detection) {
                 descriptors.push(detection.descriptor);
                 framesCaptured++;
-                overlayDesc.textContent = \`Capturing frames... (\${framesCaptured}/5)\`;
+                overlayDesc.textContent = `Capturing frames... (${framesCaptured}/5)`;
                 
                 if (framesCaptured >= 5) {
                     clearInterval(regInterval);
@@ -298,9 +298,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (isOwner) {
             status.textContent = "Recognised ✅ (Owner)";
             overlayTitle.textContent = "Welcome back, Vikash Saravanan! 👋";
-            overlayDesc.textContent = \`Today is \${today}.\\nReady to build something amazing today?\`;
+            overlayDesc.textContent = `Today is ${today}.\\nReady to build something amazing today?`;
             
-            ttsText = \`Hello Vikash Saravanan! Welcome back. Today is \${today}. How can I assist you today?\`;
+            ttsText = `Hello Vikash Saravanan! Welcome back. Today is ${today}. How can I assist you today?`;
             initialChatMsg = "I'm your Portfolio Assistant. I manage your portfolio and can help you update it, check your projects, or anything else you need.";
         } else {
             status.textContent = "Visitor Detected 👋";
@@ -322,7 +322,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Chat functionality
     function addMessage(text, sender) {
         const msgDiv = document.createElement('div');
-        msgDiv.className = \`fa-msg \${sender}\`;
+        msgDiv.className = `fa-msg ${sender}`;
         msgDiv.textContent = text;
         chatMessages.appendChild(msgDiv);
         chatMessages.scrollTop = chatMessages.scrollHeight;
@@ -366,16 +366,16 @@ document.addEventListener('DOMContentLoaded', () => {
             return "I am ready to assist you, Vikash. How can I help with the portfolio today?";
         } else {
             // Visitor Mode Q&A
-            if (q.includes('who is') || q.includes('about')) return \`\${KB.name} is a \${KB.role} at \${KB.education}. He is the \${KB.companies}.\`;
-            if (q.includes('skill') || q.includes('tech') || q.includes('stack')) return \`Vikash's skills include: \${KB.skills}.\`;
-            if (q.includes('project') || q.includes('work') || q.includes('build')) return \`He has built several projects including AI automation systems and health-tech SaaS. You can see them in the Projects section or his GitHub: \${KB.github}\`;
-            if (q.includes('contact') || q.includes('email') || q.includes('reach')) return \`You can contact Vikash at \${KB.email} or connect on LinkedIn: \${KB.linkedin}\`;
-            if (q.includes('company') || q.includes('startup') || q.includes('founder') || q.includes('ceo')) return \`Vikash is the \${KB.companies}.\`;
-            if (q.includes('location') || q.includes('where')) return \`Vikash is based in \${KB.location}.\`;
-            if (q.includes('education') || q.includes('study') || q.includes('college')) return \`He studies at \${KB.education} as a \${KB.role}.\`;
-            if (q.includes('achievement') || q.includes('hackathon')) return \`He is a \${KB.achievements}.\`;
+            if (q.includes('who is') || q.includes('about')) return `${KB.name} is a ${KB.role} at ${KB.education}. He is the ${KB.companies}.`;
+            if (q.includes('skill') || q.includes('tech') || q.includes('stack')) return `Vikash's skills include: ${KB.skills}.`;
+            if (q.includes('project') || q.includes('work') || q.includes('build')) return `He has built several projects including AI automation systems and health-tech SaaS. You can see them in the Projects section or his GitHub: ${KB.github}`;
+            if (q.includes('contact') || q.includes('email') || q.includes('reach')) return `You can contact Vikash at ${KB.email} or connect on LinkedIn: ${KB.linkedin}`;
+            if (q.includes('company') || q.includes('startup') || q.includes('founder') || q.includes('ceo')) return `Vikash is the ${KB.companies}.`;
+            if (q.includes('location') || q.includes('where')) return `Vikash is based in ${KB.location}.`;
+            if (q.includes('education') || q.includes('study') || q.includes('college')) return `He studies at ${KB.education} as a ${KB.role}.`;
+            if (q.includes('achievement') || q.includes('hackathon')) return `He is a ${KB.achievements}.`;
             
-            return \`For more details, you can contact Vikash at \${KB.email} or visit his LinkedIn (\${KB.linkedin}).\`;
+            return `For more details, you can contact Vikash at ${KB.email} or visit his LinkedIn (${KB.linkedin}).`;
         }
     }
 

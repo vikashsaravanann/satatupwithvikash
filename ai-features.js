@@ -11,10 +11,10 @@ const AI_API_URL = (() => {
     }
     return 'https://portfolio-information.vercel.app/api/chat';
 })();
-const CALENDLY_URL = "https://calendly.com/vikash07052008"; 
+const CALENDLY_URL = "https://calendly.com/vikash07052008";
 // ============================================
 
-const VIKASH_SYSTEM_PROMPT = \`You are the AI Portfolio Assistant for Vikash Saravanan J.
+const VIKASH_SYSTEM_PROMPT = `You are the AI Portfolio Assistant for Vikash Saravanan.
 You represent his portfolio and answer visitor questions professionally and helpfully.
 
 About Vikash:
@@ -29,7 +29,7 @@ About Vikash:
 - Email: vikash07052008@gmail.com
 - Open to: Frontend Developer, Full-Stack, and Web Development roles
 
-Keep answers concise, friendly, and professional. If asked something unknown about Vikash, suggest contacting him at vikash07052008@gmail.com.\`;
+Keep answers concise, friendly, and professional. If asked something unknown about Vikash, suggest contacting him at vikash07052008@gmail.com.`;
 
 async function callGrokAPI(messages, maxTokens = 500) {
     const response = await fetch(AI_API_URL, {
@@ -52,7 +52,7 @@ async function callGrokAPI(messages, maxTokens = 500) {
     return data.choices[0].message.content;
 }
 
-const safeAiRun = (name, fn) => { try { fn(); } catch(e) { console.error(\`AI Feature [\${name}] Error:\`, e); } };
+const safeAiRun = (name, fn) => { try { fn(); } catch(e) { console.error(`AI Feature [${name}] Error:`, e); } };
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // F2: AI Resume Analyser
     // ==========================================
     safeAiRun('ResumeAnalyzer', () => {
-        const html = \`
+        const html = `
             <button class="ai-float-btn" id="ai-analyze-btn">📋 Check My Fit</button>
             <div class="ai-modal" id="ai-analyze-modal">
                 <div class="ai-modal-content" id="ai-analyze-content">
@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                 </div>
             </div>
-        \`;
+        `;
         document.body.insertAdjacentHTML('beforeend', html);
 
         const btn = document.getElementById('ai-analyze-btn');
@@ -103,20 +103,20 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('ai-match-circle').innerText = "";
             document.getElementById('ai-match-circle').classList.add('loading');
 
-            const promptMsg = \`You are a professional recruiter assistant. Analyse how well Vikash Saravanan J fits this job description: \n\n\${jd}\n\nHis profile:\n- B.Tech AI & Data Science student (2029), Rathinam Technical Campus\n- Founder & CEO of HearWise Technologies and Logic Intelligence Technologies Pvt. Ltd.\n- Meta PyTorch OpenEnv Hackathon Finalist\n- Skills: React, TypeScript, Next.js, Tailwind CSS, Supabase, Python, Node.js, Framer Motion, Vite\n\nRespond ONLY in this exact JSON format (no markdown, no extra text):\n{\n  "match_percentage": 85,\n  "matching_skills": ["React", "TypeScript", "Node.js"],\n  "gaps": ["Docker", "AWS"],\n  "recommendation": "Strong candidate for this role. Vikash brings solid frontend and full-stack skills...",\n  "verdict": "Recommended"\n}\`;
+            const promptMsg = `You are a professional recruiter assistant. Analyse how well Vikash Saravanan J fits this job description: \n\n${jd}\n\nHis profile:\n- B.Tech AI & Data Science student (2029), Rathinam Technical Campus\n- Founder & CEO of HearWise Technologies and Logic Intelligence Technologies Pvt. Ltd.\n- Meta PyTorch OpenEnv Hackathon Finalist\n- Skills: React, TypeScript, Next.js, Tailwind CSS, Supabase, Python, Node.js, Framer Motion, Vite\n\nRespond ONLY in this exact JSON format (no markdown, no extra text):\n{\n  "match_percentage": 85,\n  "matching_skills": ["React", "TypeScript", "Node.js"],\n  "gaps": ["Docker", "AWS"],\n  "recommendation": "Strong candidate for this role. Vikash brings solid frontend and full-stack skills...",\n  "verdict": "Recommended"\n}`;
 
             try {
                 let resStr = await callGrokAPI([{ role: "user", content: promptMsg }], 800);
                 
                 // Clean markdown if AI includes it
-                if(resStr.startsWith('\`\`\`json')) resStr = resStr.replace(/\`\`\`json/g, '').replace(/\`\`\`/g, '');
+                if(resStr.startsWith('```json')) resStr = resStr.replace(/```json/g, '').replace(/```/g, '');
                 const result = JSON.parse(resStr.trim());
 
                 document.getElementById('ai-match-circle').classList.remove('loading');
-                document.getElementById('ai-match-circle').innerText = \`\${result.match_percentage}%\`;
+                document.getElementById('ai-match-circle').innerText = `${result.match_percentage}%`;
                 
-                document.getElementById('ai-match-skills').innerHTML = result.matching_skills.map(s => \`<span class="ai-tag green">\${s}</span>\`).join('');
-                document.getElementById('ai-gap-skills').innerHTML = result.gaps.map(s => \`<span class="ai-tag yellow">\${s}</span>\`).join('');
+                document.getElementById('ai-match-skills').innerHTML = result.matching_skills.map(s => `<span class="ai-tag green">${s}</span>`).join('');
+                document.getElementById('ai-gap-skills').innerHTML = result.gaps.map(s => `<span class="ai-tag yellow">${s}</span>`).join('');
                 document.getElementById('ai-rec-text').innerText = result.recommendation;
 
                 resultDiv.classList.add('active');
@@ -138,7 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Print just the result modal content
             const content = document.getElementById('ai-analyze-content').innerHTML;
             const originalBody = document.body.innerHTML;
-            document.body.innerHTML = \`<div style="padding:40px; background:#fff; color:#000;">\${content}</div>\`;
+            document.body.innerHTML = `<div style="padding:40px; background:#fff; color:#000;">${content}</div>`;
             window.print();
             document.body.innerHTML = originalBody;
             location.reload(); // Quick restore of state
@@ -149,7 +149,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // F5: AI Cover Letter Generator
     // ==========================================
     safeAiRun('CoverLetter', () => {
-        const html = \`
+        const html = `
             <button class="ai-float-btn cover-letter" id="ai-cl-btn">✉️ Gen Cover Letter</button>
             <div class="ai-modal" id="ai-cl-modal">
                 <div class="ai-modal-content">
@@ -170,7 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                 </div>
             </div>
-        \`;
+        `;
         document.body.insertAdjacentHTML('beforeend', html);
 
         const btn = document.getElementById('ai-cl-btn');
@@ -195,7 +195,7 @@ document.addEventListener('DOMContentLoaded', () => {
             preview.classList.remove('active');
             actions.style.display = 'none';
 
-            const promptMsg = \`Write a professional cover letter from Vikash Saravanan J applying for \${role} at \${company}. His background: B.Tech AI & Data Science (2029), Founder & CEO of HearWise Technologies and Logic Intelligence Technologies Pvt. Ltd., Meta PyTorch Hackathon Finalist, skills in React/TypeScript/Next.js/Python/Supabase. Make it compelling, confident, and under 300 words. \${reqs ? 'Include these specific requirements: ' + reqs : ''}\`;
+            const promptMsg = `Write a professional cover letter from Vikash Saravanan J applying for ${role} at ${company}. His background: B.Tech AI & Data Science (2029), Founder & CEO of HearWise Technologies and Logic Intelligence Technologies Pvt. Ltd., Meta PyTorch Hackathon Finalist, skills in React/TypeScript/Next.js/Python/Supabase. Make it compelling, confident, and under 300 words. ${reqs ? 'Include these specific requirements: ' + reqs : ''}`;
 
             try {
                 generatedText = await callGrokAPI([{ role: "user", content: promptMsg }], 800);
@@ -223,7 +223,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const element = document.createElement('a');
             const file = new Blob([generatedText], {type: 'text/plain'});
             element.href = URL.createObjectURL(file);
-            element.download = \`CoverLetter_\${document.getElementById('ai-cl-company').value}.txt\`;
+            element.download = `CoverLetter_${document.getElementById('ai-cl-company').value}.txt`;
             document.body.appendChild(element);
             element.click();
             document.body.removeChild(element);
@@ -234,14 +234,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // F22: Calendly Integration
     // ==========================================
     safeAiRun('Calendly', () => {
-        const html = \`
+        const html = `
             <div class="ai-modal" id="ai-calendly-modal">
                 <div class="ai-modal-content" style="padding:0; overflow:hidden;">
                     <button class="ai-modal-close" style="z-index:10; background:#0f172a; border-radius:50%; width:30px; height:30px; top:10px; right:10px; padding:0;" onclick="document.getElementById('ai-calendly-modal').classList.remove('active')">&times;</button>
                     <div id="ai-calendly-body" style="width:100%; height:600px; background:#fff; display:flex; align-items:center; justify-content:center;"></div>
                 </div>
             </div>
-        \`;
+        `;
         document.body.insertAdjacentHTML('beforeend', html);
 
         const openCalendly = () => {
@@ -249,15 +249,15 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('ai-calendly-modal').classList.add('active');
             
             if(CALENDLY_URL && CALENDLY_URL.trim() !== "") {
-                body.innerHTML = \`<iframe src="\${CALENDLY_URL}?embed_domain=\${window.location.hostname}&embed_type=Inline" class="ai-calendly-wrap"></iframe>\`;
+                body.innerHTML = `<iframe src="${CALENDLY_URL}?embed_domain=${window.location.hostname}&embed_type=Inline" class="ai-calendly-wrap"></iframe>`;
             } else {
-                body.innerHTML = \`
+                body.innerHTML = `
                     <div style="text-align:center; padding:20px; color:#000;">
                         <h3>Calendly not set up yet.</h3>
                         <p>Contact via email instead.</p>
                         <a href="mailto:vikash07052008@gmail.com" class="ai-btn" style="display:inline-block; margin-top:15px; text-decoration:none;">Email Vikash</a>
                     </div>
-                \`;
+                `;
             }
         };
 
