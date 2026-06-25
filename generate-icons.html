@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Generate PWA Icons</title>
+</head>
+<body style="background: #0f172a; color: white; text-align: center; font-family: sans-serif; padding: 50px;">
+    <h2>Generating Icons...</h2>
+    <p>Check your downloads folder for icon-192.png and icon-512.png</p>
+    <p>Move them into your Portfolio_Information directory.</p>
+    
+    <script>
+        function createIcon(size) {
+            const canvas = document.createElement('canvas');
+            canvas.width = size;
+            canvas.height = size;
+            const ctx = canvas.getContext('2d');
+            
+            // Background
+            ctx.fillStyle = '#0ea5e9'; // sky-blue
+            ctx.beginPath();
+            ctx.arc(size/2, size/2, size/2, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Text
+            ctx.fillStyle = '#ffffff';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.font = `bold ${size * 0.4}px Arial`;
+            ctx.fillText('VS', size/2, size/2);
+            
+            // Download
+            const link = document.createElement('a');
+            link.download = `icon-${size}.png`;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+        
+        // Generate both sizes
+        setTimeout(() => {
+            createIcon(192);
+            setTimeout(() => createIcon(512), 500);
+        }, 1000);
+    </script>
+</body>
+</html>

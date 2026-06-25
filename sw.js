@@ -1,70 +1,53 @@
-const CACHE_NAME = 'vikash-portfolio-v3';
-const ASSETS_TO_CACHE = [
-    './',
-    './index.html',
-    './style.css',
-    './animations.css',
-    './script.js',
-    './animations.js',
-    './chatbot.js',
-    './manifest.json',
-    './certifications.html',
-    'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;600;700;800&display=swap',
-    'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css'
-];
+const CACHE_NAME = 'vikash-portfolio-v1';
 
-// Install — Cache core assets
 self.addEventListener('install', (event) => {
     event.waitUntil(
         caches.open(CACHE_NAME).then((cache) => {
-            console.log('SW: Caching core assets');
-            return cache.addAll(ASSETS_TO_CACHE);
+            return cache.addAll([
+                '/Portfolio_Information/',
+                '/Portfolio_Information/index.html',
+                '/Portfolio_Information/style.css'
+            ]).catch(err => console.warn('PWA Cache error:', err));
         })
     );
     self.skipWaiting();
 });
 
-// Activate — Clean old caches
+self.addEventListener('fetch', (event) => {
+    event.respondWith(
+        caches.match(event.request).then((response) => {
+            if (response) {
+                return response;
+            }
+            return fetch(event.request).then(
+                (response) => {
+                    if(!response || response.status !== 200 || response.type !== 'basic') {
+                        return response;
+                    }
+                    var responseToCache = response.clone();
+                    caches.open(CACHE_NAME)
+                        .then((cache) => {
+                            cache.put(event.request, responseToCache);
+                        });
+                    return response;
+                }
+            );
+        }).catch(() => {
+            // Ignore for now
+        })
+    );
+});
+
 self.addEventListener('activate', (event) => {
     event.waitUntil(
         caches.keys().then((cacheNames) => {
             return Promise.all(
-                cacheNames
-                    .filter((name) => name !== CACHE_NAME)
-                    .map((name) => caches.delete(name))
+                cacheNames.map((cacheName) => {
+                    if (cacheName !== CACHE_NAME) {
+                        return caches.delete(cacheName);
+                    }
+                })
             );
         })
-    );
-    self.clients.claim();
-});
-
-// Fetch — Network-first with cache fallback
-self.addEventListener('fetch', (event) => {
-    // Skip non-GET requests and API calls
-    if (event.request.method !== 'GET') return;
-    if (event.request.url.includes('/api/')) return;
-    if (event.request.url.includes('api.github.com')) return;
-    if (event.request.url.includes('emailjs.com')) return;
-
-    event.respondWith(
-        fetch(event.request)
-            .then((response) => {
-                // Clone and cache the fresh response
-                const responseClone = response.clone();
-                caches.open(CACHE_NAME).then((cache) => {
-                    cache.put(event.request, responseClone);
-                });
-                return response;
-            })
-            .catch(() => {
-                // Network failed — serve from cache
-                return caches.match(event.request).then((cachedResponse) => {
-                    if (cachedResponse) return cachedResponse;
-                    // Return offline fallback for navigation requests
-                    if (event.request.mode === 'navigate') {
-                        return caches.match('./index.html');
-                    }
-                });
-            })
     );
 });

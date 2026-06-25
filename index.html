@@ -105,6 +105,17 @@
     <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
     <link rel="stylesheet" href="face-assistant.css">
     <link rel="stylesheet" href="voice-nav.css">
+    
+    <!-- PWA Support -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0ea5e9">
+    
+    <!-- Calendly Integration -->
+    <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+    
+    <!-- Advanced & AI Features CSS -->
+    <link rel="stylesheet" href="advanced-features.css">
+    <link rel="stylesheet" href="ai-features.css">
 </head>
 
 <body>
@@ -1468,6 +1479,23 @@
     <script src="terminal.js"></script>
     <script src="face-assistant.js"></script>
     <script src="voice-nav.js"></script>
+    
+    <!-- Calendly Script -->
+    <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
+    
+    <!-- Advanced & AI Features JS -->
+    <script src="advanced-features.js"></script>
+    <script src="ai-features.js"></script>
+    <script src="instagram-feed.js"></script>
+
+    <!-- PWA Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js').catch(err => console.log('SW registration failed:', err));
+            });
+        }
+    </script>
 </body>
 
 </html><!-- Trigger Update -->
