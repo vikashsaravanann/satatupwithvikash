@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // ==========================================
     safeAiRun('ResumeAnalyzer', () => {
         const html = `
-            <button class="ai-float-btn" id="ai-analyze-btn">📋 AI Fit Assessment</button>
+            <button class="ai-float-btn" id="ai-analyze-btn"><i class="fa-solid fa-briefcase"></i> AI Fit Assessment</button>
             <div class="ai-modal" id="ai-analyze-modal">
                 <div class="ai-modal-content" id="ai-analyze-content">
                     <button class="ai-modal-close" onclick="document.getElementById('ai-analyze-modal').classList.remove('active')">&times;</button>
@@ -150,7 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // ==========================================
     safeAiRun('CoverLetter', () => {
         const html = `
-            <button class="ai-float-btn cover-letter" id="ai-cl-btn">✉️ Generate Executive Brief</button>
+            <button class="ai-float-btn cover-letter" id="ai-cl-btn"><i class="fa-solid fa-file-signature"></i> Generate Executive Brief</button>
             <div class="ai-modal" id="ai-cl-modal">
                 <div class="ai-modal-content">
                     <button class="ai-modal-close" onclick="document.getElementById('ai-cl-modal').classList.remove('active')">&times;</button>
