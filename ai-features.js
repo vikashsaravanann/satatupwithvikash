@@ -1,11 +1,16 @@
 // ai-features.js
 
 // ============================================
-// GROK API CONFIGURATION — PASTE YOUR KEY HERE
+// AI FEATURES CONFIGURATION (uses backend proxy)
 // ============================================
-const GROK_API_KEY = "YOUR_XAI_API_KEY_HERE";
-const GROK_MODEL = "grok-3-latest";
-const GROK_API_URL = "https://api.x.ai/v1/chat/completions";
+const GROK_MODEL = "llama-3.3-70b-versatile";
+const AI_API_URL = (() => {
+    const loc = window.location;
+    if (loc.hostname === 'localhost' || loc.hostname === '127.0.0.1') {
+        return 'http://localhost:3000/api/chat';
+    }
+    return 'https://portfolio-information.vercel.app/api/chat';
+})();
 const CALENDLY_URL = "https://calendly.com/vikash07052008"; 
 // ============================================
 
@@ -27,20 +32,15 @@ About Vikash:
 Keep answers concise, friendly, and professional. If asked something unknown about Vikash, suggest contacting him at vikash07052008@gmail.com.\`;
 
 async function callGrokAPI(messages, maxTokens = 500) {
-    if (GROK_API_KEY === "YOUR_XAI_API_KEY_HERE") {
-        throw new Error("API_NOT_CONFIGURED");
-    }
-    const response = await fetch(GROK_API_URL, {
+    const response = await fetch(AI_API_URL, {
         method: "POST",
         headers: {
-            "Content-Type": "application/json",
-            "Authorization": \`Bearer \${GROK_API_KEY}\`
+            "Content-Type": "application/json"
         },
         body: JSON.stringify({
             model: GROK_MODEL,
             messages: messages,
             max_tokens: maxTokens,
-            temperature: 0.7,
             stream: false
         })
     });
