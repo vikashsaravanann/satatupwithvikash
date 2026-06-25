@@ -1,0 +1,218 @@
+/* voice-nav.css */
+
+/* Microphone Button */
+#voice-nav-btn {
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: #1e293b;
+    border: 2px solid #0ea5e9;
+    color: white;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    transition: all 0.3s ease;
+}
+
+#voice-nav-btn:hover {
+    transform: scale(1.1);
+}
+
+/* Tooltip */
+#voice-nav-btn::after {
+    content: "Voice Commands";
+    position: absolute;
+    left: 70px;
+    background: rgba(15, 23, 42, 0.9);
+    color: #fff;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    border: 1px solid rgba(14, 165, 233, 0.3);
+}
+
+#voice-nav-btn:hover::after {
+    opacity: 1;
+}
+
+/* Listening State */
+#voice-nav-btn.listening {
+    background: #0ea5e9;
+    border-color: #fff;
+    animation: vn-pulse 1.5s infinite;
+}
+
+@keyframes vn-pulse {
+    0% { box-shadow: 0 0 0 0 rgba(14, 165, 233, 0.7); }
+    70% { box-shadow: 0 0 0 15px rgba(14, 165, 233, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(14, 165, 233, 0); }
+}
+
+/* Processing State */
+#voice-nav-btn.processing {
+    background: #1e293b;
+    border-top-color: transparent;
+    animation: vn-spin 1s linear infinite;
+}
+#voice-nav-btn.processing i {
+    animation: vn-spin-reverse 1s linear infinite;
+}
+
+@keyframes vn-spin {
+    100% { transform: rotate(360deg); }
+}
+@keyframes vn-spin-reverse {
+    100% { transform: rotate(-360deg); }
+}
+
+/* Label when listening */
+.vn-listening-label {
+    position: fixed;
+    bottom: 95px;
+    left: 15px;
+    background: rgba(14, 165, 233, 0.15);
+    border: 1px solid rgba(14, 165, 233, 0.5);
+    color: #fff;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-family: sans-serif;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    transform: translateY(10px);
+    z-index: 9998;
+}
+
+.vn-listening-label.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Toast Notification */
+#vn-toast {
+    position: fixed;
+    top: -100px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #0f172a;
+    border: 1px solid #0ea5e9;
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: 30px;
+    font-family: sans-serif;
+    font-size: 14px;
+    z-index: 10000;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    transition: top 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    max-width: 90vw;
+    text-align: center;
+}
+
+#vn-toast.show {
+    top: 30px;
+}
+
+/* Help Panel */
+#vn-help-panel {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.95);
+    background: #0f172a;
+    border: 1px solid #0ea5e9;
+    color: #fff;
+    width: 90vw;
+    max-width: 600px;
+    border-radius: 16px;
+    z-index: 10001;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.7);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+#vn-help-panel.active {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.vn-help-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 24px;
+    border-bottom: 1px solid rgba(14, 165, 233, 0.2);
+    background: rgba(14, 165, 233, 0.05);
+}
+
+.vn-help-header h3 {
+    margin: 0;
+    color: #0ea5e9;
+    font-family: sans-serif;
+}
+
+.vn-help-close {
+    background: none;
+    border: none;
+    color: #94a3b8;
+    font-size: 24px;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.vn-help-close:hover {
+    color: #fff;
+}
+
+.vn-help-content {
+    padding: 24px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    overflow-y: auto;
+    max-height: 60vh;
+}
+
+.vn-help-item {
+    background: rgba(255,255,255,0.03);
+    padding: 12px 16px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.05);
+}
+
+.vn-help-command {
+    color: #38bdf8;
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 4px;
+    font-family: monospace;
+}
+
+.vn-help-action {
+    color: #cbd5e1;
+    font-size: 13px;
+}
+
+@media (max-width: 600px) {
+    .vn-help-content {
+        grid-template-columns: 1fr;
+    }
+}

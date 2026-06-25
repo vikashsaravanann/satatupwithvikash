@@ -1,0 +1,310 @@
+/* face-assistant.css */
+
+#face-assistant-btn {
+    position: fixed;
+    bottom: 90px; /* Above the chatbot if present */
+    right: 30px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #0ea5e9, #7c3aed);
+    color: white;
+    border: none;
+    box-shadow: 0 4px 15px rgba(14, 165, 233, 0.4);
+    cursor: pointer;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#face-assistant-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(14, 165, 233, 0.6);
+}
+
+#face-assistant-btn::after {
+    content: "Portfolio AI Assistant";
+    position: absolute;
+    right: 70px;
+    background: rgba(15, 23, 42, 0.9);
+    color: #fff;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    border: 1px solid rgba(14, 165, 233, 0.3);
+}
+
+#face-assistant-btn:hover::after {
+    opacity: 1;
+}
+
+#face-assistant-panel {
+    position: fixed;
+    bottom: 160px;
+    right: 30px;
+    width: 380px;
+    max-width: 95vw;
+    background: #0f172a;
+    border: 1px solid #0ea5e9;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    z-index: 9998;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transform: translateY(20px);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+#face-assistant-panel.active {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.fa-panel-header {
+    background: rgba(14, 165, 233, 0.1);
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(14, 165, 233, 0.2);
+}
+
+.fa-panel-header h3 {
+    margin: 0;
+    color: #fff;
+    font-size: 16px;
+    font-family: 'Outfit', sans-serif;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.fa-close-btn {
+    background: none;
+    border: none;
+    color: #94a3b8;
+    font-size: 20px;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.fa-close-btn:hover {
+    color: #fff;
+}
+
+.fa-webcam-container {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+#fa-video {
+    width: 280px;
+    height: 200px;
+    object-fit: cover;
+    transform: scaleX(-1); /* Mirror effect */
+}
+
+#fa-canvas {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 280px;
+    height: 200px;
+    pointer-events: none;
+}
+
+.fa-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(15, 23, 42, 0.85);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    text-align: center;
+    padding: 20px;
+    color: #fff;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.fa-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.fa-overlay h4 {
+    margin: 0 0 10px 0;
+    font-size: 18px;
+    color: #0ea5e9;
+}
+
+.fa-overlay p {
+    font-size: 14px;
+    color: #cbd5e1;
+    margin-bottom: 15px;
+}
+
+.fa-status-bar {
+    padding: 10px;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.2);
+    font-size: 13px;
+    color: #94a3b8;
+    border-bottom: 1px solid rgba(14, 165, 233, 0.1);
+}
+
+.fa-chat-container {
+    height: 250px;
+    display: flex;
+    flex-direction: column;
+    background: #0a0f1c;
+}
+
+.fa-chat-messages {
+    flex: 1;
+    padding: 15px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.fa-msg {
+    max-width: 85%;
+    padding: 10px 14px;
+    border-radius: 12px;
+    font-size: 14px;
+    line-height: 1.4;
+    word-wrap: break-word;
+}
+
+.fa-msg.assistant {
+    background: rgba(14, 165, 233, 0.1);
+    border: 1px solid rgba(14, 165, 233, 0.2);
+    color: #cbd5e1;
+    align-self: flex-start;
+    border-bottom-left-radius: 4px;
+}
+
+.fa-msg.user {
+    background: #0ea5e9;
+    color: #fff;
+    align-self: flex-end;
+    border-bottom-right-radius: 4px;
+}
+
+.fa-chat-input-area {
+    padding: 10px 15px;
+    background: #0f172a;
+    border-top: 1px solid rgba(14, 165, 233, 0.2);
+    display: flex;
+    gap: 10px;
+}
+
+#fa-input {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 8px 12px;
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s ease;
+}
+
+#fa-input:focus {
+    border-color: #0ea5e9;
+}
+
+#fa-send-btn {
+    background: #0ea5e9;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    width: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+#fa-send-btn:hover {
+    background: #0284c7;
+}
+
+#fa-register-btn {
+    background: #7c3aed;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 10px;
+    transition: background 0.2s ease;
+}
+
+#fa-register-btn:hover {
+    background: #6d28d9;
+}
+
+.fa-typing {
+    display: flex;
+    gap: 4px;
+    padding: 12px 14px;
+    background: rgba(14, 165, 233, 0.05);
+    border-radius: 12px;
+    align-self: flex-start;
+    border-bottom-left-radius: 4px;
+    width: max-content;
+}
+
+.fa-typing span {
+    width: 6px;
+    height: 6px;
+    background: #0ea5e9;
+    border-radius: 50%;
+    animation: fa-bounce 1.4s infinite ease-in-out both;
+}
+
+.fa-typing span:nth-child(1) { animation-delay: -0.32s; }
+.fa-typing span:nth-child(2) { animation-delay: -0.16s; }
+
+@keyframes fa-bounce {
+    0%, 80%, 100% { transform: scale(0); }
+    40% { transform: scale(1); }
+}
+
+@media (max-width: 480px) {
+    #face-assistant-panel {
+        right: 2.5vw;
+        bottom: 90px;
+    }
+}

@@ -103,6 +103,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <!-- QR Code Generator -->
     <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+    <link rel="stylesheet" href="face-assistant.css">
+    <link rel="stylesheet" href="voice-nav.css">
 </head>
 
 <body>
@@ -1371,109 +1373,7 @@
                     </p>
                 </div>
 
-                <!-- Widget 3: Quick Links -->
-                <div class="footer-widget" style="padding: 24px;">
-                    <h3 class="text-neon mb-3" style="font-size: 1.1rem;"><i class="fas fa-link text-accent mr-2"></i>
-                        Quick Navigation</h3>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-                        <a href="projects.html" class="footer-link-v2"><i class="fas fa-code"></i> Projects</a>
-                        <a href="certifications.html" class="footer-link-v2"><i class="fas fa-certificate"></i>
-                            Certs</a>
-                        <button onclick="generateResumePDF()" class="footer-link-v2"
-                            style="border:none; background:none; cursor:pointer; text-align:left;"><i
-                                class="fas fa-file-pdf"></i> Resume</button>
-                        <a href="#hero" class="footer-link-v2"><i class="fas fa-arrow-up"></i> Top</a>
-                    </div>
-                </div>
-
-                <!-- Widget 4: Social Connection -->
-                <div class="footer-widget" style="padding: 24px;">
-                    <h3 class="text-neon mb-3" style="font-size: 1.1rem;"><i
-                            class="fas fa-share-alt text-accent mr-2"></i> Stay Connected</h3>
-                    <div style="display: flex; gap: 15px;">
-                        <a href="https://github.com/vikashsaravanann" target="_blank" class="social-icon-box"
-                            title="GitHub"><i class="fab fa-github"></i></a>
-                        <a href="https://www.linkedin.com/in/vikash-saravanan-j7528" target="_blank"
-                            class="social-icon-box" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="https://www.instagram.com/startupwithvikash/" target="_blank" class="social-icon-box"
-                            title="Instagram"><i class="fab fa-instagram"></i></a>
-                        <a href="mailto:vikash07052008@gmail.com" class="social-icon-box" title="Email"><i
-                                class="fas fa-envelope"></i></a>
-                    </div>
-                </div>
             </div>
-
-            <!-- Professional Visitor Guest Book -->
-            <div class="container" style="max-width: 100%; margin: 50px auto 30px;">
-                <div class="footer-widget"
-                    style="padding: 0; overflow: hidden; border: 1px solid rgba(14, 165, 233, 0.12); border-radius: 8px;">
-                    <!-- Header -->
-                    <div
-                        style="padding: 28px 32px 20px; border-bottom: 1px solid rgba(255,255,255,0.06); background: linear-gradient(135deg, rgba(14,165,233,0.06), rgba(99,102,241,0.06));">
-                        <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 12px;">
-                            <div
-                                style="width: 44px; height: 44px; border-radius: 12px; background: linear-gradient(135deg, #0ea5e9, #6366f1); display: flex; align-items: center; justify-content: center;">
-                                <i class="fas fa-book-open" style="color: #fff; font-size: 1.2rem;"></i>
-                            </div>
-                            <div>
-                                <h3
-                                    style="font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 1.3rem; color: #fff; margin: 0;">
-                                    Visitor Guest Book</h3>
-                                <p
-                                    style="font-family: 'Inter', sans-serif; font-size: 0.78rem; color: rgba(255,255,255,0.45); margin: 2px 0 0;">
-                                    Share your feedback, tips, or words of encouragement</p>
-                            </div>
-                        </div>
-                        <p
-                            style="font-family: 'Inter', sans-serif; font-size: 0.85rem; color: rgba(255,255,255,0.6); line-height: 1.6; margin: 0;">
-                            Hi! I'm <strong style="color: #0ea5e9;">Vikash Saravanan</strong> — a B.Tech AI & Data
-                            Science student passionate about building intelligent systems.
-                            Whether you're a recruiter, fellow developer, or mentor, I'd love to hear your thoughts,
-                            advice, or feedback on my work. Every note means a lot!
-                        </p>
-                    </div>
-                    <!-- Form -->
-                    <form id="guestBookForm"
-                        style="padding: 20px 32px; border-bottom: 1px solid rgba(255,255,255,0.06);">
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
-                            <input type="text" id="gbName" placeholder="Your Name" required
-                                style="padding: 12px 16px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; color: #fff; font-size: 0.85rem; outline: none; font-family: 'Inter', sans-serif; transition: border 0.2s;"
-                                onfocus="this.style.borderColor='rgba(14,165,233,0.4)'"
-                                onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
-                            <select id="gbCategory"
-                                style="padding: 12px 16px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; color: #fff; font-size: 0.85rem; outline: none; font-family: 'Inter', sans-serif; appearance: auto;">
-                                <option value="💬 Feedback" style="background: #0a0a0f;">💬 Feedback</option>
-                                <option value="💡 Tip" style="background: #0a0a0f;">💡 Tip / Suggestion</option>
-                                <option value="🎯 Advice" style="background: #0a0a0f;">🎯 Career Advice</option>
-                                <option value="🙌 Encouragement" style="background: #0a0a0f;">🙌 Encouragement</option>
-                                <option value="🤝 Collaboration" style="background: #0a0a0f;">🤝 Collaboration Interest
-                                </option>
-                            </select>
-                        </div>
-                        <div style="display: flex; gap: 12px;">
-                            <input type="text" id="gbMessage" placeholder="Write your message here..." required
-                                style="flex: 1; padding: 12px 16px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; color: #fff; font-size: 0.85rem; outline: none; font-family: 'Inter', sans-serif; transition: border 0.2s;"
-                                onfocus="this.style.borderColor='rgba(14,165,233,0.4)'"
-                                onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
-                            <button type="submit"
-                                style="padding: 12px 24px; background: linear-gradient(135deg, #0ea5e9, #6366f1); border: none; border-radius: 10px; color: #fff; font-weight: 700; cursor: pointer; font-size: 0.85rem; white-space: nowrap; font-family: 'Inter', sans-serif; display: flex; align-items: center; gap: 8px; transition: transform 0.2s, box-shadow 0.2s;"
-                                onmouseover="this.style.transform='translateY(-1px)';this.style.boxShadow='0 4px 15px rgba(14,165,233,0.3)'"
-                                onmouseout="this.style.transform='none';this.style.boxShadow='none'">
-                                <i class="fas fa-pen-fancy"></i> Sign
-                            </button>
-                        </div>
-                    </form>
-                    <!-- Entries -->
-                    <div style="padding: 16px 32px 24px;">
-                        <p
-                            style="font-family: 'Inter', sans-serif; font-size: 0.75rem; color: rgba(255,255,255,0.3); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px; font-weight: 600;">
-                            <i class="fas fa-stream" style="margin-right: 6px;"></i> Recent Messages
-                        </p>
-                        <div id="guestBookEntries"
-                            style="display: flex; flex-direction: column; gap: 10px; max-height: 300px; overflow-y: auto;">
-                        </div>
-                    </div>
-                </div>
             </div>
 
             <div class="footer-bottom">
@@ -1566,6 +1466,8 @@
     </script>
     <script src="particles.js?v=20260526_1645"></script>
     <script src="terminal.js"></script>
+    <script src="face-assistant.js"></script>
+    <script src="voice-nav.js"></script>
 </body>
 
 </html><!-- Trigger Update -->
