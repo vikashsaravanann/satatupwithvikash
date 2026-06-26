@@ -61,14 +61,44 @@ document.addEventListener('DOMContentLoaded', () => {
     recognition.interimResults = false;
     recognition.lang = 'en-IN'; // Indian English
 
+    let selectedVoice = null;
+    
+    // Load voices and select a female voice
+    function loadVoices() {
+        const voices = synth.getVoices();
+        if (!voices.length) return;
+        
+        // Try to find a high-quality female voice
+        selectedVoice = voices.find(v => 
+            v.name.includes('Samantha') || 
+            v.name.includes('Victoria') || 
+            v.name.includes('Karen') || 
+            v.name.includes('Tessa') || 
+            v.name.includes('Google UK English Female') ||
+            (v.name.includes('Female') && v.lang.startsWith('en'))
+        ) || voices.find(v => v.lang === 'en-US' || v.lang === 'en-GB') || voices[0];
+        
+        console.log("🎙️ AI Voice selected:", selectedVoice ? selectedVoice.name : "Default");
+    }
+    
+    // Voices are loaded asynchronously in some browsers
+    loadVoices();
+    if (speechSynthesis.onvoiceschanged !== undefined) {
+        speechSynthesis.onvoiceschanged = loadVoices;
+    }
+
     // Speak helper
     function speak(text) {
         if (synth.speaking) {
             synth.cancel();
         }
         const utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = 'en-IN';
+        utterance.lang = 'en-US';
+        if (selectedVoice) {
+            utterance.voice = selectedVoice;
+        }
         utterance.rate = 1.0;
+        utterance.pitch = 1.1; // Slightly higher pitch for female tuning if default
         synth.speak(utterance);
     }
 
@@ -210,54 +240,43 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function handleCommand(cmd) {
-        let actionMsg = "";
         let found = true;
 
         if (cmd.includes('home') || cmd.includes('top')) {
-            actionMsg = "Navigating to Top";
+            speak("Navigating to top.");
             window.scrollTo({ top: 0, behavior: 'smooth' });
-            speak("Going to the top.");
         } else if (cmd.includes('about') || cmd.includes('who are you')) {
-            actionMsg = "Navigating to About";
+            speak("Navigating to about.");
             scrollToSection('about', 'about');
-            speak("Navigating to about section.");
         } else if (cmd.includes('project') || cmd.includes('my work')) {
-            actionMsg = "Navigating to Projects";
-            // Check if projects.html or section
+            speak("Navigating to projects.");
             if (window.location.pathname.includes('projects.html')) {
                 scrollToSection('projects', 'portfolio');
             } else {
                 const scrolled = scrollToSection('projects', 'project');
                 if (!scrolled) window.location.href = 'projects.html';
             }
-            speak("Showing projects.");
         } else if (cmd.includes('skill') || cmd.includes('tech stack')) {
-            actionMsg = "Navigating to Skills";
+            speak("Navigating to skills.");
             scrollToSection('skills', 'skill');
-            speak("Showing skills.");
         } else if (cmd.includes('certificat')) {
-            actionMsg = "Navigating to Certifications";
+            speak("Navigating to certifications.");
             if (window.location.pathname.includes('certifications.html')) {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             } else {
                 const scrolled = scrollToSection('certifications', 'certificat');
                 if (!scrolled) window.location.href = 'certifications.html';
             }
-            speak("Showing certifications.");
         } else if (cmd.includes('contact') || cmd.includes('reach out')) {
-            actionMsg = "Navigating to Contact";
+            speak("Navigating to contact.");
             scrollToSection('contact', 'contact');
-            speak("Navigating to contact section.");
         } else if (cmd.includes('github')) {
-            actionMsg = "Opening GitHub";
-            window.open('https://github.com/vikashsaravanann', '_blank');
             speak("Opening GitHub profile.");
+            window.open('https://github.com/vikashsaravanann', '_blank');
         } else if (cmd.includes('linkedin')) {
-            actionMsg = "Opening LinkedIn";
-            window.open('https://linkedin.com/in/vikash-saravanan-j7528', '_blank');
             speak("Opening LinkedIn profile.");
+            window.open('https://linkedin.com/in/vikash-saravanan-j7528', '_blank');
         } else if (cmd.includes('download resume') || cmd.includes('get resume')) {
-            actionMsg = "Downloading Resume";
             if (typeof generateResumePDF === 'function') {
                 generateResumePDF();
             } else {
@@ -267,30 +286,21 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             speak("Downloading resume.");
         } else if (cmd.includes('dark mode') || cmd.includes('light mode')) {
-            actionMsg = "Toggling Theme";
+            speak("Toggling theme.");
             // Try common theme toggles
             const themeBtn = document.getElementById('themeToggle') || document.querySelector('.theme-toggle');
             if (themeBtn) themeBtn.click();
             else speak("Theme toggle not found.");
             speak("Toggling theme.");
         } else if (cmd.includes('help') || cmd.includes('what can you do') || cmd.includes('commands')) {
-            actionMsg = "Showing Help";
             helpPanel.classList.add('active');
             speak("Here are the commands you can use. You can say home, about, projects, skills, contact, or stop.");
-        } else if (cmd.includes('stop') || cmd.includes('cancel') || cmd.includes('quiet') || cmd.includes('close')) {
-            actionMsg = "Stopping Voice Commands";
+        } else if (cmd.includes('clear') || cmd.includes('stop')) {
+            speak("Stopping voice navigation.");
             stopListening();
             helpPanel.classList.remove('active');
-            speak("Stopping voice commands.");
         } else {
-            found = false;
-            showToast(`🎤 "${cmd}" &rarr; <span style="color: #ef4444;">Not recognised</span>`, 3500);
-            speak("Sorry, I didn't catch that. Say 'help' to hear all available commands.");
-            stopListening(); // Pause so they can hear the error clearly
-        }
-
-        if (found) {
-            showToast(`🎤 "${cmd}" &rarr; <span style="color: #38bdf8;">${actionMsg}</span>`);
+            speak("Sorry, I didn't catch that command.");
         }
     }
 

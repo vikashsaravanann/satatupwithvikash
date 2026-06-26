@@ -48,15 +48,18 @@
 
 /* Listening State */
 #voice-nav-btn.listening {
-    background: #0ea5e9;
-    border-color: #fff;
-    animation: vn-pulse 1.5s infinite;
+    background: linear-gradient(135deg, #0ea5e9, #7c3aed);
+    border-color: transparent;
+    animation: vn-premium-pulse 2s infinite cubic-bezier(0.66, 0, 0, 1);
 }
 
-@keyframes vn-pulse {
-    0% { box-shadow: 0 0 0 0 rgba(14, 165, 233, 0.7); }
-    70% { box-shadow: 0 0 0 15px rgba(14, 165, 233, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(14, 165, 233, 0); }
+@keyframes vn-premium-pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(14, 165, 233, 0.7), 0 0 0 0 rgba(124, 58, 237, 0.7);
+    }
+    100% {
+        box-shadow: 0 0 0 20px rgba(14, 165, 233, 0), 0 0 0 40px rgba(124, 58, 237, 0);
+    }
 }
 
 /* Processing State */
