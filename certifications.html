@@ -198,6 +198,112 @@
             </div>
         </section>
 
+        <!-- Thank You Card -->
+        <section style="padding: 60px 0 80px; background: transparent;">
+            <div class="container">
+                <div style="
+                    max-width: 720px;
+                    margin: 0 auto;
+                    background: rgba(14, 165, 233, 0.04);
+                    border: 1px solid rgba(14, 165, 233, 0.2);
+                    border-radius: 28px;
+                    padding: 56px 48px;
+                    text-align: center;
+                    position: relative;
+                    overflow: hidden;
+                    backdrop-filter: blur(16px);
+                    -webkit-backdrop-filter: blur(16px);
+                    box-shadow: 0 0 80px rgba(14, 165, 233, 0.08), 0 20px 60px rgba(0,0,0,0.4);
+                ">
+                    <!-- Glow blob -->
+                    <div style="
+                        position: absolute; top: -60px; left: 50%; transform: translateX(-50%);
+                        width: 300px; height: 300px;
+                        background: radial-gradient(circle, rgba(14,165,233,0.12) 0%, transparent 70%);
+                        pointer-events: none;
+                    "></div>
+
+                    <!-- Emoji / Icon -->
+                    <div style="font-size: 3.5rem; margin-bottom: 20px; line-height: 1;">🙏</div>
+
+                    <!-- Heading -->
+                    <h2 style="
+                        font-family: 'Outfit', sans-serif;
+                        font-weight: 800;
+                        font-size: 2.4rem;
+                        letter-spacing: -0.5px;
+                        margin-bottom: 16px;
+                        background: linear-gradient(135deg, #0ea5e9, #6366f1);
+                        -webkit-background-clip: text;
+                        -webkit-text-fill-color: transparent;
+                        background-clip: text;
+                    ">Thank You for Visiting!</h2>
+
+                    <!-- Message -->
+                    <p style="
+                        font-family: 'Inter', sans-serif;
+                        font-size: 1.05rem;
+                        color: rgba(255,255,255,0.72);
+                        line-height: 1.8;
+                        max-width: 540px;
+                        margin: 0 auto 32px;
+                    ">
+                        Every certification here represents hours of dedication, curiosity, and a commitment
+                        to continuous growth. I appreciate you taking the time to explore my learning journey.
+                        Let's build something great together!
+                    </p>
+
+                    <!-- Divider -->
+                    <div style="
+                        width: 60px; height: 3px;
+                        background: linear-gradient(90deg, #0ea5e9, #6366f1);
+                        border-radius: 2px;
+                        margin: 0 auto 28px;
+                    "></div>
+
+                    <!-- CTA Buttons -->
+                    <div style="display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;">
+                        <a href="index.html#contact" style="
+                            display: inline-flex; align-items: center; gap: 8px;
+                            padding: 13px 28px;
+                            background: linear-gradient(135deg, #0ea5e9, #6366f1);
+                            color: #fff; border-radius: 12px;
+                            font-family: 'Inter', sans-serif;
+                            font-weight: 700; font-size: 0.92rem;
+                            text-decoration: none;
+                            box-shadow: 0 6px 24px rgba(14,165,233,0.3);
+                            transition: transform 0.2s, box-shadow 0.2s;
+                        " onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 10px 30px rgba(14,165,233,0.4)';" onmouseout="this.style.transform=''; this.style.boxShadow='0 6px 24px rgba(14,165,233,0.3)';">
+                            <i class="fas fa-envelope"></i> Get In Touch
+                        </a>
+                        <a href="index.html" style="
+                            display: inline-flex; align-items: center; gap: 8px;
+                            padding: 13px 28px;
+                            background: rgba(255,255,255,0.05);
+                            color: rgba(255,255,255,0.85);
+                            border: 1px solid rgba(255,255,255,0.12);
+                            border-radius: 12px;
+                            font-family: 'Inter', sans-serif;
+                            font-weight: 600; font-size: 0.92rem;
+                            text-decoration: none;
+                            transition: background 0.2s, border-color 0.2s;
+                        " onmouseover="this.style.background='rgba(255,255,255,0.09)'; this.style.borderColor='rgba(14,165,233,0.3)';" onmouseout="this.style.background='rgba(255,255,255,0.05)'; this.style.borderColor='rgba(255,255,255,0.12)';">
+                            <i class="fas fa-home"></i> Back to Portfolio
+                        </a>
+                    </div>
+
+                    <!-- Signed name -->
+                    <p style="
+                        margin-top: 36px;
+                        font-family: 'Outfit', sans-serif;
+                        font-size: 0.82rem;
+                        color: rgba(255,255,255,0.3);
+                        letter-spacing: 0.5px;
+                    ">— Vikash Saravanan &nbsp;·&nbsp; AI Engineer &amp; Web Developer</p>
+                </div>
+            </div>
+        </section>
+
         <!-- Footer & Contact -->
         <footer id="contact" class="footer">
             <div class="container footer-widget-grid">
@@ -214,66 +320,7 @@
                     </div>
                 </div>
 
-                <!-- Widget 2: Digital Presence -->
-                <div class="footer-widget" style="padding: 0; overflow: hidden; display: flex; flex-direction: column;">
-                    <div style="padding: 20px 24px 12px;">
-                        <div class="widget-icon"><i class="fas fa-network-wired text-accent"></i></div>
-                        <h3 class="text-neon mb-2">Digital Presence</h3>
-                    </div>
-                    <div style="display: flex; flex-direction: column; flex: 1;">
-                        <a href="https://www.linkedin.com/in/vikash-saravanan-j7528" target="_blank"
-                            style="flex: 1; display: flex; align-items: center; gap: 10px; padding: 14px 24px; text-decoration: none; border-top: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.03); color: #fff; font-weight: 600; font-size: 0.85rem; font-family: 'Inter', sans-serif;">
-                            <i class="fab fa-linkedin" style="color: #0a66c2; font-size: 1.1rem;"></i> LinkedIn
-                        </a>
-                        <a href="https://github.com/vikashsaravanann" target="_blank"
-                            style="flex: 1; display: flex; align-items: center; gap: 10px; padding: 14px 24px; text-decoration: none; border-top: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.03); color: #fff; font-weight: 600; font-size: 0.85rem; font-family: 'Inter', sans-serif;">
-                            <i class="fab fa-github" style="color: #e6edf3; font-size: 1.1rem;"></i> GitHub
-                        </a>
-                        <a href="https://www.instagram.com/startupwithvikash/?__pwa=1" target="_blank"
-                            style="flex: 1; display: flex; align-items: center; gap: 10px; padding: 14px 24px; text-decoration: none; border-top: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.03); color: #fff; font-weight: 600; font-size: 0.85rem; font-family: 'Inter', sans-serif;">
-                            <i class="fab fa-instagram" style="color: #e1306c; font-size: 1.1rem;"></i> Instagram
-                        </a>
-                        <a href="mailto:vikash07052008@gmail.com"
-                            style="flex: 1; display: flex; align-items: center; gap: 10px; padding: 14px 24px; text-decoration: none; border-top: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.03); color: #fff; font-weight: 600; font-size: 0.85rem; font-family: 'Inter', sans-serif;">
-                            <i class="fas fa-envelope" style="color: #0ea5e9; font-size: 1.1rem;"></i> Email
-                        </a>
-                        <a href="https://vikashsaravanann.github.io/Portfolio_Information/" target="_blank"
-                            style="flex: 1; display: flex; align-items: center; gap: 10px; padding: 14px 24px; text-decoration: none; border-top: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.03); color: #fff; font-weight: 600; font-size: 0.85rem; font-family: 'Inter', sans-serif; border-radius: 0 0 16px 16px;">
-                            <i class="fas fa-globe" style="color: #10b981; font-size: 1.1rem;"></i> Portfolio Website
-                        </a>
-                    </div>
-                </div>
 
-                <!-- Widget 3: Quick Actions -->
-                <div class="footer-widget" style="padding: 0; overflow: hidden; display: flex; flex-direction: column;">
-                    <div style="padding: 20px 24px 12px;">
-                        <div class="widget-icon"><i class="fas fa-bolt text-accent"></i></div>
-                        <h3 class="text-neon mb-2">Quick Actions</h3>
-                    </div>
-                    <div style="display: flex; flex-direction: column; flex: 1;">
-                        <button onclick="generateResumePDF()"
-                            style="flex: 1; display: flex; align-items: center; gap: 10px; padding: 14px 24px; cursor: pointer; border: none; border-top: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.03); color: #fff; font-weight: 600; font-size: 0.85rem; font-family: 'Inter', sans-serif;">
-                            <i class="fas fa-file-pdf" style="color: #ef4444; font-size: 1.1rem;"></i> Download Resume
-                            PDF
-                        </button>
-                        <a href="index.html#page-contact-form-container"
-                            style="flex: 1; display: flex; align-items: center; gap: 10px; padding: 14px 24px; text-decoration: none; border-top: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.03); color: #fff; font-weight: 600; font-size: 0.85rem; font-family: 'Inter', sans-serif;">
-                            <i class="fas fa-envelope" style="color: #0ea5e9; font-size: 1.1rem;"></i> Get In Touch
-                        </a>
-                        <a href="index.html"
-                            style="flex: 1; display: flex; align-items: center; gap: 10px; padding: 14px 24px; text-decoration: none; border-top: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.03); color: #fff; font-weight: 600; font-size: 0.85rem; font-family: 'Inter', sans-serif;">
-                            <i class="fas fa-home" style="color: #a855f7; font-size: 1.1rem;"></i> Back to Portfolio
-                        </a>
-                        <a href="index.html#skills"
-                            style="flex: 1; display: flex; align-items: center; gap: 10px; padding: 14px 24px; text-decoration: none; border-top: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.03); color: #fff; font-weight: 600; font-size: 0.85rem; font-family: 'Inter', sans-serif;">
-                            <i class="fas fa-cogs" style="color: #10b981; font-size: 1.1rem;"></i> View Skills
-                        </a>
-                        <a href="projects.html"
-                            style="flex: 1; display: flex; align-items: center; gap: 10px; padding: 14px 24px; text-decoration: none; border-top: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.03); color: #fff; font-weight: 600; font-size: 0.85rem; font-family: 'Inter', sans-serif; border-radius: 0 0 16px 16px;">
-                            <i class="fas fa-code" style="color: #f59e0b; font-size: 1.1rem;"></i> View Projects
-                        </a>
-                    </div>
-                </div>
 
                 <!-- Widget 4: QR Contact Card -->
                 <div class="footer-widget"
