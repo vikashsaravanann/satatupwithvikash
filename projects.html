@@ -6,356 +6,168 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Development Portfolio | Vikash Saravanan</title>
     <meta name="description"
-        content="Development Portfolio of Vikash Saravanan, showcasing technical skills, GitHub repositories, and AI/Data Science projects.">
-    <!-- Google Fonts -->
+        content="Development Portfolio of Vikash Saravanan — 16+ GitHub repositories spanning AI, Full-Stack Engineering, and Data Science.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;600;700;800&family=Fira+Code:wght@400;500&display=swap"
-        rel="stylesheet">
-    <!-- Stylesheet -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="animations.css">
-    <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body {
-            background-color: #000000;
-            color: #fff;
-            overflow-x: hidden;
+        :root { --cyan:#0ea5e9;--indigo:#6366f1;--purple:#a855f7;--green:#10b981;--amber:#f59e0b;--red:#ef4444; }
+        body { background:#000;color:#fff;overflow-x:hidden; }
+
+        /* Stats Bar */
+        .stats-bar { display:flex;justify-content:center;flex-wrap:wrap;gap:16px;margin:32px auto 0;max-width:900px; }
+        .stat-chip { display:flex;align-items:center;gap:10px;padding:13px 22px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:50px;font-family:'Fira Code',monospace;font-size:0.88rem;color:rgba(255,255,255,0.8);transition:all 0.3s; }
+        .stat-chip:hover { border-color:rgba(14,165,233,0.4);background:rgba(14,165,233,0.06);transform:translateY(-2px); }
+        .stat-chip-num { font-size:1.35rem;font-weight:700;background:linear-gradient(135deg,var(--cyan),var(--indigo));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text; }
+
+        /* Back Button */
+        .back-btn { display:inline-flex;align-items:center;gap:8px;padding:11px 22px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);border-radius:50px;color:rgba(255,255,255,0.8);font-family:'Inter',sans-serif;font-weight:600;font-size:0.9rem;text-decoration:none;transition:all 0.25s; }
+        .back-btn:hover { background:rgba(14,165,233,0.12);border-color:rgba(14,165,233,0.4);color:#fff;transform:translateX(-4px); }
+
+        /* Filters */
+        .filter-tabs { display:flex;justify-content:center;gap:12px;margin-top:36px;margin-bottom:8px;flex-wrap:wrap; }
+        .filter-tab { padding:11px 22px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1);border-radius:30px;color:#fff;font-size:0.9rem;font-family:'Outfit',sans-serif;font-weight:600;cursor:pointer;transition:all 0.3s; }
+        .filter-tab.active,.filter-tab:hover { background:linear-gradient(135deg,var(--cyan),var(--indigo));border-color:transparent;transform:translateY(-2px);box-shadow:0 8px 20px rgba(14,165,233,0.35); }
+
+        /* Search + Sort */
+        .search-sort-row { display:flex;align-items:center;gap:14px;max-width:720px;margin:20px auto 44px; }
+        .search-container { flex:1;position:relative; }
+        .cert-search-input { width:100%;padding:15px 20px 15px 50px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:30px;color:#fff;font-size:0.95rem;font-family:'Inter',sans-serif;transition:all 0.3s;box-sizing:border-box; }
+        .cert-search-input:focus { outline:none;border-color:var(--cyan);box-shadow:0 0 20px rgba(14,165,233,0.2);background:rgba(255,255,255,0.08); }
+        .search-icon { position:absolute;left:18px;top:50%;transform:translateY(-50%);color:rgba(255,255,255,0.4);font-size:1rem;pointer-events:none; }
+        .sort-select { padding:15px 36px 15px 16px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:20px;color:#fff;font-family:'Outfit',sans-serif;font-size:0.88rem;font-weight:600;cursor:pointer;transition:all 0.3s;-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23888' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;white-space:nowrap; }
+        .sort-select:focus { outline:none;border-color:var(--cyan); }
+        .sort-select option { background:#111827; }
+
+        /* Cards grid */
+        .projects-sequential { display:flex;flex-direction:column;gap:24px;max-width:1000px;margin-inline:auto; }
+
+        /* Card wrapper */
+        .repo-card-wrap { position:relative;border-radius:20px;overflow:hidden;cursor:pointer;border:1px solid rgba(255,255,255,0.06); }
+        .repo-card-wrap.flagship { border:1.5px solid rgba(251,191,36,0.45);box-shadow:0 0 50px rgba(251,191,36,0.06); }
+        .flagship-badge { position:absolute;top:16px;right:16px;background:linear-gradient(135deg,#f59e0b,#ef4444);color:#fff;font-family:'Outfit',sans-serif;font-weight:700;font-size:0.72rem;padding:5px 12px;border-radius:20px;z-index:5;letter-spacing:0.5px;box-shadow:0 4px 14px rgba(251,191,36,0.4); }
+        .repo-card-wrap.hidden { display:none; }
+
+        /* Card panel */
+        .repo-panel { background:rgba(255,255,255,0.02);border-radius:20px;padding:30px 34px 26px;position:relative;overflow:hidden;transition:all 0.4s cubic-bezier(0.175,0.885,0.32,1.275); }
+        .repo-panel::after { content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--cyan),var(--indigo),var(--purple));opacity:0;transition:opacity 0.3s; }
+        .repo-panel::before { content:'';position:absolute;top:0;left:-100%;width:50%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.04),transparent);transform:skewX(-20deg);transition:0.6s;z-index:0; }
+        .repo-card-wrap:hover .repo-panel { transform:translateY(-6px) scale(1.01);border-color:rgba(14,165,233,0.35);box-shadow:0 24px 50px rgba(0,0,0,0.7),0 0 50px rgba(14,165,233,0.08); }
+        .repo-card-wrap:hover .repo-panel::after { opacity:1; }
+        .repo-card-wrap:hover .repo-panel::before { left:150%; }
+        .repo-panel > * { position:relative;z-index:1; }
+
+        /* Meta row */
+        .repo-meta-row { display:flex;align-items:center;gap:10px;margin-bottom:14px; }
+        .repo-number { font-family:'Fira Code',monospace;font-size:0.78rem;color:rgba(14,165,233,0.5);font-weight:600;letter-spacing:0.5px; }
+        .repo-cat-badge { font-family:'Outfit',sans-serif;font-size:0.72rem;font-weight:700;padding:3px 10px;border-radius:20px;letter-spacing:0.4px; }
+        .cat-ai   { background:rgba(99,102,241,0.15);color:#a5b4fc;border:1px solid rgba(99,102,241,0.3); }
+        .cat-web  { background:rgba(14,165,233,0.12);color:#38bdf8;border:1px solid rgba(14,165,233,0.3); }
+        .cat-data { background:rgba(16,185,129,0.12);color:#34d399;border:1px solid rgba(16,185,129,0.3); }
+        .live-indicator { margin-left:auto;display:flex;align-items:center;gap:5px;font-family:'Fira Code',monospace;font-size:0.72rem;color:#34d399;background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.25);padding:3px 10px;border-radius:20px; }
+        .live-dot { width:6px;height:6px;background:#34d399;border-radius:50%;animation:blink-dot 1.5s infinite; }
+        @keyframes blink-dot{0%,100%{opacity:1}50%{opacity:0.3}}
+
+        /* Title row */
+        .repo-title-row { display:flex;align-items:center;gap:14px;margin-bottom:12px; }
+        .repo-icon { width:50px;height:50px;background:linear-gradient(135deg,rgba(14,165,233,0.18),rgba(99,102,241,0.18));border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;color:var(--cyan);flex-shrink:0; }
+        .repo-title { font-family:'Outfit',sans-serif;font-size:1.5rem;font-weight:800;background:linear-gradient(90deg,#fff,#a5b4fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-0.3px;line-height:1.2; }
+
+        /* Desc */
+        .repo-desc { font-family:'Inter',sans-serif;font-size:0.96rem;color:rgba(255,255,255,0.6);line-height:1.75;margin-bottom:16px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden; }
+
+        /* Tech pills */
+        .tech-stack-row { display:flex;gap:8px;flex-wrap:wrap; }
+        .tech-pill { font-family:'Fira Code',monospace;font-size:0.78rem;padding:5px 12px;background:rgba(14,165,233,0.08);border:1px solid rgba(14,165,233,0.25);border-radius:20px;color:#38bdf8; }
+
+        /* Click hint */
+        .click-hint { display:flex;align-items:center;gap:6px;font-family:'Fira Code',monospace;font-size:0.78rem;color:rgba(14,165,233,0.55);margin-top:10px; }
+
+        /* Copy button */
+        .btn-copy { background:none;border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.4);width:36px;height:36px;border-radius:8px;font-size:0.88rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;transition:all 0.2s;padding:0;margin-left:4px; }
+        .btn-copy:hover { border-color:rgba(14,165,233,0.4);color:var(--cyan);background:rgba(14,165,233,0.1); }
+
+        /* Hover overlay */
+        .repo-hover-overlay { position:absolute;bottom:0;left:0;right:0;padding:24px 30px;background:rgba(8,10,18,0.94);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid rgba(14,165,233,0.18);transform:translateY(105%);transition:transform 0.38s cubic-bezier(0.175,0.885,0.32,1.275);z-index:10;display:flex;flex-direction:column;gap:12px; }
+        .repo-card-wrap:hover .repo-hover-overlay,
+        .repo-card-wrap.touch-open .repo-hover-overlay { transform:translateY(0); }
+        .overlay-label { font-family:'Fira Code',monospace;font-size:0.7rem;color:rgba(255,255,255,0.3);letter-spacing:1px;text-transform:uppercase; }
+        .overlay-btns { display:flex;gap:10px;flex-wrap:wrap; }
+
+        .overlay-btn { display:inline-flex;align-items:center;gap:7px;padding:11px 20px;border-radius:12px;font-family:'Inter',sans-serif;font-weight:700;font-size:0.85rem;text-decoration:none;border:none;cursor:pointer;transition:all 0.25s;opacity:0;transform:translateY(10px); }
+        .repo-card-wrap:hover .overlay-btn,
+        .repo-card-wrap.touch-open .overlay-btn { opacity:1;transform:translateY(0); }
+        .repo-card-wrap:hover .overlay-btn:nth-child(1),.repo-card-wrap.touch-open .overlay-btn:nth-child(1){transition-delay:0.08s;}
+        .repo-card-wrap:hover .overlay-btn:nth-child(2),.repo-card-wrap.touch-open .overlay-btn:nth-child(2){transition-delay:0.16s;}
+        .repo-card-wrap:hover .overlay-btn:nth-child(3),.repo-card-wrap.touch-open .overlay-btn:nth-child(3){transition-delay:0.24s;}
+
+        .btn-live { background:linear-gradient(135deg,var(--cyan),var(--indigo));color:#fff;box-shadow:0 6px 20px rgba(14,165,233,0.35); }
+        .btn-live:hover { transform:translateY(-3px) scale(1.05)!important;box-shadow:0 10px 28px rgba(14,165,233,0.55)!important; }
+        .btn-source { background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.9);border:1px solid rgba(255,255,255,0.15); }
+        .btn-source:hover { background:rgba(255,255,255,0.12);border-color:rgba(255,255,255,0.3);transform:translateY(-3px)!important; }
+        .btn-details { background:rgba(99,102,241,0.12);color:#a5b4fc;border:1px solid rgba(99,102,241,0.25); }
+        .btn-details:hover { background:rgba(99,102,241,0.2);transform:translateY(-3px)!important; }
+
+        /* Progress ring */
+        .progress-ring-wrap { display:flex;align-items:center;gap:16px;margin:20px auto 0;max-width:420px;padding:16px 22px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:18px; }
+        .ring-svg { width:58px;height:58px;flex-shrink:0; }
+        .ring-label { font-family:'Outfit',sans-serif;font-weight:700;font-size:0.95rem;color:#fff; }
+        .ring-sublabel { font-family:'Fira Code',monospace;font-size:0.72rem;color:rgba(255,255,255,0.38);margin-top:3px; }
+
+        /* Stagger animation */
+        @keyframes staggerIn{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+        .stagger-in{opacity:0;animation:staggerIn 0.5s cubic-bezier(0.175,0.885,0.32,1.275) forwards;}
+
+        /* Footer gap fix */
+        #footer-placeholder{margin:0;padding:0;}
+
+        /* Modal */
+        .project-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.9);backdrop-filter:blur(20px);z-index:10000;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.35s;padding:20px;}
+        .project-modal-overlay.active{opacity:1;pointer-events:all;}
+        .project-modal-content{background:#0d1117;border:1px solid rgba(255,255,255,0.08);border-radius:24px;width:100%;max-width:820px;max-height:90vh;overflow-y:auto;position:relative;transform:translateY(30px) scale(0.96);transition:all 0.4s cubic-bezier(0.175,0.885,0.32,1.275);box-shadow:0 30px 60px rgba(0,0,0,0.8);}
+        .project-modal-overlay.active .project-modal-content{transform:translateY(0) scale(1);}
+        .modal-accent-bar{height:4px;background:linear-gradient(90deg,var(--cyan),var(--indigo),var(--purple));border-radius:24px 24px 0 0;}
+        .modal-inner{padding:34px 38px 38px;}
+        .modal-close-btn{position:absolute;top:16px;right:16px;background:rgba(255,255,255,0.06);border:none;color:#fff;width:36px;height:36px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;font-size:0.95rem;z-index:2;}
+        .modal-close-btn:hover{background:var(--red);transform:rotate(90deg);}
+        .modal-title-row{display:flex;align-items:center;gap:14px;margin-bottom:16px;}
+        .modal-icon{width:52px;height:52px;background:linear-gradient(135deg,rgba(14,165,233,0.18),rgba(99,102,241,0.18));border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;color:var(--cyan);flex-shrink:0;}
+        .modal-title{font-family:'Outfit',sans-serif;font-size:1.9rem;font-weight:800;background:linear-gradient(90deg,var(--cyan),#a5b4fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+        .gh-stats-bar{display:flex;gap:14px;flex-wrap:wrap;margin:18px 0;padding:14px 18px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:14px;}
+        .gh-stat{display:flex;align-items:center;gap:7px;font-family:'Fira Code',monospace;color:#38bdf8;font-size:0.83rem;}
+        .modal-section-label{font-family:'Fira Code',monospace;font-size:0.7rem;color:rgba(255,255,255,0.32);letter-spacing:1.5px;text-transform:uppercase;margin:22px 0 9px;}
+        .modal-desc{color:rgba(255,255,255,0.7);line-height:1.85;font-size:0.98rem;font-family:'Inter',sans-serif;}
+        .modal-links-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px;}
+        .related-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px;margin-top:8px;}
+        .related-chip{padding:14px 16px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:12px;cursor:pointer;transition:all 0.25s;text-decoration:none;display:block;}
+        .related-chip:hover{background:rgba(14,165,233,0.08);border-color:rgba(14,165,233,0.3);transform:translateY(-2px);}
+        .related-chip-title{font-family:'Outfit',sans-serif;font-weight:700;font-size:0.83rem;color:#fff;margin-bottom:4px;}
+        .related-chip-cat{font-family:'Fira Code',monospace;font-size:0.7rem;color:var(--cyan);}
+
+        /* Mobile */
+        @media(max-width:768px){
+            .repo-panel{padding:20px 16px 18px;}
+            .repo-title{font-size:1.2rem;}
+            .modal-inner{padding:22px 18px 26px;}
+            .modal-title{font-size:1.45rem;}
+            .search-sort-row{flex-direction:column;}
+            .sort-select{width:100%;}
+            .overlay-btns{flex-direction:column;}
+            .overlay-btn{width:100%;justify-content:center;}
+            .stats-bar{gap:10px;}
         }
-
-        /* Sequential Repository Layout */
-        .projects-sequential {
-            display: flex;
-            flex-direction: column;
-            gap: 40px;
-            margin-top: 60px;
-            max-width: 1000px;
-            margin-inline: auto;
-        }
-
-        .repo-panel {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 24px;
-            padding: 40px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            backdrop-filter: blur(10px);
-            z-index: 1;
-        }
-
-        .repo-panel::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 50%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
-            transform: skewX(-20deg);
-            transition: 0.5s;
-            z-index: -1;
-        }
-
-        .repo-panel:hover {
-            transform: translateY(-5px) scale(1.02);
-            border-color: rgba(14, 165, 233, 0.4);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 40px rgba(14, 165, 233, 0.1);
-            background: rgba(255, 255, 255, 0.04);
-        }
-
-        .repo-panel:hover::before {
-            left: 150%;
-            transition: 0.7s;
-        }
-
-        .repo-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            padding-bottom: 20px;
-        }
-
-        .repo-title-group {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .repo-number {
-            font-family: 'Fira Code', monospace;
-            font-size: 1.2rem;
-            color: rgba(14, 165, 233, 0.5);
-            font-weight: 600;
-        }
-
-        .repo-icon {
-            width: 56px;
-            height: 56px;
-            background: linear-gradient(135deg, rgba(14, 165, 233, 0.2), rgba(99, 102, 241, 0.2));
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.8rem;
-            color: #0ea5e9;
-            box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.05);
-        }
-
-        .repo-title {
-            font-family: 'Outfit', sans-serif;
-            font-size: 1.8rem;
-            font-weight: 800;
-            background: linear-gradient(90deg, #fff, #a5b4fc);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: -0.5px;
-        }
-
-        .repo-links a {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.05);
-            color: #fff;
-            font-size: 1.2rem;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .repo-links a:hover {
-            background: #0ea5e9;
-            color: #fff;
-            transform: rotate(360deg) scale(1.1);
-            box-shadow: 0 0 15px #0ea5e9;
-        }
-
-        .repo-body {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .repo-desc {
-            font-family: 'Inter', sans-serif;
-            font-size: 1.05rem;
-            color: rgba(255, 255, 255, 0.7);
-            line-height: 1.8;
-        }
-
-        .tech-stack-row {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-            margin-top: 10px;
-        }
-
-        .tech-pill {
-            font-family: 'Fira Code', monospace;
-            font-size: 0.85rem;
-            padding: 8px 16px;
-            background: rgba(14, 165, 233, 0.1);
-            border: 1px solid rgba(14, 165, 233, 0.3);
-            border-radius: 30px;
-            color: #38bdf8;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        /* Filter Styles Update */
-        .filter-tabs {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 40px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-        }
-
-        .filter-tab {
-            padding: 12px 24px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 30px;
-            color: #fff;
-            font-size: 0.95rem;
-            font-family: 'Outfit', sans-serif;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        .filter-tab.active,
-        .filter-tab:hover {
-            background: linear-gradient(135deg, #0ea5e9, #6366f1);
-            border-color: transparent;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(14, 165, 233, 0.4);
-        }
-
-        .search-container {
-            max-width: 600px;
-            margin: 0 auto 50px auto;
-            position: relative;
-        }
-
-        .cert-search-input {
-            width: 100%;
-            padding: 16px 20px 16px 50px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 30px;
-            color: #fff;
-            font-size: 1rem;
-            font-family: 'Inter', sans-serif;
-            transition: all 0.3s;
-        }
-
-        .cert-search-input:focus {
-            outline: none;
-            border-color: #0ea5e9;
-            box-shadow: 0 0 20px rgba(14, 165, 233, 0.2);
-            background: rgba(255, 255, 255, 0.08);
-        }
-
-        .search-icon {
-            position: absolute;
-            left: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: rgba(255, 255, 255, 0.4);
-            font-size: 1.2rem;
-        }
-
-        @keyframes staggerIn {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .stagger-in {
-            opacity: 0;
-            animation: staggerIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-        }
-
-        @media (max-width: 768px) {
-            .repo-panel {
-                padding: 25px;
-            }
-
-            .repo-title {
-                font-size: 1.4rem;
-            }
-
-            .repo-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 15px;
-            }
-
-            .repo-links {
-                align-self: flex-end;
-                margin-top: -50px;
-            }
-        }
-        
-        /* Modal Styles */
-        .project-modal-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(15px);
-            z-index: 10000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.4s ease;
-        }
-
-        .project-modal-overlay.active {
-            opacity: 1;
-            pointer-events: all;
-        }
-
-        .project-modal-content {
-            background: #111827;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 24px;
-            width: 90%;
-            max-width: 800px;
-            max-height: 90vh;
-            overflow-y: auto;
-            position: relative;
-            transform: translateY(30px) scale(0.95);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-            padding: 40px;
-        }
-
-        .project-modal-overlay.active .project-modal-content {
-            transform: translateY(0) scale(1);
-        }
-
-        .modal-close-btn {
-            position: absolute;
-            top: 20px; right: 20px;
-            background: rgba(255,255,255,0.1);
-            border: none;
-            color: #fff;
-            width: 40px; height: 40px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex; align-items: center; justify-content: center;
-            transition: all 0.2s ease;
-            font-size: 1.2rem;
-        }
-
-        .modal-close-btn:hover {
-            background: #ef4444;
-            transform: rotate(90deg);
-        }
-
-        .gh-stats-bar {
-            display: flex; gap: 20px; margin-top: 20px;
-            padding: 15px; background: rgba(255,255,255,0.05);
-            border-radius: 12px;
-        }
-        
-        .gh-stat {
-            display: flex; align-items: center; gap: 8px;
-            font-family: 'Fira Code', monospace;
-            color: #38bdf8;
-        }
+        #confetti-canvas{position:fixed;inset:0;pointer-events:none;z-index:99999;}
     </style>
 </head>
 
 <body>
-    <canvas id="global-particles" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: -1;"></canvas>
+    <canvas id="global-particles" style="position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:-1;"></canvas>
+    <canvas id="confetti-canvas"></canvas>
     <div id="app-frame">
 
-        <!-- Navigation -->
         <nav class="navbar">
             <div class="nav-content container">
                 <a href="index.html" class="logo">VIKASH'S <span>PORTFOLIO !!</span></a>
@@ -372,347 +184,327 @@
             </div>
         </nav>
 
-        <!-- Development Portfolio Section -->
-        <section class="certifications-gallery" style="padding: 150px 0 80px; min-height: 80vh;">
+        <section class="certifications-gallery" style="padding:140px 0 80px;min-height:80vh;">
             <div class="container">
-                <div class="section-title text-center fade-up" style="text-align: center; margin-bottom: 20px;">
-                    <h2 class="mb-4" style="font-size: 3.5rem;">Development <span class="highlight">Portfolio</span>
-                    </h2>
-                    <p
-                        style="color: var(--text-secondary); max-width: 700px; margin: 0 auto; font-size: 1.2rem; line-height: 1.6;">
-                        A chronological deep-dive into my 16+ GitHub repositories. Architecting robust solutions across
-                        Artificial Intelligence, Full-Stack Engineering, and Data Science.</p>
+
+                <!-- Back Button -->
+                <div style="text-align:left;margin-bottom:12px;">
+                    <a href="index.html" class="back-btn">
+                        <i class="fas fa-arrow-left"></i> Back to Main Portfolio
+                    </a>
                 </div>
 
-                <!-- Filters -->
+                <!-- Hero heading -->
+                <div class="section-title text-center fade-up" style="text-align:center;margin-bottom:10px;">
+                    <h2 style="font-size:3.2rem;">Development <span class="highlight">Portfolio</span></h2>
+                    <p style="color:var(--text-secondary);max-width:680px;margin:12px auto 0;font-size:1.1rem;line-height:1.65;">
+                        A deep-dive into 16+ GitHub repositories — architecting robust solutions across
+                        Artificial Intelligence, Full-Stack Engineering, and Data Science.
+                    </p>
+                </div>
+
+                <!-- Stats Counter Bar -->
+                <div class="stats-bar fade-up">
+                    <div class="stat-chip"><span class="stat-chip-num">16+</span>&nbsp;Repositories</div>
+                    <div class="stat-chip"><span class="stat-chip-num">5</span>&nbsp;Live Deployments</div>
+                    <div class="stat-chip"><span class="stat-chip-num">4</span>&nbsp;AI / ML Projects</div>
+                    <div class="stat-chip"><span class="stat-chip-num">8+</span>&nbsp;Languages Used</div>
+                </div>
+
+                <!-- Progress ring -->
+                <div class="progress-ring-wrap fade-up" style="margin-top:22px;">
+                    <svg class="ring-svg" viewBox="0 0 60 60">
+                        <circle cx="30" cy="30" r="24" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="5"/>
+                        <circle id="ring-progress" cx="30" cy="30" r="24" fill="none" stroke="url(#ringGrad)" stroke-width="5"
+                            stroke-linecap="round" stroke-dasharray="150.8" stroke-dashoffset="150.8"
+                            transform="rotate(-90 30 30)" style="transition:stroke-dashoffset 1.2s ease 0.5s"/>
+                        <defs>
+                            <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="#0ea5e9"/><stop offset="100%" stop-color="#6366f1"/>
+                            </linearGradient>
+                        </defs>
+                        <text x="30" y="34" text-anchor="middle" fill="#fff" font-size="11" font-family="Fira Code" font-weight="700">31%</text>
+                    </svg>
+                    <div>
+                        <div class="ring-label">5 of 16 repos have Live Demos &#127760;</div>
+                        <div class="ring-sublabel">Remaining are open-source code repositories</div>
+                    </div>
+                </div>
+
+                <!-- Filter Tabs -->
                 <div class="filter-tabs fade-up">
-                    <button class="filter-tab active" data-filter="all"><i class="fas fa-layer-group"></i> All
-                        Repositories</button>
-                    <button class="filter-tab" data-filter="ai"><i class="fas fa-brain"></i> AI / ML Models</button>
+                    <button class="filter-tab active" data-filter="all"><i class="fas fa-layer-group"></i> All Repositories</button>
+                    <button class="filter-tab" data-filter="ai"><i class="fas fa-brain"></i> AI / ML</button>
                     <button class="filter-tab" data-filter="python"><i class="fab fa-python"></i> Data Science</button>
                     <button class="filter-tab" data-filter="web"><i class="fas fa-code"></i> Full-Stack Web</button>
                 </div>
 
-                <!-- Search -->
-                <div class="search-container fade-up">
-                    <i class="fas fa-search search-icon"></i>
-                    <input type="text" id="repoSearch" class="cert-search-input"
-                        placeholder="Search repositories, technologies, or keywords...">
+                <!-- Search + Sort -->
+                <div class="search-sort-row fade-up">
+                    <div class="search-container">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" id="repoSearch" class="cert-search-input" placeholder="Search repos, technologies, keywords&#8230;">
+                    </div>
+                    <select class="sort-select" id="sortSelect">
+                        <option value="default">&#11014; Default Order</option>
+                        <option value="live">&#127760; Live Demo First</option>
+                        <option value="ai">&#129504; AI Projects First</option>
+                        <option value="az">&#128288; A &#8594; Z</option>
+                    </select>
                 </div>
 
-                <!-- Sequential Grid -->
-                <div class="projects-sequential" id="projectsGrid">
-                    <!-- Populated by JavaScript -->
-                </div>
+                <!-- Cards Grid -->
+                <div class="projects-sequential" id="projectsGrid"></div>
+
             </div>
         </section>
 
-        <!-- Dynamic Footer Container -->
-        <div id="footer-placeholder"></div>
+        <div id="footer-placeholder" style="margin:0;padding:0;"></div>
     </div>
 
-    <!-- Project Modal -->
+    <!-- Modal -->
     <div id="projectModal" class="project-modal-overlay">
         <div class="project-modal-content">
+            <div class="modal-accent-bar"></div>
             <button class="modal-close-btn" id="closeModal"><i class="fas fa-times"></i></button>
-            <h2 id="modalTitle" style="font-family: 'Outfit', sans-serif; font-size: 2.2rem; margin-bottom: 10px; background: linear-gradient(90deg, #0ea5e9, #a5b4fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></h2>
-            <div id="modalTags" class="tech-stack-row" style="margin-bottom: 20px;"></div>
-            
-            <div class="gh-stats-bar" id="modalStats">
-                <div class="gh-stat"><i class="fas fa-circle-notch fa-spin"></i> Fetching live GitHub stats...</div>
-            </div>
-
-            <h3 style="margin-top: 30px; margin-bottom: 15px; color: #fff;">Overview</h3>
-            <p id="modalDesc" style="color: rgba(255,255,255,0.7); line-height: 1.8; font-size: 1.1rem;"></p>
-            
-            <div style="margin-top: 40px; display: flex; gap: 15px; flex-wrap: wrap;" id="modalLinks">
+            <div class="modal-inner">
+                <div class="modal-title-row">
+                    <div class="modal-icon" id="modalIcon"><i class="fas fa-code"></i></div>
+                    <div>
+                        <div class="modal-title" id="modalTitle"></div>
+                        <div id="modalCatBadge" style="margin-top:6px;"></div>
+                    </div>
+                </div>
+                <div class="gh-stats-bar" id="modalStats">
+                    <div class="gh-stat"><i class="fas fa-circle-notch fa-spin"></i>&nbsp;Fetching live GitHub stats&#8230;</div>
+                </div>
+                <div class="modal-section-label">Tech Stack</div>
+                <div id="modalTags" class="tech-stack-row"></div>
+                <div class="modal-section-label">Overview</div>
+                <p id="modalDesc" class="modal-desc"></p>
+                <div class="modal-links-row" id="modalLinks"></div>
+                <div class="modal-section-label" id="relatedLabel" style="display:none;">Related Projects</div>
+                <div class="related-grid" id="relatedGrid"></div>
             </div>
         </div>
     </div>
 
-    <!-- Script -->
     <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
     <script src="script.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Fetch footer from index.html
-            fetch('index.html')
-                .then(response => response.text())
-                .then(html => {
-                    const parser = new DOMParser();
-                    const doc = parser.parseFromString(html, 'text/html');
-                    const footer = doc.querySelector('footer');
-                    if (footer) {
-                        document.getElementById('footer-placeholder').appendChild(footer);
-                        // Re-init QR Code for footer
-                        setTimeout(() => {
-                            const qrContainer = document.getElementById('qrCodeContainer');
-                            if (qrContainer && typeof QRCode !== 'undefined') {
-                                qrContainer.innerHTML = '';
-                                const vcard = 'BEGIN:VCARD\\nVERSION:3.0\\nFN:Vikash Saravanan\\nEMAIL:vikash07052008@gmail.com\\nTEL:+919342877474\\nURL:https://vikashsaravanann.github.io/Portfolio_Information/\\nEND:VCARD';
-                                new QRCode(qrContainer, {
-                                    text: vcard,
-                                    width: 180,
-                                    height: 180,
-                                    colorDark: "#0a0a0f",
-                                    colorLight: "#ffffff",
-                                    correctLevel: QRCode.CorrectLevel.M
-                                });
-                            }
-                        }, 500);
+    document.addEventListener('DOMContentLoaded', () => {
+
+        // Progress ring animate
+        setTimeout(() => {
+            const ring = document.getElementById('ring-progress');
+            if (ring) ring.style.strokeDashoffset = (150.8 * (1 - 0.3125)).toFixed(1);
+        }, 500);
+
+        // Footer injection (gap fix: no extra margin)
+        fetch('index.html').then(r=>r.text()).then(html=>{
+            const doc = new DOMParser().parseFromString(html,'text/html');
+            const footer = doc.querySelector('footer');
+            if(footer){
+                const ph = document.getElementById('footer-placeholder');
+                ph.style.cssText='margin:0;padding:0;';
+                ph.appendChild(footer);
+                setTimeout(()=>{
+                    const qr = document.getElementById('qrCodeContainer');
+                    if(qr && typeof QRCode!=='undefined'){
+                        qr.innerHTML='';
+                        new QRCode(qr,{text:'BEGIN:VCARD\nVERSION:3.0\nFN:Vikash Saravanan\nEMAIL:vikash07052008@gmail.com\nTEL:+919342877474\nURL:https://vikashsaravanann.github.io/Portfolio_Information/\nEND:VCARD',width:180,height:180,colorDark:'#0a0a0f',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.M});
                     }
-                });
-
-            // Repositories Data (Sorted by impact)
-            const repos = [
-                {
-                    name: "AI-Traffic-Management-system",
-                    desc: "An intelligent traffic management system that replaces fixed-timer lights with real-time vision-based adaptive control. Detects vehicle density and emergency vehicles using YOLOv8, controls physical Arduino LED traffic lights, and visualizes data on a live React dashboard.",
-                    tech: ["Python", "YOLOv8", "React", "Flask", "Arduino (C++)"],
-                    url: "https://github.com/vikashsaravanann/AI-Traffic-Management-system",
-                    liveUrl: "https://vikashsaravanann.github.io/AI-Traffic-Management-system/",
-                    category: "ai",
-                    icon: "fa-traffic-light"
-                },
-                {
-                    name: "BroadcastAI-Portfolio",
-                    desc: "A next-generation AI portfolio built to showcase broadcasting and automation capabilities. Demonstrates expertise in AI model integration, streaming architecture, and interactive web interfaces.",
-                    tech: ["HTML5", "CSS3", "JavaScript"],
-                    url: "https://github.com/vikashsaravanann/BroadcastAI-Portfolio",
-                    liveUrl: "https://vikashsaravanann.github.io/BroadcastAI-Portfolio/",
-                    category: "web",
-                    icon: "fa-broadcast-tower"
-                },
-                {
-                    name: "dropout-alert-system",
-                    desc: "An edge AI-powered system to predict girl student dropout risk in rural Indian schools. Runs fully offline on Android using TFLite/ONNX. Features Explainable AI (SHAP values) for teachers and geospatial clustering to optimize CSR school bus logistics.",
-                    tech: ["Python", "XGBoost", "Edge AI", "FastAPI", "Flutter"],
-                    url: "https://github.com/vikashsaravanann/dropout-alert-system",
-                    category: "ai",
-                    icon: "fa-user-graduate"
-                },
-                {
-                    name: "fcc-demographic-data-analyzer",
-                    desc: "An in-depth analysis of the 1994 US census dataset utilizing Python and Pandas. Developed to extract demographic insights including education, income brackets, and working hours as part of the freeCodeCamp Data Analysis certification.",
-                    tech: ["Python", "Pandas", "Data Cleaning"],
-                    url: "https://github.com/vikashsaravanann/fcc-demographic-data-analyzer",
-                    category: "python",
-                    icon: "fa-users"
-                },
-                {
-                    name: "fcc-mean-variance-calculator",
-                    desc: "A high-performance Python matrix computation engine. Mathematically calculates the mean, variance, standard deviation, min, max, and sum across multi-dimensional arrays, demonstrating core numerical processing skills.",
-                    tech: ["Python", "NumPy", "Statistics"],
-                    url: "https://github.com/vikashsaravanann/fcc-mean-variance-calculator",
-                    category: "python",
-                    icon: "fa-calculator"
-                },
-                {
-                    name: "fcc-medical-data-visualizer",
-                    desc: "A comprehensive medical data visualization pipeline built with Python, Pandas, Matplotlib, and Seaborn. Processes complex patient records to visualize health risk factors and correlations with high precision.",
-                    tech: ["Python", "Pandas", "Seaborn", "Matplotlib"],
-                    url: "https://github.com/vikashsaravanann/fcc-medical-data-visualizer",
-                    category: "python",
-                    icon: "fa-heartbeat"
-                },
-                {
-                    name: "fcc-page-view-time-series-visualizer",
-                    desc: "Advanced time series data visualization project using Python, Pandas, and Matplotlib. Parses historical server page-view metrics to generate line charts, bar plots, and box plots to identify trends and seasonality.",
-                    tech: ["Python", "Pandas", "Matplotlib", "Seaborn"],
-                    url: "https://github.com/vikashsaravanann/fcc-page-view-time-series-visualizer",
-                    category: "python",
-                    icon: "fa-chart-line"
-                },
-                {
-                    name: "fcc-sea-level-predictor",
-                    desc: "A predictive data science project visualizing global sea level rise over a century. Implements linear regression models using SciPy to forecast future sea levels based on historical environmental datasets.",
-                    tech: ["Python", "Pandas", "SciPy", "Matplotlib"],
-                    url: "https://github.com/vikashsaravanann/fcc-sea-level-predictor",
-                    category: "python",
-                    icon: "fa-water"
-                },
-                {
-                    name: "gamehub",
-                    desc: "A modular, terminal-based Python arcade engineered with classic algorithmic games including Snake, Tic-Tac-Toe, and Rock-Paper-Scissors. Showcases object-oriented programming and command-line interface design.",
-                    tech: ["Python 3", "OOP", "Rich CLI"],
-                    url: "https://github.com/vikashsaravanann/gamehub",
-                    category: "python",
-                    icon: "fa-gamepad"
-                },
-                {
-                    name: "hearwise-child-health",
-                    desc: "A mobile-first school hearing screening platform built to eliminate undetected childhood hearing loss in India. Empowers non-specialists to run clinically valid screenings in under 10 minutes — no specialist hardware required. Features offline-first architecture (async data queue), four-frequency audiometric sweep (500–4000 Hz), and WHO/AAA-compliant pre-test readiness gates.",
-                    tech: ["React", "TypeScript", "Vite", "Supabase", "GitHub Pages"],
-                    url: "https://github.com/vikashsaravanann/hearwise-child-health",
-                    liveUrl: "https://vikashsaravanann.github.io/hearwise-child-health/",
-                    category: "web",
-                    icon: "fa-ear-listen"
-                },
-                {
-                    name: "IPL-Data-Analysis-Project",
-                    desc: "A comprehensive Exploratory Data Analysis (EDA) of IPL cricket data from 2008–2020. Uncovered insights into team dominance, player performance (e.g., AB de Villiers' record awards), and the statistical impact of winning the toss.",
-                    tech: ["Python", "Pandas", "Matplotlib", "Seaborn", "Jupyter"],
-                    url: "https://github.com/vikashsaravanann/IPL-Data-Analysis-Project",
-                    category: "python",
-                    icon: "fa-chart-pie"
-                },
-                {
-                    name: "Logic-Intelligence",
-                    desc: "An explorative AI repository focused on logical reasoning models and intelligent algorithms. Built to experiment with symbolic AI, decision trees, and foundational machine learning concepts.",
-                    tech: ["Python", "AI", "Algorithms"],
-                    url: "https://github.com/vikashsaravanann/Logic-Intelligence",
-                    liveUrl: "https://vikashsaravanann.github.io/Logic-Intelligence/",
-                    category: "ai",
-                    icon: "fa-brain"
-                },
-                {
-                    name: "OpenEnv-Debugger",
-                    desc: "A production-ready simulation environment for training AI agents on customer support ticket triage. Built for the Meta PyTorch OpenEnv Hackathon × Scaler School of Technology (Finalist). Agents practice classifying, prioritizing, and routing tickets via stateful API endpoints.",
-                    tech: ["Python", "FastAPI", "Docker", "Pydantic"],
-                    url: "https://github.com/vikashsaravanann/OpenEnv-Debugger",
-                    category: "ai",
-                    icon: "fa-robot"
-                },
-                {
-                    name: "portfolio.vikashsaravanan",
-                    desc: "A legacy professional portfolio repository demonstrating initial steps into front-end architecture and web hosting. Focuses on foundational HTML/CSS structural design.",
-                    tech: ["HTML5", "CSS3", "JavaScript"],
-                    url: "https://github.com/vikashsaravanann/portfolio.vikashsaravanan",
-                    category: "web",
-                    icon: "fa-archive"
-                },
-                {
-                    name: "Portfolio_Information",
-                    desc: "My personal portfolio website featuring a dark-tech aesthetic, an integrated AI assistant powered by Grok AI, automated PDF resume generation, and a fully functional dynamic repository catalog.",
-                    tech: ["HTML5", "CSS3", "JavaScript", "GitHub Pages"],
-                    url: "https://github.com/vikashsaravanann/Portfolio_Information",
-                    liveUrl: "https://vikashsaravanann.github.io/Portfolio_Information/",
-                    category: "web",
-                    icon: "fa-id-badge"
-                },
-                {
-                    name: "Web-Development",
-                    desc: "A centralized repository containing a responsive single-page portfolio for an AI & Data Science student. Built natively with HTML and modern CSS animations to highlight development versatility.",
-                    tech: ["HTML", "CSS"],
-                    url: "https://github.com/vikashsaravanann/Web-Development",
-                    category: "web",
-                    icon: "fa-file-code"
-                }
-            ];
-
-            const grid = document.getElementById('projectsGrid');
-            const searchInput = document.getElementById('repoSearch');
-            const filterTabs = document.querySelectorAll('.filter-tab');
-            
-            const modal = document.getElementById('projectModal');
-            const closeBtn = document.getElementById('closeModal');
-
-            closeBtn.addEventListener('click', () => modal.classList.remove('active'));
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) modal.classList.remove('active');
-            });
-
-            async function openModal(repoIndex) {
-                const repo = repos[repoIndex];
-                document.getElementById('modalTitle').innerHTML = `<i class="fas ${repo.icon}"></i> ${repo.name}`;
-                document.getElementById('modalDesc').textContent = repo.desc;
-                document.getElementById('modalTags').innerHTML = repo.tech.map(t => `<span class="tech-pill">${t}</span>`).join('');
-                
-                let linksHTML = `<a href="${repo.url}" target="_blank" class="btn-secondary" style="padding: 12px 24px; border-radius: 12px;"><i class="fab fa-github" style="margin-right: 8px;"></i>View Source</a>`;
-                if (repo.liveUrl) {
-                    linksHTML += `<a href="${repo.liveUrl}" target="_blank" class="btn-primary" style="padding: 12px 24px; border-radius: 12px;"><i class="fas fa-external-link-alt" style="margin-right: 8px;"></i>Live Demo</a>`;
-                }
-                document.getElementById('modalLinks').innerHTML = linksHTML;
-
-                modal.classList.add('active');
-
-                // Fetch GitHub Stats dynamically
-                try {
-                    const repoName = repo.url.split('/').pop();
-                    const ghRes = await fetch(`https://api.github.com/repos/vikashsaravanann/${repoName}`);
-                    if (ghRes.ok) {
-                        const ghData = await ghRes.json();
-                        document.getElementById('modalStats').innerHTML = `
-                            <div class="gh-stat" title="Stars"><i class="fas fa-star" style="color: #fbbf24;"></i> ${ghData.stargazers_count}</div>
-                            <div class="gh-stat" title="Forks"><i class="fas fa-code-branch"></i> ${ghData.forks_count}</div>
-                            <div class="gh-stat" title="Watchers"><i class="fas fa-eye"></i> ${ghData.watchers_count}</div>
-                            <div class="gh-stat" title="Last Updated"><i class="fas fa-clock"></i> ${new Date(ghData.pushed_at).toLocaleDateString()}</div>
-                        `;
-                    } else {
-                        document.getElementById('modalStats').innerHTML = `<div class="gh-stat">GitHub stats unavailable</div>`;
-                    }
-                } catch (e) {
-                    document.getElementById('modalStats').innerHTML = `<div class="gh-stat">GitHub stats unavailable</div>`;
-                }
+                },600);
             }
+        }).catch(()=>{});
 
-            // Expose for onClick
-            window.openProjectModal = openModal;
+        // Repos data
+        const repos = [
+            {name:"AI-Traffic-Management-system",desc:"An intelligent traffic management system replacing fixed-timer lights with real-time vision-based adaptive control. Detects vehicle density and emergency vehicles using YOLOv8, controls physical Arduino LED traffic lights, and visualizes data on a live React dashboard.",tech:["Python","YOLOv8","React","Flask","Arduino (C++)"],url:"https://github.com/vikashsaravanann/AI-Traffic-Management-system",liveUrl:"https://vikashsaravanann.github.io/AI-Traffic-Management-system/",category:"ai",icon:"fa-traffic-light",flagship:true},
+            {name:"BroadcastAI-Portfolio",desc:"A next-generation AI portfolio showcasing broadcasting and automation capabilities. Demonstrates expertise in AI model integration, streaming architecture, and interactive web interfaces.",tech:["HTML5","CSS3","JavaScript"],url:"https://github.com/vikashsaravanann/BroadcastAI-Portfolio",liveUrl:"https://vikashsaravanann.github.io/BroadcastAI-Portfolio/",category:"web",icon:"fa-broadcast-tower"},
+            {name:"dropout-alert-system",desc:"An edge AI-powered system predicting girl student dropout risk in rural Indian schools. Runs fully offline on Android using TFLite/ONNX. Features Explainable AI (SHAP values) and geospatial clustering to optimize CSR school bus logistics.",tech:["Python","XGBoost","Edge AI","FastAPI","Flutter"],url:"https://github.com/vikashsaravanann/dropout-alert-system",category:"ai",icon:"fa-user-graduate"},
+            {name:"fcc-demographic-data-analyzer",desc:"An in-depth analysis of the 1994 US census dataset using Python and Pandas. Extracts demographic insights including education, income brackets, and working hours as part of the freeCodeCamp Data Analysis certification.",tech:["Python","Pandas","Data Cleaning"],url:"https://github.com/vikashsaravanann/fcc-demographic-data-analyzer",category:"python",icon:"fa-users"},
+            {name:"fcc-mean-variance-calculator",desc:"A high-performance Python matrix computation engine. Calculates mean, variance, standard deviation, min, max, and sum across multi-dimensional arrays, demonstrating core numerical processing skills.",tech:["Python","NumPy","Statistics"],url:"https://github.com/vikashsaravanann/fcc-mean-variance-calculator",category:"python",icon:"fa-calculator"},
+            {name:"fcc-medical-data-visualizer",desc:"A comprehensive medical data visualization pipeline built with Python, Pandas, Matplotlib, and Seaborn. Processes complex patient records to visualize health risk factors and correlations with high precision.",tech:["Python","Pandas","Seaborn","Matplotlib"],url:"https://github.com/vikashsaravanann/fcc-medical-data-visualizer",category:"python",icon:"fa-heartbeat"},
+            {name:"fcc-page-view-time-series-visualizer",desc:"Advanced time series data visualization using Python, Pandas, and Matplotlib. Parses historical server page-view metrics to generate line charts, bar plots, and box plots to identify trends and seasonality.",tech:["Python","Pandas","Matplotlib","Seaborn"],url:"https://github.com/vikashsaravanann/fcc-page-view-time-series-visualizer",category:"python",icon:"fa-chart-line"},
+            {name:"fcc-sea-level-predictor",desc:"A predictive data science project visualizing global sea level rise over a century. Implements linear regression models using SciPy to forecast future sea levels based on historical environmental datasets.",tech:["Python","Pandas","SciPy","Matplotlib"],url:"https://github.com/vikashsaravanann/fcc-sea-level-predictor",category:"python",icon:"fa-water"},
+            {name:"gamehub",desc:"A modular, terminal-based Python arcade with classic algorithmic games including Snake, Tic-Tac-Toe, and Rock-Paper-Scissors. Showcases OOP design, command-line interface engineering, and rich terminal rendering.",tech:["Python 3","OOP","Rich CLI"],url:"https://github.com/vikashsaravanann/gamehub",category:"python",icon:"fa-gamepad"},
+            {name:"hearwise-child-health",desc:"A mobile-first school hearing screening platform eliminating undetected childhood hearing loss in India. Empowers non-specialists to run clinically valid screenings in under 10 minutes. Features offline-first architecture, four-frequency audiometric sweep, and WHO/AAA-compliant pre-test readiness gates.",tech:["React","TypeScript","Vite","Supabase","GitHub Pages"],url:"https://github.com/vikashsaravanann/hearwise-child-health",liveUrl:"https://vikashsaravanann.github.io/hearwise-child-health/",category:"web",icon:"fa-ear-listen"},
+            {name:"IPL-Data-Analysis-Project",desc:"Comprehensive Exploratory Data Analysis (EDA) of IPL cricket data from 2008-2020. Uncovers insights into team dominance, player performance, and the statistical impact of winning the toss.",tech:["Python","Pandas","Matplotlib","Seaborn","Jupyter"],url:"https://github.com/vikashsaravanann/IPL-Data-Analysis-Project",category:"python",icon:"fa-chart-pie"},
+            {name:"Logic-Intelligence",desc:"An explorative AI repository focused on logical reasoning models and intelligent algorithms. Built to experiment with symbolic AI, decision trees, and foundational machine learning concepts.",tech:["Python","AI","Algorithms"],url:"https://github.com/vikashsaravanann/Logic-Intelligence",liveUrl:"https://vikashsaravanann.github.io/Logic-Intelligence/",category:"ai",icon:"fa-brain"},
+            {name:"OpenEnv-Debugger",desc:"A production-ready simulation environment for training AI agents on customer support ticket triage. Built for the Meta PyTorch OpenEnv Hackathon x Scaler (Finalist). Agents classify, prioritize, and route tickets via stateful API endpoints.",tech:["Python","FastAPI","Docker","Pydantic"],url:"https://github.com/vikashsaravanann/OpenEnv-Debugger",category:"ai",icon:"fa-robot"},
+            {name:"portfolio.vikashsaravanan",desc:"A legacy professional portfolio demonstrating initial steps into front-end architecture and web hosting. Focuses on foundational HTML/CSS structural design.",tech:["HTML5","CSS3","JavaScript"],url:"https://github.com/vikashsaravanann/portfolio.vikashsaravanan",category:"web",icon:"fa-archive"},
+            {name:"Portfolio_Information",desc:"My personal portfolio website featuring a dark-tech aesthetic, AI assistant powered by Gemini, automated PDF resume generation, and a fully functional dynamic repository catalog.",tech:["HTML5","CSS3","JavaScript","GitHub Pages"],url:"https://github.com/vikashsaravanann/Portfolio_Information",liveUrl:"https://vikashsaravanann.github.io/Portfolio_Information/",category:"web",icon:"fa-id-badge"},
+            {name:"Web-Development",desc:"A centralized repository containing a responsive single-page portfolio for an AI & Data Science student. Built natively with HTML and modern CSS animations.",tech:["HTML","CSS"],url:"https://github.com/vikashsaravanann/Web-Development",category:"web",icon:"fa-file-code"}
+        ];
 
-            function renderRepos(data) {
-                if (data.length === 0) {
-                    grid.innerHTML = `
-                        <div style="text-align: center; padding: 50px; color: rgba(255,255,255,0.5);">
-                            <i class="fas fa-ghost" style="font-size: 3rem; margin-bottom: 20px; opacity: 0.5;"></i>
-                            <h3>No repositories found matching your criteria.</h3>
+        const grid = document.getElementById('projectsGrid');
+        const searchInput = document.getElementById('repoSearch');
+        const filterTabs = document.querySelectorAll('.filter-tab');
+        const sortSelect = document.getElementById('sortSelect');
+        const modal = document.getElementById('projectModal');
+        const closeBtn = document.getElementById('closeModal');
+
+        closeBtn.addEventListener('click',()=>modal.classList.remove('active'));
+        modal.addEventListener('click',e=>{if(e.target===modal)modal.classList.remove('active');});
+        document.addEventListener('keydown',e=>{if(e.key==='Escape')modal.classList.remove('active');});
+
+        const catLabel = {ai:'AI / ML',web:'Full-Stack',python:'Data Science'};
+        const catClass = {ai:'cat-ai',web:'cat-web',python:'cat-data'};
+
+        window.copyRepoLink = (url,btn) => {
+            navigator.clipboard.writeText(url).then(()=>{
+                btn.innerHTML='<i class="fas fa-check"></i>';
+                btn.style.color='#34d399';
+                setTimeout(()=>{btn.innerHTML='<i class="fas fa-copy"></i>';btn.style.color='';},1500);
+            });
+        };
+
+        function popConfetti(x,y){
+            const c=document.getElementById('confetti-canvas');
+            const ctx=c.getContext('2d');
+            c.width=innerWidth;c.height=innerHeight;
+            const particles=Array.from({length:26},()=>({x,y,vx:(Math.random()-0.5)*7,vy:(Math.random()-2.2)*5,size:Math.random()*5+3,color:['#0ea5e9','#6366f1','#a855f7','#34d399','#fbbf24'][Math.floor(Math.random()*5)],life:1}));
+            let fr;
+            (function draw(){
+                ctx.clearRect(0,0,c.width,c.height);
+                particles.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=0.18;p.life-=0.022;ctx.globalAlpha=Math.max(0,p.life);ctx.fillStyle=p.color;ctx.beginPath();ctx.arc(p.x,p.y,p.size,0,Math.PI*2);ctx.fill();});
+                ctx.globalAlpha=1;
+                if(particles.some(p=>p.life>0))fr=requestAnimationFrame(draw);
+                else ctx.clearRect(0,0,c.width,c.height);
+            })();
+        }
+
+        async function openModal(idx,cardEl){
+            const repo=repos[idx];
+            if(cardEl){const r=cardEl.getBoundingClientRect();popConfetti(r.left+r.width/2,r.top+r.height/2);}
+            document.getElementById('modalIcon').innerHTML=`<i class="fas ${repo.icon}"></i>`;
+            document.getElementById('modalTitle').textContent=repo.name;
+            document.getElementById('modalCatBadge').innerHTML=`<span class="repo-cat-badge ${catClass[repo.category]}">${catLabel[repo.category]}</span>`;
+            document.getElementById('modalDesc').textContent=repo.desc;
+            document.getElementById('modalTags').innerHTML=repo.tech.map(t=>`<span class="tech-pill">${t}</span>`).join('');
+            let links=`<a href="${repo.url}" target="_blank" class="btn-secondary" style="padding:12px 22px;border-radius:12px;display:inline-flex;align-items:center;gap:8px;"><i class="fab fa-github"></i> View Source on GitHub</a>`;
+            if(repo.liveUrl)links=`<a href="${repo.liveUrl}" target="_blank" class="btn-primary" style="padding:12px 22px;border-radius:12px;display:inline-flex;align-items:center;gap:8px;"><i class="fas fa-external-link-alt"></i> Open Live Demo</a>`+links;
+            document.getElementById('modalLinks').innerHTML=links;
+            const related=repos.filter(r=>r.category===repo.category&&r.name!==repo.name).slice(0,3);
+            if(related.length){
+                document.getElementById('relatedLabel').style.display='block';
+                document.getElementById('relatedGrid').innerHTML=related.map(r=>{
+                    const ri=repos.findIndex(x=>x.name===r.name);
+                    return `<div class="related-chip" onclick="window.openProjectModal(${ri})"><div class="related-chip-title">${r.name}</div><div class="related-chip-cat">${catLabel[r.category]}</div></div>`;
+                }).join('');
+            } else {
+                document.getElementById('relatedLabel').style.display='none';
+                document.getElementById('relatedGrid').innerHTML='';
+            }
+            modal.classList.add('active');
+            document.getElementById('modalStats').innerHTML='<div class="gh-stat"><i class="fas fa-circle-notch fa-spin"></i>&nbsp;Fetching live stats&#8230;</div>';
+            try{
+                const res=await fetch(`https://api.github.com/repos/vikashsaravanann/${repo.url.split('/').pop()}`);
+                if(!res.ok)throw new Error();
+                const d=await res.json();
+                document.getElementById('modalStats').innerHTML=`
+                    <div class="gh-stat"><i class="fas fa-star" style="color:#fbbf24;"></i>&nbsp;${d.stargazers_count} Stars</div>
+                    <div class="gh-stat"><i class="fas fa-code-branch" style="color:#a5b4fc;"></i>&nbsp;${d.forks_count} Forks</div>
+                    <div class="gh-stat"><i class="fas fa-eye" style="color:#34d399;"></i>&nbsp;${d.watchers_count} Watchers</div>
+                    <div class="gh-stat"><i class="fas fa-clock" style="color:#f59e0b;"></i>&nbsp;${new Date(d.pushed_at).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'})}</div>
+                    ${d.language?`<div class="gh-stat"><i class="fas fa-code" style="color:#0ea5e9;"></i>&nbsp;${d.language}</div>`:''}
+                `;
+            }catch{
+                document.getElementById('modalStats').innerHTML='<div class="gh-stat"><i class="fas fa-exclamation-circle" style="color:#ef4444;"></i>&nbsp;Stats unavailable</div>';
+            }
+        }
+        window.openProjectModal = (idx) => openModal(idx);
+
+        function renderRepos(data){
+            if(!data.length){
+                grid.innerHTML=`<div style="text-align:center;padding:60px 20px;color:rgba(255,255,255,0.4);"><i class="fas fa-ghost" style="font-size:3rem;margin-bottom:16px;display:block;opacity:0.4;"></i><h3>No repositories match your search.</h3></div>`;
+                return;
+            }
+            grid.innerHTML=data.map((repo,i)=>{
+                const oi=repos.findIndex(r=>r.name===repo.name);
+                const liveTag=repo.liveUrl?`<span class="live-indicator"><span class="live-dot"></span>Live</span>`:'';
+                const flagBadge=repo.flagship?'<div class="flagship-badge">&#127942; Flagship Project</div>':'';
+                const overlayBtns=[
+                    repo.liveUrl?`<a href="${repo.liveUrl}" target="_blank" class="overlay-btn btn-live"><i class="fas fa-external-link-alt"></i> Open Live Demo</a>`:'',
+                    `<a href="${repo.url}" target="_blank" class="overlay-btn btn-source"><i class="fab fa-github"></i> View Source</a>`,
+                    `<button class="overlay-btn btn-details" onclick="event.stopPropagation();window.openProjectModal(${oi})"><i class="fas fa-info-circle"></i> Full Details</button>`
+                ].filter(Boolean).join('');
+                return `
+                <div class="repo-card-wrap stagger-in ${repo.flagship?'flagship':''}"
+                     data-category="${repo.category}"
+                     style="animation-delay:${(i*0.05).toFixed(2)}s"
+                     id="card-${oi}">
+                    ${flagBadge}
+                    <div class="repo-panel">
+                        <div class="repo-meta-row">
+                            <span class="repo-number">#${String(oi+1).padStart(2,'0')}</span>
+                            <span class="repo-cat-badge ${catClass[repo.category]}">${catLabel[repo.category]}</span>
+                            ${liveTag}
                         </div>
-                    `;
-                    return;
-                }
-
-                grid.innerHTML = data.map((repo, i) => {
-                    const originalIndex = repos.findIndex(r => r.name === repo.name);
-                    return `
-                    <div class="deep-dive-card stagger-in" data-category="${repo.category}" style="animation-delay: ${(i * 0.05) % 1}s; margin-top: 20px; margin-bottom: 20px; cursor: pointer; transition: transform 0.3s; border: 1px solid rgba(14,165,233,0.1);" onclick="window.openProjectModal(${originalIndex})" onmouseover="this.style.transform='translateY(-5px)'; this.style.borderColor='rgba(14,165,233,0.5)'" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='rgba(14,165,233,0.1)'">
-                        <div class="deep-dive-header">
-                            <h3><i class="fas ${repo.icon} text-accent"></i> ${repo.name}</h3>
-                            <div class="tags">
-                                ${repo.tech.map(t => `<span class="tag">${t}</span>`).join('')}
-                            </div>
+                        <div class="repo-title-row">
+                            <div class="repo-icon"><i class="fas ${repo.icon}"></i></div>
+                            <div class="repo-title">${repo.name}</div>
                         </div>
-                        <div class="deep-dive-body">
-                            <div class="problem-solution">
-                                <h4><span class="text-accent">Overview:</span> ${repo.desc}</h4>
-                            </div>
-                            <div class="tech-highlights mt-4">
-                                <span style="color: #0ea5e9; font-size: 0.9rem; font-weight: 600;"><i class="fas fa-search-plus"></i> Click to view details and live stats</span>
-                            </div>
+                        <p class="repo-desc">${repo.desc}</p>
+                        <div class="tech-stack-row">${repo.tech.map(t=>`<span class="tech-pill">${t}</span>`).join('')}</div>
+                        <div class="click-hint">
+                            <i class="fas fa-hand-pointer"></i> Hover to explore &nbsp;&middot;&nbsp;
+                            <button class="btn-copy" onclick="event.stopPropagation();copyRepoLink('${repo.url}',this)" title="Copy GitHub link"><i class="fas fa-copy"></i></button>
                         </div>
                     </div>
-                `}).join('');
-            }
+                    <div class="repo-hover-overlay">
+                        <div class="overlay-label">Quick Actions</div>
+                        <div class="overlay-btns">${overlayBtns}</div>
+                    </div>
+                </div>`;
+            }).join('');
 
-            // Initial render
-            renderRepos(repos);
-
-            // Filtering
-            filterTabs.forEach(tab => {
-                tab.addEventListener('click', (e) => {
-                    filterTabs.forEach(t => t.classList.remove('active'));
-                    e.target.closest('button').classList.add('active');
-                    const filter = e.target.closest('button').getAttribute('data-filter');
-
-                    if (filter === 'all') {
-                        renderRepos(repos);
-                    } else {
-                        renderRepos(repos.filter(r => r.category === filter));
+            document.querySelectorAll('.repo-card-wrap').forEach(card=>{
+                card.addEventListener('click',function(e){
+                    if(e.target.closest('a,button'))return;
+                    if(window.matchMedia('(hover: none)').matches){
+                        const open=this.classList.contains('touch-open');
+                        document.querySelectorAll('.repo-card-wrap.touch-open').forEach(c=>c.classList.remove('touch-open'));
+                        if(!open)this.classList.add('touch-open');
                     }
                 });
             });
+        }
 
-            // Searching
-            searchInput.addEventListener('input', (e) => {
-                const term = e.target.value.toLowerCase();
-                const filtered = repos.filter(r =>
-                    r.name.toLowerCase().includes(term) ||
-                    r.desc.toLowerCase().includes(term) ||
-                    r.tech.some(t => t.toLowerCase().includes(term))
-                );
-                renderRepos(filtered);
+        function getSorted(data){
+            const v=sortSelect.value;
+            if(v==='live')return [...data].sort((a,b)=>(b.liveUrl?1:0)-(a.liveUrl?1:0));
+            if(v==='ai')return [...data].sort((a,b)=>(b.category==='ai'?1:0)-(a.category==='ai'?1:0));
+            if(v==='az')return [...data].sort((a,b)=>a.name.localeCompare(b.name));
+            return data;
+        }
+
+        let activeFilter='all', activeSearch='';
+        function applyFilters(){
+            let data=repos;
+            if(activeFilter!=='all')data=data.filter(r=>r.category===activeFilter);
+            if(activeSearch)data=data.filter(r=>r.name.toLowerCase().includes(activeSearch)||r.desc.toLowerCase().includes(activeSearch)||r.tech.some(t=>t.toLowerCase().includes(activeSearch)));
+            renderRepos(getSorted(data));
+        }
+
+        renderRepos(repos);
+
+        filterTabs.forEach(tab=>{
+            tab.addEventListener('click',()=>{
+                filterTabs.forEach(t=>t.classList.remove('active'));
+                tab.classList.add('active');
+                activeFilter=tab.getAttribute('data-filter');
+                applyFilters();
             });
         });
+        searchInput.addEventListener('input',e=>{activeSearch=e.target.value.toLowerCase().trim();applyFilters();});
+        sortSelect.addEventListener('change',applyFilters);
+
+        const yearEl=document.getElementById('copyrightYear');
+        if(yearEl)yearEl.textContent=new Date().getFullYear();
+    });
     </script>
     <script src="particles.js"></script>
 </body>
-
 </html>
