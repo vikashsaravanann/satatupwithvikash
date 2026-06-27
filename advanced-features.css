@@ -52,13 +52,7 @@
 
 .adv-switch-view-btn { position: fixed; top: 20px; right: 20px; background: rgba(15,23,42,0.8); border: 1px solid #0ea5e9; color: #fff; padding: 8px 12px; border-radius: 20px; font-size: 12px; cursor: pointer; z-index: 9990; }
 
-/* F15: Visitor Map Widget */
-.adv-map-container { background: #1e293b; border-radius: 12px; padding: 20px; border: 1px solid rgba(14,165,233,0.2); margin-top: 20px; overflow: hidden; }
-.adv-map-svg-wrap { position: relative; width: 100%; aspect-ratio: 2/1; background: #0f172a; border-radius: 8px; overflow: hidden; }
-.adv-map-dot { position: absolute; width: 6px; height: 6px; background: #0ea5e9; border-radius: 50%; transform: translate(-50%, -50%); box-shadow: 0 0 10px #0ea5e9; }
-.adv-ticker { white-space: nowrap; overflow: hidden; margin-top: 15px; font-size: 13px; color: #cbd5e1; }
-.adv-ticker-content { display: inline-block; padding-left: 100%; animation: adv-ticker 20s linear infinite; }
-@keyframes adv-ticker { 0% { transform: translate3d(0,0,0); } 100% { transform: translate3d(-100%,0,0); } }
+
 
 /* F21: Hire Me CTA */
 .adv-hire-pill {

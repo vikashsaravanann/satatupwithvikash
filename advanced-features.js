@@ -234,68 +234,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // ==========================================
-    // F15: Real-time Visitor Map
-    // ==========================================
-    safeRun('VisitorMap', () => {
-        // Find a place to inject. Like contact section or footer
-        const target = document.getElementById('contact') || document.querySelector('footer') || document.body;
-        
-        const html = `
-            <div class="adv-map-container">
-                <h3 style="color:#0ea5e9; text-align:center; margin-top:0;">Global Reach</h3>
-                <p style="text-align:center; font-size:14px; margin-bottom:15px;" id="adv-map-counter">🌍 Loading visitors...</p>
-                <div class="adv-map-svg-wrap" id="adv-map-wrap">
-                    <!-- Simple inline SVG Map placeholder -->
-                    <svg viewBox="0 0 1000 500" style="width:100%; height:100%; fill:#334155;">
-                        <rect width="1000" height="500" fill="#0f172a" />
-                        <path d="M100,100 Q200,50 300,150 T500,200 T700,100 T900,250 L900,500 L100,500 Z" opacity="0.3"/>
-                        <text x="500" y="250" fill="#64748b" text-anchor="middle" font-size="20">World Map View</text>
-                    </svg>
-                </div>
-                <div class="adv-ticker">
-                    <div class="adv-ticker-content" id="adv-ticker-content">...</div>
-                </div>
-            </div>
-        `;
-        target.insertAdjacentHTML('beforebegin', html);
 
-        // Fetch location
-        fetch('https://ipapi.co/json/')
-            .then(res => res.json())
-            .then(data => {
-                if (data.city) {
-                    let visitors = JSON.parse(localStorage.getItem('portfolio_visitors') || '[]');
-                    const newV = { city: data.city, country: data.country_name, lat: data.latitude, lon: data.longitude, t: Date.now() };
-                    // Avoid duplicate immediately
-                    if(visitors.length === 0 || visitors[visitors.length-1].city !== newV.city) {
-                        visitors.push(newV);
-                        if (visitors.length > 100) visitors.shift();
-                        localStorage.setItem('portfolio_visitors', JSON.stringify(visitors));
-                    }
-                    
-                    document.getElementById('adv-map-counter').innerText = `🌍 Visited from ${new Set(visitors.map(v=>v.country)).size} countries`;
-                    
-                    const tickerText = visitors.slice(-10).reverse().map(v => `Someone from ${v.city}, ${v.country} just visited`).join(' • ');
-                    document.getElementById('adv-ticker-content').innerText = tickerText;
 
-                    // Plot dots
-                    const wrap = document.getElementById('adv-map-wrap');
-                    visitors.forEach(v => {
-                        if(v.lat && v.lon) {
-                            // Rough projection mapping
-                            const x = (v.lon + 180) * (1000 / 360);
-                            const y = (90 - v.lat) * (500 / 180);
-                            const dot = document.createElement('div');
-                            dot.className = 'adv-map-dot';
-                            dot.style.left = `${(x/1000)*100}%`;
-                            dot.style.top = `${(y/500)*100}%`;
-                            wrap.appendChild(dot);
-                        }
-                    });
-                }
-            }).catch(e => console.log('Map fetch error', e));
-    });
 
     // ==========================================
     // F46 & F48: Mobile Nav & Shake
