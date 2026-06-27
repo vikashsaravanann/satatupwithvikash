@@ -52,63 +52,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // ==========================================
-    // F3: Smart Project Recommender
-    // ==========================================
-    safeRun('SmartRecommender', () => {
-        const createRoleModal = () => {
-            const html = `
-                <div class="adv-role-modal" id="adv-role-modal">
-                    <div class="adv-role-content">
-                        <h2 style="color:#0ea5e9; margin-bottom: 20px;">Who are you?</h2>
-                        <button class="adv-role-btn" data-role="recruiter">👨‍💼 Recruiter</button>
-                        <button class="adv-role-btn" data-role="developer">👨‍💻 Developer</button>
-                        <button class="adv-role-btn" data-role="client">🏢 Client</button>
-                    </div>
-                </div>
-            `;
-            document.body.insertAdjacentHTML('beforeend', html);
-        };
-
-        createRoleModal();
 
 
-        const modal = document.getElementById('adv-role-modal');
-        const role = localStorage.getItem('visitor_role');
-        
-        if (!role) {
-            modal.classList.add('active');
-        }
-
-        const applyHighlight = (roleType) => {
-            document.querySelectorAll('.adv-highlight-section').forEach(el => el.classList.remove('adv-highlight-section'));
-            
-            let targets = [];
-            if (roleType === 'recruiter') targets = ['skills', 'competencies', 'certifications', 'about'];
-            if (roleType === 'developer') targets = ['projects', 'github'];
-            if (roleType === 'client') targets = ['contact', 'services'];
-            
-            targets.forEach(id => {
-                const el = document.getElementById(id) || document.querySelector(`[id*="${id}"]`);
-                if (el) {
-                    el.classList.add('adv-highlight-section');
-                    // auto scroll to first target if triggered manually
-                }
-            });
-            setTimeout(() => {
-                document.querySelectorAll('.adv-highlight-section').forEach(el => el.classList.remove('adv-highlight-section'));
-            }, 3000);
-        };
-
-        document.querySelectorAll('.adv-role-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const r = e.target.getAttribute('data-role');
-                localStorage.setItem('visitor_role', r);
-                modal.classList.remove('active');
-                applyHighlight(r);
-            });
-        });
-    });
 
     // ==========================================
     // F16: Resume Download Counter

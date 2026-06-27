@@ -47,20 +47,8 @@
 @keyframes adv-pulse { 0% { transform: scale(1); } 100% { transform: scale(1.1); } }
 @keyframes adv-blink { 50% { border-color: transparent; } }
 
-/* F3: Smart Recommender */
-.adv-role-modal {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(5px);
-    z-index: 100000; display: flex; align-items: center; justify-content: center;
-    opacity: 0; pointer-events: none; transition: opacity 0.3s;
-}
-.adv-role-modal.active { opacity: 1; pointer-events: auto; }
-.adv-role-content { background: #1e293b; padding: 30px; border-radius: 16px; border: 1px solid #0ea5e9; text-align: center; max-width: 400px; width: 90%; transform: scale(0.9); transition: transform 0.3s; }
-.adv-role-modal.active .adv-role-content { transform: scale(1); }
-.adv-role-btn { display: block; width: 100%; padding: 15px; margin: 10px 0; background: rgba(14,165,233,0.1); border: 1px solid #0ea5e9; color: #fff; border-radius: 8px; cursor: pointer; font-size: 16px; transition: all 0.2s; }
-.adv-role-btn:hover { background: #0ea5e9; transform: translateY(-2px); }
-.adv-highlight-section { animation: adv-section-pulse 3s infinite; position: relative; }
-@keyframes adv-section-pulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(14,165,233,0); } 50% { box-shadow: 0 0 0 8px rgba(14,165,233,0.3); } }
+
+
 
 .adv-switch-view-btn { position: fixed; top: 20px; right: 20px; background: rgba(15,23,42,0.8); border: 1px solid #0ea5e9; color: #fff; padding: 8px 12px; border-radius: 20px; font-size: 12px; cursor: pointer; z-index: 9990; }
 

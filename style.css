@@ -3454,3 +3454,229 @@ section {
   }
 }
 
+
+/* ================================================================
+   COMPREHENSIVE MOBILE RESPONSIVENESS OVERHAUL
+   Ensures every section, image, text, button matches desktop quality
+   ================================================================ */
+
+/* ── Global mobile base ───────────────────────────────────────── */
+@media (max-width: 768px) {
+
+  /* Tighten body padding on mobile */
+  body { padding: 0 !important; }
+  #app-frame { border-radius: 0 !important; }
+
+  /* Section vertical padding */
+  section { padding: 60px 0 !important; }
+
+  /* Container side padding */
+  .container { padding: 0 18px !important; }
+
+  /* Section headings */
+  .section-title { margin-bottom: 36px !important; }
+  .section-title h2 { font-size: 2rem !important; }
+  .section-title p { font-size: 0.95rem !important; }
+
+  /* ── HERO ──────────────────────────────────────────────────── */
+  .hero { padding-top: 100px !important; }
+  .hero-content {
+    grid-template-columns: 1fr !important;
+    text-align: center !important;
+    gap: 32px !important;
+  }
+  .hero-text h1 { font-size: 2.4rem !important; line-height: 1.2 !important; }
+  .hero-text h2 { font-size: 1.5rem !important; }
+  .hero-text p  { font-size: 0.95rem !important; margin: 0 auto 24px !important; }
+  .hero-cta { justify-content: center !important; flex-wrap: wrap !important; gap: 12px !important; }
+  .hero-cta a, .hero-cta button { width: 100% !important; max-width: 320px !important; text-align: center !important; }
+  .social-links-hero { justify-content: center !important; flex-wrap: wrap !important; gap: 12px !important; }
+
+  /* ── SUMMARY GRID ──────────────────────────────────────────── */
+  .summary-grid { grid-template-columns: 1fr !important; gap: 16px !important; }
+  .summary-box { padding: 20px !important; }
+
+  /* ── SKILLS ─────────────────────────────────────────────────── */
+  .skills-grid { grid-template-columns: 1fr !important; gap: 16px !important; }
+  .skill-card { padding: 20px !important; }
+  .progress-grid { grid-template-columns: 1fr !important; }
+
+  /* ── PROJECTS ───────────────────────────────────────────────── */
+  .projects-grid { grid-template-columns: 1fr !important; gap: 20px !important; }
+  .deep-dive-card { margin: 0 !important; }
+  /* Disable complex 3D perspective transform on mobile — use simple lift */
+  .deep-dive-card:hover {
+    transform: translateY(-6px) !important;
+    box-shadow: 0 16px 40px rgba(0,0,0,0.5) !important;
+  }
+  /* Filter buttons — wrap on mobile */
+  .filter-btns, [class*="filter-wrap"] {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+    justify-content: center !important;
+  }
+  .filter-btn { font-size: 0.82rem !important; padding: 8px 14px !important; }
+
+  /* ── CERTIFICATIONS ─────────────────────────────────────────── */
+  .cert-container { grid-template-columns: 1fr !important; gap: 16px !important; }
+  .cert-row { flex-direction: column !important; align-items: center !important; gap: 16px !important; }
+  .cert-thumb { width: 100% !important; max-width: 340px !important; margin: 0 auto !important; }
+  .cert-thumb img { width: 100% !important; height: auto !important; border-radius: 12px !important; }
+  .cert-search-wrap { max-width: 100% !important; }
+
+  /* ── TIMELINE ───────────────────────────────────────────────── */
+  .timeline::before { left: 20px !important; }
+  .timeline-item {
+    width: 100% !important;
+    padding-left: 56px !important;
+    padding-right: 12px !important;
+    left: 0 !important;
+    text-align: left !important;
+  }
+  .timeline-item:nth-child(odd) .timeline-dot,
+  .timeline-item:nth-child(even) .timeline-dot {
+    left: 12px !important;
+    right: auto !important;
+  }
+
+  /* ── BLOG GRID ──────────────────────────────────────────────── */
+  .blog-grid { grid-template-columns: 1fr !important; gap: 16px !important; margin-top: 28px !important; }
+  /* Premium blog card (icon-style) */
+  .blog-card {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 12px !important;
+    padding: 18px !important;
+  }
+  .blog-thumb { height: 180px !important; }
+
+  /* ── TESTIMONIALS ───────────────────────────────────────────── */
+  .testimonial-card { min-width: min(340px, 85vw) !important; padding: 22px !important; }
+  .testimonial-carousel { margin: 24px auto 0 !important; }
+
+  /* ── GITHUB SECTION ─────────────────────────────────────────── */
+  .github-stats-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 12px !important; }
+  .gh-repos-grid { grid-template-columns: 1fr !important; gap: 12px !important; }
+  .gh-stat-card { padding: 20px 14px !important; }
+  .gh-stat-value { font-size: 1.6rem !important; }
+  .gh-contrib-chart { border-radius: 8px !important; }
+
+  /* ── CONTACT / FORM ─────────────────────────────────────────── */
+  .pro-contact-form { padding: 20px 16px !important; }
+  .form-row { grid-template-columns: 1fr !important; gap: 16px !important; }
+  .contact-channels { gap: 8px !important; }
+  .channel-badge { font-size: 0.72rem !important; padding: 5px 12px !important; }
+
+  /* ── FOOTER ─────────────────────────────────────────────────── */
+  .footer-content { grid-template-columns: 1fr !important; text-align: center !important; gap: 20px !important; }
+  .footer-widget-grid { grid-template-columns: 1fr !important; gap: 16px !important; }
+
+  /* ── COLLAGE / STAGGERED IMAGES ─────────────────────────────── */
+  .collage-img {
+    width: 100% !important;
+    height: 220px !important;
+    border-radius: 16px !important;
+  }
+  .collage-center {
+    width: 100% !important;
+    height: 260px !important;
+  }
+  .project-gallery-collage {
+    flex-direction: column !important;
+    gap: 12px !important;
+    align-items: center !important;
+  }
+  .project-gallery-collage img {
+    width: 100% !important;
+    height: 220px !important;
+    margin-bottom: 0 !important;
+    transform: none !important;
+  }
+
+  /* ── LIGHTBOX ───────────────────────────────────────────────── */
+  .lightbox-prev { left: 12px !important; }
+  .lightbox-next { right: 12px !important; }
+  .lightbox-close { top: 12px !important; right: 12px !important; }
+  .lightbox-close, .lightbox-prev, .lightbox-next {
+    width: 42px !important; height: 42px !important; font-size: 1rem !important;
+  }
+
+  /* ── AI CHATBOT ─────────────────────────────────────────────── */
+  #ai-chat-widget { bottom: 16px !important; right: 16px !important; }
+  #ai-chat-panel {
+    bottom: 74px !important;
+    right: 0 !important;
+    width: calc(100vw - 32px) !important;
+    max-height: 70vh !important;
+    border-radius: 18px !important;
+  }
+  .chat-messages { max-height: 45vh !important; }
+  .chat-chips { gap: 6px !important; padding: 10px 12px !important; }
+  .chat-chip { font-size: 0.72rem !important; padding: 5px 10px !important; }
+
+  /* ── GLOBAL BUTTONS — 44px min tap target ───────────────────── */
+  .btn-primary, .btn-secondary, .btn-primary-sm {
+    min-height: 44px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 12px 22px !important;
+    font-size: 0.95rem !important;
+    touch-action: manipulation !important;
+  }
+  .adv-hire-pill { font-size: 0.85rem !important; padding: 8px 18px !important; }
+
+  /* ── MISC FIXES ─────────────────────────────────────────────── */
+  /* Goals container */
+  .goals-container { grid-template-columns: 1fr !important; padding: 28px 16px !important; gap: 16px !important; }
+  /* Intro image wrapper */
+  .intro-image-wrapper { flex-direction: column !important; gap: 20px !important; align-items: center !important; }
+  .intro-image-wrapper > * { max-width: 90% !important; width: 100% !important; }
+  /* Widget grid */
+  .widget-grid, .grid-2-col { grid-template-columns: 1fr !important; gap: 16px !important; }
+  /* Swipe dots — ensure they don't interfere with bottom buttons */
+  .adv-swipe-dots { bottom: 6px !important; }
+  /* Toast — ensure it doesn't overlap the chatbot button */
+  .adv-toast { bottom: 80px !important; }
+  /* Deep dive header/body padding */
+  .deep-dive-header { padding: 20px !important; }
+  /* Responsive card transforms — flatten on touch to avoid glitch */
+  .widget-card-center { transform: none !important; }
+
+  /* Ensure all images are responsive */
+  img { max-width: 100% !important; height: auto; }
+  /* But don't override explicitly sized profile images */
+  .profile-image-container img { height: 100% !important; }
+}
+
+/* ── Extra small screens (≤ 480px) ───────────────────────────── */
+@media (max-width: 480px) {
+  .hero-text h1 { font-size: 2rem !important; }
+  .hero-text h2 { font-size: 1.3rem !important; }
+  .section-title h2 { font-size: 1.75rem !important; }
+  .container { padding: 0 14px !important; }
+
+  /* Single column on very small */
+  .github-stats-grid { grid-template-columns: 1fr !important; }
+  .projects-grid { grid-template-columns: 1fr !important; }
+
+  /* Chat panel full-width */
+  #ai-chat-panel { width: calc(100vw - 24px) !important; right: -4px !important; }
+
+  /* Profile images — slightly smaller */
+  .profile-image-container.side-profile { width: 90px !important; height: 125px !important; }
+  .profile-image-container.floating { width: 115px !important; height: 160px !important; }
+
+  /* Testimonial cards */
+  .testimonial-card { min-width: min(290px, 90vw) !important; padding: 18px !important; }
+
+  /* Cert badges */
+  .cert-badge-card { padding: 14px !important; }
+
+  /* Form padding */
+  .pro-contact-form { padding: 16px 12px !important; }
+
+  /* Footer */
+  .footer-widget-grid { grid-template-columns: 1fr !important; }
+}
